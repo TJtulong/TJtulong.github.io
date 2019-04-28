@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-center-circle.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="设计模式,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="责任链（Chain Of Responsibility）Intent使多个对象都有机会处理请求，从而避免请求的发送者和接收者之间的耦合关系。将这些对象连成一条链，并沿着这条链发送该请求，直到有一个对象处理它为止。 Class Diagram发出请求的客户端并不知道当中哪个对象会最终处理这个请求，对于一个具体的处理者（handler），如果可以处理该请求，则处理之，否则就将该请求转发给它的后继者。">
+<meta name="keywords" content="设计模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式之行为型模式">
+<meta property="og:url" content="http://yoursite.com/2019/04/28/设计模式之行为型模式/index.html">
+<meta property="og:site_name" content="椰子皮&#39;s Blog">
+<meta property="og:description" content="责任链（Chain Of Responsibility）Intent使多个对象都有机会处理请求，从而避免请求的发送者和接收者之间的耦合关系。将这些对象连成一条链，并沿着这条链发送该请求，直到有一个对象处理它为止。 Class Diagram发出请求的客户端并不知道当中哪个对象会最终处理这个请求，对于一个具体的处理者（handler），如果可以处理该请求，则处理之，否则就将该请求转发给它的后继者。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F.png">
+<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F.png">
+<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/%E8%A7%A3%E9%87%8A%E5%99%A8%E6%A8%A1%E5%BC%8F.png">
+<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F.png">
+<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/%E4%B8%AD%E4%BB%8B%E8%80%85%E6%A8%A1%E5%BC%8F.png">
+<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/%E4%B8%AD%E4%BB%8B%E8%80%851.jpg">
+<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/%E4%B8%AD%E4%BB%8B%E8%80%852.jpg">
+<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/%E5%A4%87%E5%BF%98%E5%BD%95.png">
+<meta property="og:updated_time" content="2019-04-28T15:29:39.269Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="设计模式之行为型模式">
+<meta name="twitter:description" content="责任链（Chain Of Responsibility）Intent使多个对象都有机会处理请求，从而避免请求的发送者和接收者之间的耦合关系。将这些对象连成一条链，并沿着这条链发送该请求，直到有一个对象处理它为止。 Class Diagram发出请求的客户端并不知道当中哪个对象会最终处理这个请求，对于一个具体的处理者（handler），如果可以处理该请求，则处理之，否则就将该请求转发给它的后继者。">
+<meta name="twitter:image" content="http://ppznxle2c.bkt.clouddn.com/%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/04/28/设计模式之行为型模式/">
+
+
+
+
+
+  <title>设计模式之行为型模式 | 椰子皮's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">椰子皮's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/28/设计模式之行为型模式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tulong Xiao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="http://ppznxle2c.bkt.clouddn.com/IMG_1547.JPG">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="椰子皮's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">设计模式之行为型模式</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-28T18:14:51+08:00">
+                2019-04-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  11
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="责任链（Chain-Of-Responsibility）"><a href="#责任链（Chain-Of-Responsibility）" class="headerlink" title="责任链（Chain Of Responsibility）"></a>责任链（Chain Of Responsibility）</h1><h2 id="Intent"><a href="#Intent" class="headerlink" title="Intent"></a>Intent</h2><p>使多个对象都有机会处理请求，从而避免请求的发送者和接收者之间的耦合关系。将这些对象连成一条链，并沿着这条链发送该请求，直到有一个对象处理它为止。</p>
+<h2 id="Class-Diagram"><a href="#Class-Diagram" class="headerlink" title="Class Diagram"></a>Class Diagram</h2><p><strong>发出请求的客户端并不知道当中哪个对象会最终处理这个请求，对于一个具体的处理者（handler），如果可以处理该请求，则处理之，否则就将该请求转发给它的后继者。</strong></p>
+<ul>
+<li>Handler：定义处理请求的接口，并且实现后继链（successor）</li>
+</ul>
+<p><div align="center"> <img src="http://ppznxle2c.bkt.clouddn.com/%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F.png"> </div><br><br><a id="more"></a></p>
+<h2 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Handler</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span> Handler successor;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Handler</span><span class="params">(Handler successor)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.successor = successor;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">handleRequest</span><span class="params">(Request request)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteHandler1</span> <span class="keyword">extends</span> <span class="title">Handler</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ConcreteHandler1</span><span class="params">(Handler successor)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(successor);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">handleRequest</span><span class="params">(Request request)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (request.getType() == RequestType.TYPE1) &#123;</span><br><span class="line">            System.out.println(request.getName() + <span class="string">" is handle by ConcreteHandler1"</span>);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (successor != <span class="keyword">null</span>) &#123;</span><br><span class="line">            successor.handleRequest(request);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteHandler2</span> <span class="keyword">extends</span> <span class="title">Handler</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ConcreteHandler2</span><span class="params">(Handler successor)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(successor);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">handleRequest</span><span class="params">(Request request)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (request.getType() == RequestType.TYPE2) &#123;</span><br><span class="line">            System.out.println(request.getName() + <span class="string">" is handle by ConcreteHandler2"</span>);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (successor != <span class="keyword">null</span>) &#123;</span><br><span class="line">            successor.handleRequest(request);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Request</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> RequestType type;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Request</span><span class="params">(RequestType type, String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.type = type;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> RequestType <span class="title">getType</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> type;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> RequestType &#123;</span><br><span class="line">    TYPE1, TYPE2</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>先生成一条责任链，先用头结点去处理</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Handler handler1 = <span class="keyword">new</span> ConcreteHandler1(<span class="keyword">null</span>);</span><br><span class="line">        Handler handler2 = <span class="keyword">new</span> ConcreteHandler2(handler1);</span><br><span class="line"></span><br><span class="line">        Request request1 = <span class="keyword">new</span> Request(RequestType.TYPE1, <span class="string">"request1"</span>);</span><br><span class="line">        handler2.handleRequest(request1);</span><br><span class="line"></span><br><span class="line">        Request request2 = <span class="keyword">new</span> Request(RequestType.TYPE2, <span class="string">"request2"</span>);</span><br><span class="line">        handler2.handleRequest(request2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">request1 is handle by ConcreteHandler1</span><br><span class="line">request2 is handle by ConcreteHandler2</span><br></pre></td></tr></table></figure>
+<h2 id="JDK"><a href="#JDK" class="headerlink" title="JDK"></a>JDK</h2><ul>
+<li><a href="http://docs.oracle.com/javase/8/docs/api/java/util/logging/Logger.html#log%28java.util.logging.Level,%20java.lang.String%29" target="_blank" rel="noopener">java.util.logging.Logger#log()</a></li>
+<li><a href="https://commons.apache.org/proper/commons-chain/index.html" target="_blank" rel="noopener">Apache Commons Chain</a></li>
+<li><a href="http://docs.oracle.com/javaee/7/api/javax/servlet/Filter.html#doFilter-javax.servlet.ServletRequest-javax.servlet.ServletResponse-javax.servlet.FilterChain-" target="_blank" rel="noopener">javax.servlet.Filter#doFilter()</a></li>
+</ul>
+<h2 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h2><p>servlet中的Filter类的核心是传递FilterChain对象，这个对象保存了到最终Servlet对象的所有Filter对象，这些对象都保存在ApplicationFilterChain对象的filters数组中。FilterChain链上每执行一个Filter对象，数组计数器加1，直到遍历完毕。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">ApplicationFilterChain</span> <span class="keyword">implements</span> <span class="title">FilterChain</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> pos = <span class="number">0</span>; <span class="comment">//当前执行filter的offset</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> n; <span class="comment">//当前filter的数量</span></span><br><span class="line">    <span class="keyword">private</span> ApplicationFilterConfig[] filters;  <span class="comment">//filter配置类，通过getFilter()方法获取Filter</span></span><br><span class="line">    <span class="keyword">private</span> Servlet servlet</span><br><span class="line">  </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doFilter</span><span class="params">(ServletRequest request, ServletResponse response)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (pos &lt; n) &#123;</span><br><span class="line">            ApplicationFilterConfig filterConfig = filters[pos++];</span><br><span class="line">            Filter filter = filterConfig.getFilter();</span><br><span class="line">            filter.doFilter(request, response, <span class="keyword">this</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// filter都处理完毕后，执行servlet</span></span><br><span class="line">            servlet.service(request, response);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="命令（Command）"><a href="#命令（Command）" class="headerlink" title="命令（Command）"></a>命令（Command）</h1><h2 id="Intent-1"><a href="#Intent-1" class="headerlink" title="Intent"></a>Intent</h2><p>将命令封装成对象中，具有以下作用：</p>
+<ul>
+<li>使用命令来参数化其它对象</li>
+<li>将命令放入队列中进行排队</li>
+<li>将命令的操作记录到日志中</li>
+<li>支持可撤销的操作</li>
+</ul>
+<h2 id="Class-Diagram-1"><a href="#Class-Diagram-1" class="headerlink" title="Class Diagram"></a>Class Diagram</h2><ul>
+<li>Command：命令</li>
+<li>Receiver：命令接收者，也就是命令真正的执行者</li>
+<li>Invoker：通过它来调用命令</li>
+<li>Client：可以设置命令与命令的接收者</li>
+</ul>
+<p><div align="center"> <img src="http://ppznxle2c.bkt.clouddn.com/%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F.png"> </div><br></p>
+<h2 id="Implementation-1"><a href="#Implementation-1" class="headerlink" title="Implementation"></a>Implementation</h2><p>设计一个遥控器，可以控制电灯开关。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Command</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">execute</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LightOnCommand</span> <span class="keyword">implements</span> <span class="title">Command</span> </span>&#123;</span><br><span class="line">    Light light;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LightOnCommand</span><span class="params">(Light light)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.light = light;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        light.on();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LightOffCommand</span> <span class="keyword">implements</span> <span class="title">Command</span> </span>&#123;</span><br><span class="line">    Light light;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LightOffCommand</span><span class="params">(Light light)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.light = light;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        light.off();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Light</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">on</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Light is on!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">off</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Light is off!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 遥控器</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Invoker</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Command[] onCommands;</span><br><span class="line">    <span class="keyword">private</span> Command[] offCommands;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> slotNum = <span class="number">7</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Invoker</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.onCommands = <span class="keyword">new</span> Command[slotNum];</span><br><span class="line">        <span class="keyword">this</span>.offCommands = <span class="keyword">new</span> Command[slotNum];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setOnCommand</span><span class="params">(Command command, <span class="keyword">int</span> slot)</span> </span>&#123;</span><br><span class="line">        onCommands[slot] = command;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setOffCommand</span><span class="params">(Command command, <span class="keyword">int</span> slot)</span> </span>&#123;</span><br><span class="line">        offCommands[slot] = command;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onButtonWasPushed</span><span class="params">(<span class="keyword">int</span> slot)</span> </span>&#123;</span><br><span class="line">        onCommands[slot].execute();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">offButtonWasPushed</span><span class="params">(<span class="keyword">int</span> slot)</span> </span>&#123;</span><br><span class="line">        offCommands[slot].execute();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Invoker invoker = <span class="keyword">new</span> Invoker();</span><br><span class="line">        Light light = <span class="keyword">new</span> Light();</span><br><span class="line">        Command lightOnCommand = <span class="keyword">new</span> LightOnCommand(light);</span><br><span class="line">        Command lightOffCommand = <span class="keyword">new</span> LightOffCommand(light);</span><br><span class="line">        invoker.setOnCommand(lightOnCommand, <span class="number">0</span>);</span><br><span class="line">        invoker.setOffCommand(lightOffCommand, <span class="number">0</span>);</span><br><span class="line">        invoker.onButtonWasPushed(<span class="number">0</span>);</span><br><span class="line">        invoker.offButtonWasPushed(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="JDK-1"><a href="#JDK-1" class="headerlink" title="JDK"></a>JDK</h2><ul>
+<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html" target="_blank" rel="noopener">java.lang.Runnable</a></li>
+<li><a href="https://github.com/Netflix/Hystrix/wiki" target="_blank" rel="noopener">Netflix Hystrix</a></li>
+<li><a href="http://docs.oracle.com/javase/8/docs/api/javax/swing/Action.html" target="_blank" rel="noopener">javax.swing.Action</a></li>
+</ul>
+<h1 id="解释器（Interpreter）"><a href="#解释器（Interpreter）" class="headerlink" title="解释器（Interpreter）"></a>解释器（Interpreter）</h1><h2 id="Intent-2"><a href="#Intent-2" class="headerlink" title="Intent"></a>Intent</h2><p>为语言创建解释器，通常由语言的语法和语法分析来定义。</p>
+<h2 id="Class-Diagram-2"><a href="#Class-Diagram-2" class="headerlink" title="Class Diagram"></a>Class Diagram</h2><ul>
+<li>TerminalExpression：终结符表达式，每个终结符都需要一个 TerminalExpression。</li>
+<li>Context：上下文，包含解释器之外的一些全局信息。</li>
+</ul>
+<p><div align="center"> <img src="http://ppznxle2c.bkt.clouddn.com/%E8%A7%A3%E9%87%8A%E5%99%A8%E6%A8%A1%E5%BC%8F.png"> </div><br></p>
+<h2 id="Implementation-2"><a href="#Implementation-2" class="headerlink" title="Implementation"></a>Implementation</h2><p>以下是一个规则检验器实现，具有 and 和 or 规则，通过规则可以构建一颗解析树，用来检验一个文本是否满足解析树定义的规则。</p>
+<p>例如一颗解析树为 D And (A Or (B C))，文本 “D A” 满足该解析树定义的规则。</p>
+<p>这里的 Context 指的是 String。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Expression</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">boolean</span> <span class="title">interpret</span><span class="params">(String str)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TerminalExpression</span> <span class="keyword">extends</span> <span class="title">Expression</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String literal = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TerminalExpression</span><span class="params">(String str)</span> </span>&#123;</span><br><span class="line">        literal = str;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">interpret</span><span class="params">(String str)</span> </span>&#123;</span><br><span class="line">        StringTokenizer st = <span class="keyword">new</span> StringTokenizer(str);</span><br><span class="line">        <span class="keyword">while</span> (st.hasMoreTokens()) &#123;</span><br><span class="line">            String test = st.nextToken();</span><br><span class="line">            <span class="keyword">if</span> (test.equals(literal)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AndExpression</span> <span class="keyword">extends</span> <span class="title">Expression</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Expression expression1 = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">private</span> Expression expression2 = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">AndExpression</span><span class="params">(Expression expression1, Expression expression2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.expression1 = expression1;</span><br><span class="line">        <span class="keyword">this</span>.expression2 = expression2;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">interpret</span><span class="params">(String str)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> expression1.interpret(str) &amp;&amp; expression2.interpret(str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OrExpression</span> <span class="keyword">extends</span> <span class="title">Expression</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Expression expression1 = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">private</span> Expression expression2 = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">OrExpression</span><span class="params">(Expression expression1, Expression expression2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.expression1 = expression1;</span><br><span class="line">        <span class="keyword">this</span>.expression2 = expression2;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">interpret</span><span class="params">(String str)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> expression1.interpret(str) || expression2.interpret(str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 构建解析树</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Expression <span class="title">buildInterpreterTree</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// Literal</span></span><br><span class="line">        Expression terminal1 = <span class="keyword">new</span> TerminalExpression(<span class="string">"A"</span>);</span><br><span class="line">        Expression terminal2 = <span class="keyword">new</span> TerminalExpression(<span class="string">"B"</span>);</span><br><span class="line">        Expression terminal3 = <span class="keyword">new</span> TerminalExpression(<span class="string">"C"</span>);</span><br><span class="line">        Expression terminal4 = <span class="keyword">new</span> TerminalExpression(<span class="string">"D"</span>);</span><br><span class="line">        <span class="comment">// B C</span></span><br><span class="line">        Expression alternation1 = <span class="keyword">new</span> OrExpression(terminal2, terminal3);</span><br><span class="line">        <span class="comment">// A Or (B C)</span></span><br><span class="line">        Expression alternation2 = <span class="keyword">new</span> OrExpression(terminal1, alternation1);</span><br><span class="line">        <span class="comment">// D And (A Or (B C))</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> AndExpression(terminal4, alternation2);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Expression define = buildInterpreterTree();</span><br><span class="line">        String context1 = <span class="string">"D A"</span>;</span><br><span class="line">        String context2 = <span class="string">"A B"</span>;</span><br><span class="line">        System.out.println(define.interpret(context1));</span><br><span class="line">        System.out.println(define.interpret(context2));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">true</span><br><span class="line">false</span><br></pre></td></tr></table></figure>
+<h2 id="JDK-2"><a href="#JDK-2" class="headerlink" title="JDK"></a>JDK</h2><ul>
+<li><a href="http://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html" target="_blank" rel="noopener">java.util.Pattern</a></li>
+<li><a href="http://docs.oracle.com/javase/8/docs/api/java/text/Normalizer.html" target="_blank" rel="noopener">java.text.Normalizer</a></li>
+<li>All subclasses of <a href="http://docs.oracle.com/javase/8/docs/api/java/text/Format.html" target="_blank" rel="noopener">java.text.Format</a></li>
+<li><a href="http://docs.oracle.com/javaee/7/api/javax/el/ELResolver.html" target="_blank" rel="noopener">javax.el.ELResolver</a></li>
+</ul>
+<h1 id="迭代器（Iterator）"><a href="#迭代器（Iterator）" class="headerlink" title="迭代器（Iterator）"></a>迭代器（Iterator）</h1><h2 id="Intent-3"><a href="#Intent-3" class="headerlink" title="Intent"></a>Intent</h2><p>提供一种顺序访问聚合对象元素的方法，并且不暴露聚合对象的内部表示。</p>
+<h2 id="Class-Diagram-3"><a href="#Class-Diagram-3" class="headerlink" title="Class Diagram"></a>Class Diagram</h2><ul>
+<li>Aggregate 是聚合类，其中 createIterator() 方法可以产生一个 Iterator；</li>
+<li>Iterator 主要定义了 hasNext() 和 next() 方法。</li>
+<li>Client 组合了 Aggregate，为了迭代遍历 Aggregate，也需要组合 Iterator。</li>
+</ul>
+<p><div align="center"> <img src="http://ppznxle2c.bkt.clouddn.com/%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F.png"> </div><br></p>
+<h2 id="Implementation-3"><a href="#Implementation-3" class="headerlink" title="Implementation"></a>Implementation</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Aggregate</span> </span>&#123;</span><br><span class="line">    <span class="function">Iterator <span class="title">createIterator</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteAggregate</span> <span class="keyword">implements</span> <span class="title">Aggregate</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Integer[] items;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ConcreteAggregate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        items = <span class="keyword">new</span> Integer[<span class="number">10</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; items.length; i++) &#123;</span><br><span class="line">            items[i] = i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Iterator <span class="title">createIterator</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ConcreteIterator&lt;Integer&gt;(items);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Iterator</span>&lt;<span class="title">Item</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">Item <span class="title">next</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">hasNext</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteIterator</span>&lt;<span class="title">Item</span>&gt; <span class="keyword">implements</span> <span class="title">Iterator</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Item[] items;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> position = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ConcreteIterator</span><span class="params">(Item[] items)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.items = items;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">next</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> items[position++];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasNext</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> position &lt; items.length;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Aggregate aggregate = <span class="keyword">new</span> ConcreteAggregate();</span><br><span class="line">        Iterator&lt;Integer&gt; iterator = aggregate.createIterator();</span><br><span class="line">        <span class="keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line">            System.out.println(iterator.next());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="JDK-3"><a href="#JDK-3" class="headerlink" title="JDK"></a>JDK</h2><ul>
+<li><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html" target="_blank" rel="noopener">java.util.Iterator</a></li>
+<li><a href="http://docs.oracle.com/javase/8/docs/api/java/util/Enumeration.html" target="_blank" rel="noopener">java.util.Enumeration</a></li>
+</ul>
+<h1 id="中介者（Mediator）"><a href="#中介者（Mediator）" class="headerlink" title="中介者（Mediator）"></a>中介者（Mediator）</h1><h2 id="Intent-4"><a href="#Intent-4" class="headerlink" title="Intent"></a>Intent</h2><p>如果多个对象之间交互复杂，用一个中介对象来封装一系列对象的交互，从而使其耦合松散。每个具体的同事对象彼此不认识，只认识中介者，而中介者需要认识所有同事，从具体同事接收消息，向具体的同事发出指令。</p>
+<h2 id="Class-Diagram-4"><a href="#Class-Diagram-4" class="headerlink" title="Class Diagram"></a>Class Diagram</h2><ul>
+<li>Mediator：中介者，定义一个接口用于与各同事（Colleague）对象通信。</li>
+<li>Colleague：同事，相关对象</li>
+</ul>
+<p><div align="center"> <img src="http://ppznxle2c.bkt.clouddn.com/%E4%B8%AD%E4%BB%8B%E8%80%85%E6%A8%A1%E5%BC%8F.png"> </div><br></p>
+<h2 id="Implementation-4"><a href="#Implementation-4" class="headerlink" title="Implementation"></a>Implementation</h2><p>Alarm（闹钟）、CoffeePot（咖啡壶）、Calendar（日历）、Sprinkler（喷头）是一组相关的对象，在某个对象的事件产生时需要去操作其它对象，形成了下面这种依赖结构：</p>
+<p><div align="center"> <img src="http://ppznxle2c.bkt.clouddn.com/%E4%B8%AD%E4%BB%8B%E8%80%851.jpg"> </div><br></p>
+<p>使用中介者模式可以将复杂的依赖结构变成星形结构：</p>
+<p><div align="center"> <img src="http://ppznxle2c.bkt.clouddn.com/%E4%B8%AD%E4%BB%8B%E8%80%852.jpg"> </div><br></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Colleague</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">onEvent</span><span class="params">(Mediator mediator)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Alarm</span> <span class="keyword">extends</span> <span class="title">Colleague</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onEvent</span><span class="params">(Mediator mediator)</span> </span>&#123;</span><br><span class="line">        mediator.doEvent(<span class="string">"alarm"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doAlarm</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"doAlarm()"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CoffeePot</span> <span class="keyword">extends</span> <span class="title">Colleague</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onEvent</span><span class="params">(Mediator mediator)</span> </span>&#123;</span><br><span class="line">        mediator.doEvent(<span class="string">"coffeePot"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doCoffeePot</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"doCoffeePot()"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Calender</span> <span class="keyword">extends</span> <span class="title">Colleague</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onEvent</span><span class="params">(Mediator mediator)</span> </span>&#123;</span><br><span class="line">        mediator.doEvent(<span class="string">"calender"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doCalender</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"doCalender()"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Sprinkler</span> <span class="keyword">extends</span> <span class="title">Colleague</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onEvent</span><span class="params">(Mediator mediator)</span> </span>&#123;</span><br><span class="line">        mediator.doEvent(<span class="string">"sprinkler"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSprinkler</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"doSprinkler()"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Mediator</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">doEvent</span><span class="params">(String eventType)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteMediator</span> <span class="keyword">extends</span> <span class="title">Mediator</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Alarm alarm;</span><br><span class="line">    <span class="keyword">private</span> CoffeePot coffeePot;</span><br><span class="line">    <span class="keyword">private</span> Calender calender;</span><br><span class="line">    <span class="keyword">private</span> Sprinkler sprinkler;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ConcreteMediator</span><span class="params">(Alarm alarm, CoffeePot coffeePot, Calender calender, Sprinkler sprinkler)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.alarm = alarm;</span><br><span class="line">        <span class="keyword">this</span>.coffeePot = coffeePot;</span><br><span class="line">        <span class="keyword">this</span>.calender = calender;</span><br><span class="line">        <span class="keyword">this</span>.sprinkler = sprinkler;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doEvent</span><span class="params">(String eventType)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">switch</span> (eventType) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">"alarm"</span>:</span><br><span class="line">                doAlarmEvent();</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">"coffeePot"</span>:</span><br><span class="line">                doCoffeePotEvent();</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">"calender"</span>:</span><br><span class="line">                doCalenderEvent();</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                doSprinklerEvent();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doAlarmEvent</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        alarm.doAlarm();</span><br><span class="line">        coffeePot.doCoffeePot();</span><br><span class="line">        calender.doCalender();</span><br><span class="line">        sprinkler.doSprinkler();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doCoffeePotEvent</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doCalenderEvent</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSprinklerEvent</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Alarm alarm = <span class="keyword">new</span> Alarm();</span><br><span class="line">        CoffeePot coffeePot = <span class="keyword">new</span> CoffeePot();</span><br><span class="line">        Calender calender = <span class="keyword">new</span> Calender();</span><br><span class="line">        Sprinkler sprinkler = <span class="keyword">new</span> Sprinkler();</span><br><span class="line">        Mediator mediator = <span class="keyword">new</span> ConcreteMediator(alarm, coffeePot, calender, sprinkler);</span><br><span class="line">        <span class="comment">// 闹钟事件到达，调用中介者就可以操作相关对象</span></span><br><span class="line">        alarm.onEvent(mediator);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">doAlarm()</span><br><span class="line">doCoffeePot()</span><br><span class="line">doCalender()</span><br><span class="line">doSprinkler()</span><br></pre></td></tr></table></figure>
+<h2 id="JDK-4"><a href="#JDK-4" class="headerlink" title="JDK"></a>JDK</h2><ul>
+<li>All scheduleXXX() methods of <a href="http://docs.oracle.com/javase/8/docs/api/java/util/Timer.html" target="_blank" rel="noopener">java.util.Timer</a></li>
+<li><a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Executor.html#execute-java.lang.Runnable-" target="_blank" rel="noopener">java.util.concurrent.Executor#execute()</a></li>
+<li>submit() and invokeXXX() methods of <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html" target="_blank" rel="noopener">java.util.concurrent.ExecutorService</a></li>
+<li>scheduleXXX() methods of <a href="http://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ScheduledExecutorService.html" target="_blank" rel="noopener">java.util.concurrent.ScheduledExecutorService</a></li>
+<li><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Method.html#invoke-java.lang.Object-java.lang.Object...-" target="_blank" rel="noopener">java.lang.reflect.Method#invoke()</a></li>
+</ul>
+<h1 id="备忘录（Memento）"><a href="#备忘录（Memento）" class="headerlink" title="备忘录（Memento）"></a>备忘录（Memento）</h1><h2 id="Intent-5"><a href="#Intent-5" class="headerlink" title="Intent"></a>Intent</h2><p>在不违反封装的情况下获得对象的内部状态，并在该对象之外保存这个状态，从而在需要时可以将对象恢复到最初状态，可以类比游戏存档。</p>
+<h2 id="Class-Diagram-5"><a href="#Class-Diagram-5" class="headerlink" title="Class Diagram"></a>Class Diagram</h2><ul>
+<li>Originator：原始对象</li>
+<li>Caretaker：负责保存好备忘录</li>
+<li><strong>Menento：备忘录，存储原始对象的的状态。</strong> 备忘录实际上有两个接口，一个是提供给 Caretaker 的窄接口：它只能将备忘录传递给其它对象；一个是提供给 Originator 的宽接口，允许它访问到先前状态所需的所有数据。理想情况是只允许 Originator 访问本备忘录的内部状态。</li>
+</ul>
+<p><div align="center"> <img src="http://ppznxle2c.bkt.clouddn.com/%E5%A4%87%E5%BF%98%E5%BD%95.png"> </div><br></p>
+<h2 id="Implementation-5"><a href="#Implementation-5" class="headerlink" title="Implementation"></a>Implementation</h2><p>参考<a href="https://www.runoob.com/design-pattern/memento-pattern.html" target="_blank" rel="noopener">https://www.runoob.com/design-pattern/memento-pattern.html</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/设计模式/" rel="tag"># 设计模式</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/27/设计模式之创建型模式/" rel="next" title="设计模式之创建型模式">
+                <i class="fa fa-chevron-left"></i> 设计模式之创建型模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="http://ppznxle2c.bkt.clouddn.com/IMG_1547.JPG" alt="Tulong Xiao">
+            
+              <p class="site-author-name" itemprop="name">Tulong Xiao</p>
+              <p class="site-description motion-element" itemprop="description">Almost Famous</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/TJtulong" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:TJtulong@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/2610493505/home" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/TJtulong" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-book"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.tongji.edu.cn/" title="同济大学" target="_blank">同济大学</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#责任链（Chain-Of-Responsibility）"><span class="nav-number">1.</span> <span class="nav-text">责任链（Chain Of Responsibility）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Intent"><span class="nav-number">1.1.</span> <span class="nav-text">Intent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Class-Diagram"><span class="nav-number">1.2.</span> <span class="nav-text">Class Diagram</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Implementation"><span class="nav-number">1.3.</span> <span class="nav-text">Implementation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JDK"><span class="nav-number">1.4.</span> <span class="nav-text">JDK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#案例"><span class="nav-number">1.5.</span> <span class="nav-text">案例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#命令（Command）"><span class="nav-number">2.</span> <span class="nav-text">命令（Command）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Intent-1"><span class="nav-number">2.1.</span> <span class="nav-text">Intent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Class-Diagram-1"><span class="nav-number">2.2.</span> <span class="nav-text">Class Diagram</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Implementation-1"><span class="nav-number">2.3.</span> <span class="nav-text">Implementation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JDK-1"><span class="nav-number">2.4.</span> <span class="nav-text">JDK</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解释器（Interpreter）"><span class="nav-number">3.</span> <span class="nav-text">解释器（Interpreter）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Intent-2"><span class="nav-number">3.1.</span> <span class="nav-text">Intent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Class-Diagram-2"><span class="nav-number">3.2.</span> <span class="nav-text">Class Diagram</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Implementation-2"><span class="nav-number">3.3.</span> <span class="nav-text">Implementation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JDK-2"><span class="nav-number">3.4.</span> <span class="nav-text">JDK</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#迭代器（Iterator）"><span class="nav-number">4.</span> <span class="nav-text">迭代器（Iterator）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Intent-3"><span class="nav-number">4.1.</span> <span class="nav-text">Intent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Class-Diagram-3"><span class="nav-number">4.2.</span> <span class="nav-text">Class Diagram</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Implementation-3"><span class="nav-number">4.3.</span> <span class="nav-text">Implementation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JDK-3"><span class="nav-number">4.4.</span> <span class="nav-text">JDK</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#中介者（Mediator）"><span class="nav-number">5.</span> <span class="nav-text">中介者（Mediator）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Intent-4"><span class="nav-number">5.1.</span> <span class="nav-text">Intent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Class-Diagram-4"><span class="nav-number">5.2.</span> <span class="nav-text">Class Diagram</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Implementation-4"><span class="nav-number">5.3.</span> <span class="nav-text">Implementation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JDK-4"><span class="nav-number">5.4.</span> <span class="nav-text">JDK</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#备忘录（Memento）"><span class="nav-number">6.</span> <span class="nav-text">备忘录（Memento）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Intent-5"><span class="nav-number">6.1.</span> <span class="nav-text">Intent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Class-Diagram-5"><span class="nav-number">6.2.</span> <span class="nav-text">Class Diagram</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Implementation-5"><span class="nav-number">6.3.</span> <span class="nav-text">Implementation</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tulong Xiao</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
