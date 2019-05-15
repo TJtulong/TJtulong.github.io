@@ -14,13 +14,6 @@
 
 
 
-  
-  
-    
-    
-  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
-  <link href="/lib/pace/pace-theme-center-circle.min.css?v=1.0.2" rel="stylesheet">
-
 
 
 
@@ -264,7 +257,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Tulong Xiao">
       <meta itemprop="description" content>
-      <meta itemprop="image" content="http://ppznxle2c.bkt.clouddn.com/IMG_1547.JPG">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/IMG_1547.JPG">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -383,7 +376,7 @@
       
         
           <h1 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h1><p>代理模式是常用的java设计模式，特征是代理类与委托类有同样的接口，代理类主要负责为委托类预处理消息、过滤消息、把消息转发给委托类，以及事后处理消息等。代理类与委托类之间通常会存在关联关系，一个代理类的对象与一个委托类的对象关联，<strong>代理类的对象本身并不真正实现服务，而是通过调用委托类的对象的相关方法，来提供特定的服务</strong>。简单的说就是，我们在访问实际对象时，是通过代理对象来访问的，代理模式就是在访问实际对象时引入一定程度的间接性，因为这种间接性，可以附加多种用途。</p>
-<h2 id="UML类图"><a href="#UML类图" class="headerlink" title="UML类图"></a>UML类图</h2><p><img src="http://ppznxle2c.bkt.clouddn.com/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F.png" alt="enter description here"><br>
+<h2 id="UML类图"><a href="#UML类图" class="headerlink" title="UML类图"></a>UML类图</h2><p><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F.png" alt="enter description here"><br>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2019/05/01/Java的动态代理机制/#more" rel="contents">
@@ -442,7 +435,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Tulong Xiao">
       <meta itemprop="description" content>
-      <meta itemprop="image" content="http://ppznxle2c.bkt.clouddn.com/IMG_1547.JPG">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/IMG_1547.JPG">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -561,7 +554,7 @@
       
         
           <h1 id="适配器（Adapter）"><a href="#适配器（Adapter）" class="headerlink" title="适配器（Adapter）"></a>适配器（Adapter）</h1><h2 id="Intent"><a href="#Intent" class="headerlink" title="Intent"></a>Intent</h2><p>把一个类接口转换成另一个用户需要的接口。</p>
-<p><div align="center"> <img src="http://ppznxle2c.bkt.clouddn.com/%E9%85%8D%E9%80%82%E5%99%A8.png"> </div><br><br>
+<p><div align="center"> <img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/%E9%85%8D%E9%80%82%E5%99%A8.png"> </div><br><br>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2019/05/01/设计模式之结构型模式/#more" rel="contents">
@@ -620,7 +613,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Tulong Xiao">
       <meta itemprop="description" content>
-      <meta itemprop="image" content="http://ppznxle2c.bkt.clouddn.com/IMG_1547.JPG">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/IMG_1547.JPG">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -741,7 +734,7 @@
           <h1 id="反射的概述"><a href="#反射的概述" class="headerlink" title="反射的概述"></a>反射的概述</h1><p>JAVA反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法和属性；<strong>这种动态获取的信息以及动态调用对象的方法的功能称为java语言的反射机制</strong>。</p>
 <p>要想解剖一个类，必须先要获取到该类的字节码文件对象。而解剖使用的就是Class类中的方法，所以先要获取到每一个字节码文件对应的Class类型的对象。<strong>反射是框架设计的灵魂。</strong> 在JVM加载一个类时，会在方法区创建这一个类的Class类型的对象。</p>
 <p>反射就是把java类中的各种成分映射成一个个的Java对象。例如一个类有成员变量、方法、构造方法、包等等信息，利用反射技术可以对一个类进行解剖，把个个组成部分映射成一个个对象（其实：一个类中这些成员方法、构造方法、在加入类中都有一个类来描述）。</p>
-<p>如图是类的正常加载过程：反射的原理在于Class对象<br><img src="http://ppznxle2c.bkt.clouddn.com/%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B.png" alt="enter description here"><br>
+<p>如图是类的正常加载过程：反射的原理在于Class对象<br><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B.png" alt="enter description here"><br>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2019/04/30/Java的反射机制/#more" rel="contents">
@@ -800,7 +793,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Tulong Xiao">
       <meta itemprop="description" content>
-      <meta itemprop="image" content="http://ppznxle2c.bkt.clouddn.com/IMG_1547.JPG">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/IMG_1547.JPG">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -982,7 +975,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Tulong Xiao">
       <meta itemprop="description" content>
-      <meta itemprop="image" content="http://ppznxle2c.bkt.clouddn.com/IMG_1547.JPG">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/IMG_1547.JPG">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1103,7 +1096,7 @@
           <h1 id="单例（Singleton）"><a href="#单例（Singleton）" class="headerlink" title="单例（Singleton）"></a>单例（Singleton）</h1><h2 id="Intent"><a href="#Intent" class="headerlink" title="Intent"></a>Intent</h2><p>确保一个类只有一个实例，并提供该实例的全局访问点。</p>
 <h2 id="Class-Diagram"><a href="#Class-Diagram" class="headerlink" title="Class Diagram"></a>Class Diagram</h2><p>使用一个私有构造函数、一个私有静态变量以及一个公有静态函数来实现。</p>
 <p>私有构造函数保证了不能通过构造函数来创建对象实例，只能通过公有静态函数返回唯一的私有静态变量。</p>
-<p><div align="center"> <img src="http://ppznxle2c.bkt.clouddn.com/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F.png"> </div><br><br>
+<p><div align="center"> <img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F.png"> </div><br><br>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2019/04/27/设计模式之创建型模式/#more" rel="contents">
@@ -1162,7 +1155,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Tulong Xiao">
       <meta itemprop="description" content>
-      <meta itemprop="image" content="http://ppznxle2c.bkt.clouddn.com/IMG_1547.JPG">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/IMG_1547.JPG">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1344,7 +1337,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Tulong Xiao">
       <meta itemprop="description" content>
-      <meta itemprop="image" content="http://ppznxle2c.bkt.clouddn.com/IMG_1547.JPG">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/IMG_1547.JPG">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1523,7 +1516,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Tulong Xiao">
       <meta itemprop="description" content>
-      <meta itemprop="image" content="http://ppznxle2c.bkt.clouddn.com/IMG_1547.JPG">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/IMG_1547.JPG">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1642,7 +1635,7 @@
       
         
           <h1 id="走近Java"><a href="#走近Java" class="headerlink" title="走近Java"></a>走近Java</h1><h2 id="JDK、JRE与JVM之间的关系："><a href="#JDK、JRE与JVM之间的关系：" class="headerlink" title="JDK、JRE与JVM之间的关系："></a>JDK、JRE与JVM之间的关系：</h2><p><strong>JDK</strong>全程为Java SE Development Kit（Java开发工具），提供了编译和运行Java程序所需的各种资源和工具，包括：JRE+java开发工具。<br><strong>JRE</strong>全称为Java runtime environment（Java运行环境），包括：虚拟机+java的核心类库。<br><strong>JVM</strong>是运行Java程序的核心虚拟机。</p>
-<p><img src="http://ppznxle2c.bkt.clouddn.com/JDK.JPG" alt="enter description here"><br>
+<p><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/JDK.JPG" alt="enter description here"><br>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2019/04/16/深入理解Java虚拟机/#more" rel="contents">
@@ -1701,7 +1694,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Tulong Xiao">
       <meta itemprop="description" content>
-      <meta itemprop="image" content="http://ppznxle2c.bkt.clouddn.com/IMG_1547.JPG">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/IMG_1547.JPG">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1887,7 +1880,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Tulong Xiao">
       <meta itemprop="description" content>
-      <meta itemprop="image" content="http://ppznxle2c.bkt.clouddn.com/IMG_1547.JPG">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/IMG_1547.JPG">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -2095,7 +2088,7 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image" src="http://ppznxle2c.bkt.clouddn.com/IMG_1547.JPG" alt="Tulong Xiao">
+              <img class="site-author-image" itemprop="image" src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/IMG_1547.JPG" alt="Tulong Xiao">
             
               <p class="site-author-name" itemprop="name">Tulong Xiao</p>
               <p class="site-description motion-element" itemprop="description">Almost Famous</p>

@@ -14,13 +14,6 @@
 
 
 
-  
-  
-    
-    
-  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
-  <link href="/lib/pace/pace-theme-center-circle.min.css?v=1.0.2" rel="stylesheet">
-
 
 
 
@@ -94,14 +87,14 @@
 <meta property="og:site_name" content="椰子皮&#39;s Blog">
 <meta property="og:description" content="ArrayList简介ArrayList的底层是数组队列，相当于动态数组。与Java中的数组相比，它的容量能动态增长。在添加大量元素前，应用程序可以使用ensureCapacity操作来增加ArrayList实例的容量。这可以减少递增式再分配的数量。 它继承于AbstractList，实现了List，RandomAccess，Cloneable，java.io.Serializable 这些接口。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/%E6%8F%92%E5%85%A5%E5%B0%BE%E9%83%A8.jpg">
-<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/%E4%B8%AD%E9%97%B4%E6%8F%92%E5%85%A5.jpg">
-<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0.jpg">
-<meta property="og:updated_time" content="2019-05-08T15:40:07.313Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/%E6%8F%92%E5%85%A5%E5%B0%BE%E9%83%A8.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/%E4%B8%AD%E9%97%B4%E6%8F%92%E5%85%A5.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0.jpg">
+<meta property="og:updated_time" content="2019-05-15T06:16:29.077Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ArrayList源码分析">
 <meta name="twitter:description" content="ArrayList简介ArrayList的底层是数组队列，相当于动态数组。与Java中的数组相比，它的容量能动态增长。在添加大量元素前，应用程序可以使用ensureCapacity操作来增加ArrayList实例的容量。这可以减少递增式再分配的数量。 它继承于AbstractList，实现了List，RandomAccess，Cloneable，java.io.Serializable 这些接口。">
-<meta name="twitter:image" content="http://ppznxle2c.bkt.clouddn.com/%E6%8F%92%E5%85%A5%E5%B0%BE%E9%83%A8.jpg">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/%E6%8F%92%E5%85%A5%E5%B0%BE%E9%83%A8.jpg">
 
 
 
@@ -269,7 +262,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Tulong Xiao">
       <meta itemprop="description" content>
-      <meta itemprop="image" content="http://ppznxle2c.bkt.clouddn.com/IMG_1547.JPG">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/IMG_1547.JPG">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -406,10 +399,10 @@
 <p>对于在元素序列尾部插入，这种情况比较简单，只需两个步骤即可：</p>
 <ul>
 <li>检测数组是否有足够的空间插入</li>
-<li>将新元素插入至序列尾部<br><img src="http://ppznxle2c.bkt.clouddn.com/%E6%8F%92%E5%85%A5%E5%B0%BE%E9%83%A8.jpg" alt="enter description here"><br>如果是在元素序列指定位置（假设该位置合理）插入，则情况稍微复杂一点，需要三个步骤：</li>
+<li>将新元素插入至序列尾部<br><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/%E6%8F%92%E5%85%A5%E5%B0%BE%E9%83%A8.jpg" alt="enter description here"><br>如果是在元素序列指定位置（假设该位置合理）插入，则情况稍微复杂一点，需要三个步骤：</li>
 <li>检测数组是否有足够的空间</li>
 <li>将 index 及其之后的所有元素向后移一位</li>
-<li>将新元素插入至 index 处<br><img src="http://ppznxle2c.bkt.clouddn.com/%E4%B8%AD%E9%97%B4%E6%8F%92%E5%85%A5.jpg" alt="enter description here"></li>
+<li>将新元素插入至 index 处<br><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/%E4%B8%AD%E9%97%B4%E6%8F%92%E5%85%A5.jpg" alt="enter description here"></li>
 </ul>
 <p>从上图可以看出，将新元素插入至序列指定位置，需要先将该位置及其之后的元素都向后移动一位，为新元素腾出位置。这个操作的时间复杂度为O(N)，频繁移动元素会导致效率问题，特别是集合中元素数量较多时。在日常开发中，若非所需，我们应当尽量避免在大集合中调用第二个插入方法。</p>
 <h4 id="扩容机制"><a href="#扩容机制" class="headerlink" title="扩容机制"></a>扩容机制</h4><p>以上是ArrayList插入相关的分析，上面的分析以及配图均未体现扩容机制。那么下面就来简单分析一下ArrayList的扩容机制。对于变长数据结构，当结构中没有空余空间可供使用时，就需要进行扩容。在ArrayList中，当空间用完，其会<strong>按照原数组空间的1.5倍进行扩容</strong>。相关源码如下：</p>
@@ -425,7 +418,7 @@
 <li>将最后一个元素置空，并将size值减1；</li>
 <li>返回被删除值，完成删除操作。</li>
 </ul>
-<p><img src="http://ppznxle2c.bkt.clouddn.com/%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0.jpg" alt="enter description here"><br>考虑这样一种情况，我们往ArrayList中插入大量元素后，又删除很多元素，此时底层数组会空闲处大量的空间。因为ArrayList没有自动缩容机制，导致底层数组大量的空闲空间不能被释放，造成浪费。对于这种情况，ArrayList也提供了相应的处理方法，如下：</p>
+<p><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0.jpg" alt="enter description here"><br>考虑这样一种情况，我们往ArrayList中插入大量元素后，又删除很多元素，此时底层数组会空闲处大量的空间。因为ArrayList没有自动缩容机制，导致底层数组大量的空闲空间不能被释放，造成浪费。对于这种情况，ArrayList也提供了相应的处理方法，如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** 将数组容量缩小至元素数量 */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">trimToSize</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    modCount++;</span><br><span class="line">    <span class="keyword">if</span> (size &lt; elementData.length) &#123;</span><br><span class="line">        elementData = (size == <span class="number">0</span>)</span><br><span class="line">          ? EMPTY_ELEMENTDATA</span><br><span class="line">          : Arrays.copyOf(elementData, size);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>通过上面的方法，我们可以手动触发 ArrayList 的缩容机制。这样就可以释放多余的空间，提高空间利用率。</p>
 <h4 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h4><p>使用方式：</p>
@@ -553,7 +546,7 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image" src="http://ppznxle2c.bkt.clouddn.com/IMG_1547.JPG" alt="Tulong Xiao">
+              <img class="site-author-image" itemprop="image" src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/IMG_1547.JPG" alt="Tulong Xiao">
             
               <p class="site-author-name" itemprop="name">Tulong Xiao</p>
               <p class="site-description motion-element" itemprop="description">Almost Famous</p>

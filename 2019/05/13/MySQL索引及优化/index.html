@@ -14,13 +14,6 @@
 
 
 
-  
-  
-    
-    
-  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
-  <link href="/lib/pace/pace-theme-center-circle.min.css?v=1.0.2" rel="stylesheet">
-
 
 
 
@@ -94,27 +87,41 @@
 <meta property="og:site_name" content="椰子皮&#39;s Blog">
 <meta property="og:description" content="索引什么是索引MySQL官方对索引的定义为：索引(Index) 是帮助MySQL高效获取数据的数据结构。 排好顺序的快速查找数据结构。 数据本身之外，数据库维护着满足特定算法的数据结构，这种数据结构以某种方式指向数据，这样可以在这些数据结构上实现高级的查找算法，这种数据结构称为索引。一般来说索引也很大，不可能全部存储在内存中，因此索引往往以文件的形式储存在磁盘中。我们平常所说的索引，如果没有特别指">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/5687393-d10b611e15cf2ac6.png">
-<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/B-%E6%A0%91.JPG">
-<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/B-%E8%87%AA%E5%B9%B3%E8%A1%A1.gif">
-<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/B+%E6%A0%91.png">
-<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/explain.png">
-<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/id%E7%9B%B8%E5%90%8C.png">
-<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/706569-20180621233147579-359902163.png">
-<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/706569-20180621233603807-1370399356.png">
-<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/union.png">
-<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/const.png">
-<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/index.png">
-<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/len.png">
-<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/ref.png">
-<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/706569-20180622154520287-452169518.png">
-<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/706569-20180622154657116-497510920.png">
-<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/706569-20180622162414976-876933935.png">
-<meta property="og:updated_time" content="2019-05-15T04:15:49.493Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/5687393-d10b611e15cf2ac6.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/B-%E6%A0%91.JPG">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/B-%E8%87%AA%E5%B9%B3%E8%A1%A1.gif">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/B+%E6%A0%91.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/explain.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/id%E7%9B%B8%E5%90%8C.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/706569-20180621233147579-359902163.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/706569-20180621233603807-1370399356.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/union.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/const.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/index.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/len.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/ref.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/706569-20180622154520287-452169518.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/706569-20180622154657116-497510920.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/706569-20180622162414976-876933935.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/case1.JPG">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/case2.JPG">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/case3.JPG">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/case4.JPG">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/case5.JPG">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/case6.JPG">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/case7.JPG">
+<meta property="og:image" content="https://images2018.cnblogs.com/blog/706569/201806/706569-20180624194116625-767179219.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/case8.JPG">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/case9.JPG">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/case10.JPG">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/case10.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/case11.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/小表驱动大表.png">
+<meta property="og:updated_time" content="2019-05-15T14:16:52.872Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL索引及优化">
 <meta name="twitter:description" content="索引什么是索引MySQL官方对索引的定义为：索引(Index) 是帮助MySQL高效获取数据的数据结构。 排好顺序的快速查找数据结构。 数据本身之外，数据库维护着满足特定算法的数据结构，这种数据结构以某种方式指向数据，这样可以在这些数据结构上实现高级的查找算法，这种数据结构称为索引。一般来说索引也很大，不可能全部存储在内存中，因此索引往往以文件的形式储存在磁盘中。我们平常所说的索引，如果没有特别指">
-<meta name="twitter:image" content="http://ppznxle2c.bkt.clouddn.com/5687393-d10b611e15cf2ac6.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/5687393-d10b611e15cf2ac6.png">
 
 
 
@@ -282,7 +289,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Tulong Xiao">
       <meta itemprop="description" content>
-      <meta itemprop="image" content="http://ppznxle2c.bkt.clouddn.com/IMG_1547.JPG">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/IMG_1547.JPG">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -360,7 +367,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  3.8k
+                  4.8k
                 </span>
               
 
@@ -376,7 +383,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  14
+                  17
                 </span>
               
             </div>
@@ -399,7 +406,7 @@
       
         <h1 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h1><h2 id="什么是索引"><a href="#什么是索引" class="headerlink" title="什么是索引"></a>什么是索引</h2><p>MySQL官方对索引的定义为：<strong>索引(Index)</strong> 是帮助MySQL高效获取数据的<strong>数据结构</strong>。</p>
 <p><strong><em>排好顺序的快速查找数据结构。</em></strong></p>
-<p>数据本身之外，数据库维护着满足特定算法的数据结构，这种数据结构以某种方式指向数据，这样可以在这些数据结构上实现高级的查找算法，这种数据结构称为索引。<br><img src="http://ppznxle2c.bkt.clouddn.com/5687393-d10b611e15cf2ac6.png" alt="enter description here"><br>一般来说索引也很大，不可能全部存储在内存中，因此索引往往以文件的形式储存在<strong>磁盘</strong>中。我们平常所说的索引，如果没有特别指明，都是指<strong>B数</strong>(多路搜索树，不一定是二叉的)结构组织的索引。<br><a id="more"></a></p>
+<p>数据本身之外，数据库维护着满足特定算法的数据结构，这种数据结构以某种方式指向数据，这样可以在这些数据结构上实现高级的查找算法，这种数据结构称为索引。<br><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/5687393-d10b611e15cf2ac6.png" alt="enter description here"><br>一般来说索引也很大，不可能全部存储在内存中，因此索引往往以文件的形式储存在<strong>磁盘</strong>中。我们平常所说的索引，如果没有特别指明，都是指<strong>B数</strong>(多路搜索树，不一定是二叉的)结构组织的索引。<br><a id="more"></a></p>
 <h2 id="索引的优缺点"><a href="#索引的优缺点" class="headerlink" title="索引的优缺点"></a>索引的优缺点</h2><p>优势：</p>
 <ol>
 <li>提高数据检索的效率，降低数据库的IO成本；</li>
@@ -451,7 +458,7 @@
 <li>所有叶子结点位于同一层；</li>
 <li>每个k对应一个data。</li>
 </ol>
-<p>如：（M=3）相当于一个2–3树，2–3树是一个这样的一棵树， 它的每个节点要么有2个孩子和1个数据元素，要么有3个孩子和2个数据元素，叶子节点没有孩子，并且有1个或2个数据元素。<br><img src="http://ppznxle2c.bkt.clouddn.com/B-%E6%A0%91.JPG" alt="enter description here"><br>B-树的搜索，从根结点开始，对结点内的关键字（有序）序列进行二分查找，如果命中则结束，否则进入查询关键字所属范围的儿子结点；重复，直到所对应的儿子指针为空，或已经是叶子结点。</p>
+<p>如：（M=3）相当于一个2–3树，2–3树是一个这样的一棵树， 它的每个节点要么有2个孩子和1个数据元素，要么有3个孩子和2个数据元素，叶子节点没有孩子，并且有1个或2个数据元素。<br><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/B-%E6%A0%91.JPG" alt="enter description here"><br>B-树的搜索，从根结点开始，对结点内的关键字（有序）序列进行二分查找，如果命中则结束，否则进入查询关键字所属范围的儿子结点；重复，直到所对应的儿子指针为空，或已经是叶子结点。</p>
 <p><strong>B-树的特性：</strong></p>
 <ol>
 <li>关键字集合分布在整颗树中；</li>
@@ -460,7 +467,7 @@
 <li>其搜索性能等价于在关键字全集内做一次二分查找；</li>
 <li>自动层次控制；</li>
 </ol>
-<p>往B树中依次插入：6 10 4 14 5 11 15 3 2 12 1 7 8 8 6 3 6 21 5 15 15 6 32 23 45 65 7 8 6 5 4<br><img src="http://ppznxle2c.bkt.clouddn.com/B-%E8%87%AA%E5%B9%B3%E8%A1%A1.gif" alt="enter description here"><br>插入或者删除元素都会导致节点发生裂变反应，有时候会非常麻烦，但正因为如此才让B树能够始终保持多路平衡，这也是B树自身的一个优势：<strong>自平衡</strong>。</p>
+<p>往B树中依次插入：6 10 4 14 5 11 15 3 2 12 1 7 8 8 6 3 6 21 5 15 15 6 32 23 45 65 7 8 6 5 4<br><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/B-%E8%87%AA%E5%B9%B3%E8%A1%A1.gif" alt="enter description here"><br>插入或者删除元素都会导致节点发生裂变反应，有时候会非常麻烦，但正因为如此才让B树能够始终保持多路平衡，这也是B树自身的一个优势：<strong>自平衡</strong>。</p>
 <h2 id="B-树-1"><a href="#B-树-1" class="headerlink" title="B+树"></a>B+树</h2><p>B-Tree有许多变种，其中最常见的是B+Tree，例如MySQL就普遍使用B+Tree实现其索引结构。</p>
 <p>与B-Tree相比，B+Tree有以下不同点：</p>
 <ol>
@@ -470,7 +477,7 @@
 <li><strong>所有关键字都在叶子结点出现；</strong></li>
 <li>内节点不存储data，只存储key</li>
 </ol>
-<p>如：（M=3）<br><img src="http://ppznxle2c.bkt.clouddn.com/B+%E6%A0%91.png" alt="enter description here"></p>
+<p>如：（M=3）<br><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/B+%E6%A0%91.png" alt="enter description here"></p>
 <p><strong>B+树的特征：</strong></p>
 <ol>
 <li>有k个子树的中间节点包含有k个元素（B树中是k-1个元素），每个元素不保存数据，只用来索引，所有数据都保存在叶子节点。</li>
@@ -499,11 +506,11 @@
 <li>表之间的引用。（对应ref）</li>
 <li>每张表有多少行被优化器查询。（对应rows）</li>
 </ol>
-<h2 id="explain包含的信息"><a href="#explain包含的信息" class="headerlink" title="explain包含的信息"></a>explain包含的信息</h2><p><img src="http://ppznxle2c.bkt.clouddn.com/explain.png" alt="enter description here"></p>
+<h2 id="explain包含的信息"><a href="#explain包含的信息" class="headerlink" title="explain包含的信息"></a>explain包含的信息</h2><p><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/explain.png" alt="enter description here"></p>
 <h3 id="id"><a href="#id" class="headerlink" title="id"></a>id</h3><p>select查询的<strong>序列号</strong>，包含一组数字，表示查询中执行select子句或操作表的顺序，该字段通常与table字段搭配来分析。</p>
-<p><strong>1.id相同，执行顺序从上到下</strong><br><img src="http://ppznxle2c.bkt.clouddn.com/id%E7%9B%B8%E5%90%8C.png" alt="enter description here"><br>id相同，执行顺序从上到下，搭配table列进行观察可知，执行顺序为t1-&gt;t3-&gt;t2。</p>
-<p><strong>2.id不同，如果是子查询，id的序号会递增，id值越大执行优先级越高</strong><br><img src="http://ppznxle2c.bkt.clouddn.com/706569-20180621233147579-359902163.png" alt="enter description here"><br>如果是子查询id的序号会递增，id值越大执行优先级越高，搭配table列可知，执行顺序为t3-&gt;t1-&gt;t2。</p>
-<p><strong>3.id相同不同，同时存在</strong><br><img src="http://ppznxle2c.bkt.clouddn.com/706569-20180621233603807-1370399356.png" alt="enter description here"><br>id如果相同，可认为是同一组，执行顺序从上到下。在所有组中，id值越大执行优先级越高。所以执行顺序为t3-&gt;derived2(衍生表，也可以说临时表)-&gt;t2。</p>
+<p><strong>1.id相同，执行顺序从上到下</strong><br><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/id%E7%9B%B8%E5%90%8C.png" alt="enter description here"><br>id相同，执行顺序从上到下，搭配table列进行观察可知，执行顺序为t1-&gt;t3-&gt;t2。</p>
+<p><strong>2.id不同，如果是子查询，id的序号会递增，id值越大执行优先级越高</strong><br><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/706569-20180621233147579-359902163.png" alt="enter description here"><br>如果是子查询id的序号会递增，id值越大执行优先级越高，搭配table列可知，执行顺序为t3-&gt;t1-&gt;t2。</p>
+<p><strong>3.id相同不同，同时存在</strong><br><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/706569-20180621233603807-1370399356.png" alt="enter description here"><br>id如果相同，可认为是同一组，执行顺序从上到下。在所有组中，id值越大执行优先级越高。所以执行顺序为t3-&gt;derived2(衍生表，也可以说临时表)-&gt;t2。</p>
 <h2 id="select-type"><a href="#select-type" class="headerlink" title="select_type"></a>select_type</h2><p>查询的类型，主要用于区别普通查询、联合查询、子查询等复杂的查询。其值主要有六个：</p>
 <ol>
 <li>SIMPLE<br>简单的select查询，查询中不包含子查询或union查询。</li>
@@ -513,20 +520,20 @@
 <li>UNION<br>若第二个select出现在union后，则被标记为UNION，若union包含在from子句的子查询中，外层select将被标记为DERIVED。</li>
 <li>UNION RESULT<br>从union表获取结果的select。</li>
 </ol>
-<p><img src="http://ppznxle2c.bkt.clouddn.com/union.png" alt="enter description here"></p>
+<p><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/union.png" alt="enter description here"></p>
 <h2 id="type"><a href="#type" class="headerlink" title="type"></a>type</h2><p>表示查询所使用的访问类型，type的值主要有八种，该值表示查询的sql语句好坏，从最好到最差依次为：<strong>system&gt;const&gt;eq_ref&gt;ref&gt;range&gt;index&gt;ALL</strong>。</p>
 <h3 id="system"><a href="#system" class="headerlink" title="system"></a>system</h3><p>表只有一行记录（等于系统表），是const的特例类型，平时不会出现，可以忽略不计。</p>
-<h3 id="const"><a href="#const" class="headerlink" title="const"></a>const</h3><p>表示通过一次索引就找到了结果，常出现于primary key或unique索引。因为只匹配一行数据，所以查询非常快。如将主键置于where条件中，MySQL就能将查询转换为一个常量。<br><img src="http://ppznxle2c.bkt.clouddn.com/const.png" alt="enter description here"></p>
+<h3 id="const"><a href="#const" class="headerlink" title="const"></a>const</h3><p>表示通过一次索引就找到了结果，常出现于primary key或unique索引。因为只匹配一行数据，所以查询非常快。如将主键置于where条件中，MySQL就能将查询转换为一个常量。<br><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/const.png" alt="enter description here"></p>
 <h3 id="eq-ref"><a href="#eq-ref" class="headerlink" title="eq_ref"></a>eq_ref</h3><p>唯一索引扫描，对于每个索引键，表中只有一条记录与之匹配。常见主键或唯一索引扫描。</p>
 <h3 id="ref"><a href="#ref" class="headerlink" title="ref"></a>ref</h3><p>非唯一性索引扫描，返回匹配某个单独值的所有行。本质上也是一种索引访问，<strong>返回匹配某值（某条件）的多行值</strong>，属于查找和扫描的混合体。</p>
 <h3 id="range"><a href="#range" class="headerlink" title="range"></a>range</h3><p>只检索给定范围的行，使用一个索引来检索行，可以在key列中查看使用的索引，一般出现在where语句的条件中，如使用between、&gt;、&lt;、in等查询。</p>
 <p>这种索引的范围扫描比全表扫描要好，因为索引的开始点和结束点都固定，不用扫描全索引。</p>
-<h3 id="index"><a href="#index" class="headerlink" title="index"></a>index</h3><p><strong>全索引扫描</strong>，index和ALL的区别：index只遍历索引树，通常比ALL快，因为索引文件通常比数据文件小。虽说index和ALL都是全表扫描，但是index是从索引中读取，ALL是从磁盘中读取。<br><img src="http://ppznxle2c.bkt.clouddn.com/index.png" alt="enter description here"></p>
+<h3 id="index"><a href="#index" class="headerlink" title="index"></a>index</h3><p><strong>全索引扫描</strong>，index和ALL的区别：index只遍历索引树，通常比ALL快，因为索引文件通常比数据文件小。虽说index和ALL都是全表扫描，但是index是从索引中读取，ALL是从磁盘中读取。<br><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/index.png" alt="enter description here"></p>
 <h3 id="ALL"><a href="#ALL" class="headerlink" title="ALL"></a>ALL</h3><p><strong>全表扫描</strong>。</p>
 <p>注：一般来说，需保证查询至少达到range级别，最好能达到ref。</p>
 <h2 id="possible-keys和key、key-len"><a href="#possible-keys和key、key-len" class="headerlink" title="possible_keys和key、key_len"></a>possible_keys和key、key_len</h2><p><strong>possible_keys</strong>：显示可能应用在表中的索引，可能一个或多个。查询涉及到的字段若存在索引，则该索引将被列出，但不一定被查询实际使用。</p>
-<p><strong>key</strong>：实际中使用的索引，如为NULL，则表示未使用索引。若查询中使用了覆盖索引，则该索引和查询的select字段重叠。<br>简单理解：possible_keys表示理论上可能用到的索引，key表示实际中使用的索引。<br><strong>key_len</strong>：表示索引中所使用的字节数，可通过该列计算查询中使用的索引长度。在不损失精确性的情况下，长度越短越好。key_len显示的值为索引字段的最大可能长度，并非实际使用长度，即key_len是根据表定义计算而得，并不是通过表内检索出的。<br><img src="http://ppznxle2c.bkt.clouddn.com/len.png" alt="enter description here"></p>
-<h2 id="ref-1"><a href="#ref-1" class="headerlink" title="ref"></a>ref</h2><p>显示关联的字段。如果使用常数等值查询，则<strong>显示const</strong>，如果是连接查询，则会<strong>显示关联的字段</strong>。<br><img src="http://ppznxle2c.bkt.clouddn.com/ref.png" alt="enter description here"></p>
+<p><strong>key</strong>：实际中使用的索引，如为NULL，则表示未使用索引。若查询中使用了覆盖索引，则该索引和查询的select字段重叠。<br>简单理解：possible_keys表示理论上可能用到的索引，key表示实际中使用的索引。<br><strong>key_len</strong>：表示索引中所使用的字节数，可通过该列计算查询中使用的索引长度。在不损失精确性的情况下，长度越短越好。key_len显示的值为索引字段的最大可能长度，并非实际使用长度，即key_len是根据表定义计算而得，并不是通过表内检索出的。<br><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/len.png" alt="enter description here"></p>
+<h2 id="ref-1"><a href="#ref-1" class="headerlink" title="ref"></a>ref</h2><p>显示关联的字段。如果使用常数等值查询，则<strong>显示const</strong>，如果是连接查询，则会<strong>显示关联的字段</strong>。<br><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/ref.png" alt="enter description here"></p>
 <ul>
 <li>tb_emp表为非唯一性索引扫描，实际使用的索引列为idx_name，由于<strong>tb_emp.name=’rose’为一个常量，所以ref=const</strong>。</li>
 <li>tb_dept为唯一索引扫描，从sql语句可以看出，实际使用了PRIMARY主键索引，ref=db01.tb_emp.deptid表示<strong>关联了db01数据库中tb_emp表的deptid字段</strong>。</li>
@@ -534,15 +541,54 @@
 <h2 id="rows"><a href="#rows" class="headerlink" title="rows"></a>rows</h2><p>根据表统计信息及索引选用情况大致估算出找到所需记录所要读取的行数。当然该值<strong>越小越好</strong>。</p>
 <h2 id="extra"><a href="#extra" class="headerlink" title="extra"></a>extra</h2><h3 id="Using-filesort"><a href="#Using-filesort" class="headerlink" title="Using filesort"></a>Using filesort</h3><p>Using filesort表明mysql会对数据使用一个外部的索引<strong>排序</strong>，而不是按照表内的索引顺序进行读取。mysql中无法利用索引完成的排序操作称为“文件排序”。</p>
 <p>出现Using filesort就非常危险了，在数据量非常大的时候几乎“九死一生”。出现Using filesort尽快优化sql语句。</p>
-<p>deptname字段未建索引的情况：<br><img src="http://ppznxle2c.bkt.clouddn.com/706569-20180622154520287-452169518.png" alt="enter description here"><br>为deptname字段创建索引后：<br><img src="http://ppznxle2c.bkt.clouddn.com/706569-20180622154657116-497510920.png" alt="enter description here"></p>
+<p>deptname字段未建索引的情况：<br><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/706569-20180622154520287-452169518.png" alt="enter description here"><br>为deptname字段创建索引后：<br><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/706569-20180622154657116-497510920.png" alt="enter description here"></p>
 <h3 id="Using-temporary"><a href="#Using-temporary" class="headerlink" title="Using temporary"></a>Using temporary</h3><p>使用了<strong>临时表保存中间结果</strong>，常见于排序order by和分组查询group by。非常危险，“十死无生”，急需优化。</p>
 <h3 id="Using-index"><a href="#Using-index" class="headerlink" title="Using index"></a>Using index</h3><p>表明相应的select操作中使用了覆盖索引，避免访问表的额外数据行，效率不错。</p>
 <p>如果同时出现了Using where，表明索引被用来执行索引键值的查找。（where deptid=1）</p>
 <p>如果没有同时出现Using where，表明索引用来读取数据而非执行查找动作。</p>
-<p>删除tb_emp表中name和deptid字段的单独索引，创建复合索引：<br><img src="http://ppznxle2c.bkt.clouddn.com/706569-20180622162414976-876933935.png" alt="enter description here"></p>
+<p>删除tb_emp表中name和deptid字段的单独索引，创建复合索引：<br><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/706569-20180622162414976-876933935.png" alt="enter description here"></p>
 <h1 id="索引优化"><a href="#索引优化" class="headerlink" title="索引优化"></a>索引优化</h1><p>准备：创建经典的tb_emp表</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> <span class="string">`tb_emp`</span>;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`tb_emp`</span> (</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  <span class="string">`name`</span> <span class="built_in">varchar</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`age`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  gender <span class="built_in">varchar</span>(<span class="number">10</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  email <span class="built_in">varchar</span>(<span class="number">20</span>),</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8mb4;</span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`tb_emp`</span> (<span class="keyword">name</span>,age,gender,email) <span class="keyword">VALUES</span> (<span class="string">'Tom'</span>, <span class="string">'22'</span>,<span class="string">'male'</span>,<span class="string">'1@qq.com'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`tb_emp`</span> (<span class="keyword">name</span>,age,gender,email) <span class="keyword">VALUES</span> (<span class="string">'Mary'</span>, <span class="string">'21'</span>,<span class="string">'female'</span>,<span class="string">'2@qq.com'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`tb_emp`</span> (<span class="keyword">name</span>,age,gender,email) <span class="keyword">VALUES</span> (<span class="string">'Jack'</span>, <span class="string">'27'</span>,<span class="string">'male'</span>,<span class="string">'3@qq.com'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`tb_emp`</span> (<span class="keyword">name</span>,age,gender,email) <span class="keyword">VALUES</span> (<span class="string">'Rose'</span>, <span class="string">'23'</span>,<span class="string">'female'</span>,<span class="string">'4@qq.com'</span>);</span><br></pre></td></tr></table></figure>
 <h2 id="全职匹配我最爱"><a href="#全职匹配我最爱" class="headerlink" title="全职匹配我最爱"></a>全职匹配我最爱</h2><p>创建索引：<br><code>create index idx_nameagegender on tb_emp(name,age,gender);</code></p>
+<p>case1:<br><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/case1.JPG" alt="enter description here"></p>
+<p>case2：<br><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/case2.JPG" alt="enter description here"></p>
+<p>case3：<br><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/case3.JPG" alt="enter description here"></p>
+<p>这三种情况都使用了索引，type=ref，ref=const。</p>
+<h2 id="最佳左前缀法则"><a href="#最佳左前缀法则" class="headerlink" title="最佳左前缀法则"></a>最佳左前缀法则</h2><p>定义：在创建了多列索引的情况下，查询从索引的<strong>最左</strong>前列开始且不能跳过索引中的列。</p>
+<p>最佳左前缀法则就是说如果创建了多个索引，在使用索引时要按照创建索引的顺序来使用，不能缺少或跳过，当然如果只使用最左边的索引列，也就是第一个索引是可以的，通俗理解：“<strong>带头大哥不能死，中间兄弟不能断</strong>”。要点：“头不能掉”。</p>
+<p>case4：<br><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/case4.JPG" alt="enter description here"><br>索引最左边没有用到，变为全表扫描。</p>
+<h2 id="不要在索引列上做任何操作"><a href="#不要在索引列上做任何操作" class="headerlink" title="不要在索引列上做任何操作"></a>不要在索引列上做任何操作</h2><p>在索引列上做任何操作（<strong>计算、函数、（自动or手动）类型转换</strong>），会导致索引失效从而转向全表扫描。<br><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/case5.JPG" alt="enter description here"><br>这里使用了函数计算，type=ALL，导致索引失效。</p>
+<h2 id="范围右边全失效"><a href="#范围右边全失效" class="headerlink" title="范围右边全失效"></a>范围右边全失效</h2><p>存储引擎不能使用索引中范围右边的列，也就是说范围右边的索引列会失效。<br><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/case6.JPG" alt="enter description here"><br>当使用范围时（age&gt;22），type=range，key_len=86，ref=Null，与Case 1、Case2和Case3可知，使用了<strong>部分索引</strong>，但<strong>gender索引没用上</strong>（与Case 3对比）。</p>
+<h2 id="尽量使用覆盖索引"><a href="#尽量使用覆盖索引" class="headerlink" title="尽量使用覆盖索引"></a>尽量使用覆盖索引</h2><p>尽量使用覆盖索引（查询列和索引列尽量一致，通俗说就是对A、B列创建了索引，然后查询中也使用A、B列），减少select * 的使用。</p>
+<p><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/case7.JPG" alt="enter description here"></p>
+<p>select name,age,gender替代select * 使用覆盖索引（查询列与条件列对应），可看到Extra从Null变成了Using index，提高检索效率。</p>
+<h2 id="使用不等于（！-或-lt-gt-）会使索引失效"><a href="#使用不等于（！-或-lt-gt-）会使索引失效" class="headerlink" title="使用不等于（！=或&lt;&gt;）会使索引失效"></a>使用不等于（！=或&lt;&gt;）会使索引失效</h2><p><img src="https://images2018.cnblogs.com/blog/706569/201806/706569-20180624194116625-767179219.png" alt="enter description here"><br>结论：使用！=会使type=ALL，key=Null，导致全表扫描，并且索引失效。</p>
+<h2 id="is-null-或-is-not-null也无法使用索引"><a href="#is-null-或-is-not-null也无法使用索引" class="headerlink" title="is null 或 is not null也无法使用索引"></a>is null 或 is not null也无法使用索引</h2><p>使用is not null的时候，type=ALL全表扫描，key=Null索引失效。<br><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/case8.JPG" alt="enter description here"></p>
+<h2 id="like通配符以-开头会使索引失效"><a href="#like通配符以-开头会使索引失效" class="headerlink" title="like通配符以%开头会使索引失效"></a>like通配符以%开头会使索引失效</h2><p><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/case9.JPG" alt="enter description here"></p>
+<p><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/case10.JPG" alt="enter description here"></p>
+<p>like的%位置不同，所产生的效果不一样，<strong>当%出现在左边的时候，type=ALL，key=Null（全表扫描，索引失效），当%出现在右边的时候，type=range，索引未失效</strong>。</p>
+<p>但是在实际生产环境中，%仅出现在右边可能不能够解决我们的问题，所以解决%出现在左边索引失效的方法：使用<strong>覆盖索引</strong>。<br><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/case10.png" alt="enter description here"></p>
+<h2 id="字符串不加单引号导致索引失效"><a href="#字符串不加单引号导致索引失效" class="headerlink" title="字符串不加单引号导致索引失效"></a>字符串不加单引号导致索引失效</h2><p><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/case11.png" alt="enter description here"></p>
+<p>通过explain执行结果可以看出，字符串（name）不加单引号在查询的时候，导致索引失效（type=ref变成了type=ALL，并且key=Null），并全表扫描。</p>
+<h2 id="少用or，用or连接会使索引失效"><a href="#少用or，用or连接会使索引失效" class="headerlink" title="少用or，用or连接会使索引失效"></a>少用or，用or连接会使索引失效</h2><p><strong>一般性建议：</strong></p>
+<ul>
+<li>对于单键索引，尽量选择针对当前query过滤性更好的索引</li>
+<li>在选择组合索引时，当前Query中过滤性最好的字段在索引字段顺序中，位置越靠前越好；</li>
+<li>在选择组合索引时，尽量选择可以能够包含当前query中的where字句中更多字段的索引；</li>
+<li>尽可能通过分析统计信息和调整query写法来达到选择合适索引的目的。</li>
+</ul>
+<h1 id="查询截取分析"><a href="#查询截取分析" class="headerlink" title="查询截取分析"></a>查询截取分析</h1><p>分析过程：</p>
+<ol>
+<li>先观察，至少跑1天，查看生产的慢SQL情况；</li>
+<li>开启慢查询日志，设置阈值，比如超过5s就是慢SQL，并将其抓取；</li>
+<li>explain + 慢SQL；</li>
+<li>show profile查看SQL在MySQL服务器里面执行细节和生命周期情况；</li>
+<li>SQL数据库服务器的参数调优。</li>
+</ol>
+<h2 id="小表驱动大表"><a href="#小表驱动大表" class="headerlink" title="小表驱动大表"></a>小表驱动大表</h2><p><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/小表驱动大表.png" alt="enter description here"></p>
+<p>in后面跟的是小表，exists后面跟的是大表。</p>
+<p>对于exists：<br><code>select .....from table where exists(subquery);</code></p>
+<p>可以理解为：将主查询的数据放入子查询中做条件验证，根据验证结果（<strong>true或false</strong>）来决定主查询的数据是否得以保留。</p>
 
       
     </div>
@@ -647,7 +693,7 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image" src="http://ppznxle2c.bkt.clouddn.com/IMG_1547.JPG" alt="Tulong Xiao">
+              <img class="site-author-image" itemprop="image" src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/IMG_1547.JPG" alt="Tulong Xiao">
             
               <p class="site-author-name" itemprop="name">Tulong Xiao</p>
               <p class="site-description motion-element" itemprop="description">Almost Famous</p>
@@ -757,7 +803,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#索引"><span class="nav-number">1.</span> <span class="nav-text">索引</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是索引"><span class="nav-number">1.1.</span> <span class="nav-text">什么是索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引的优缺点"><span class="nav-number">1.2.</span> <span class="nav-text">索引的优缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引分类"><span class="nav-number">1.3.</span> <span class="nav-text">索引分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本语法"><span class="nav-number">1.4.</span> <span class="nav-text">基本语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建索引"><span class="nav-number">1.4.1.</span> <span class="nav-text">创建索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除索引"><span class="nav-number">1.4.2.</span> <span class="nav-text">删除索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看索引"><span class="nav-number">1.4.3.</span> <span class="nav-text">查看索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他创建索引的方式"><span class="nav-number">1.4.4.</span> <span class="nav-text">其他创建索引的方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引的结构"><span class="nav-number">1.5.</span> <span class="nav-text">索引的结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建立索引与否的具体情况"><span class="nav-number">1.6.</span> <span class="nav-text">建立索引与否的具体情况</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#需建立索引的情况"><span class="nav-number">1.6.1.</span> <span class="nav-text">需建立索引的情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不需要创建索引的情况"><span class="nav-number">1.6.2.</span> <span class="nav-text">不需要创建索引的情况</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#B-Tree和B-Tree"><span class="nav-number">2.</span> <span class="nav-text">B-Tree和B+Tree</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#B-树"><span class="nav-number">2.1.</span> <span class="nav-text">B-树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-树-1"><span class="nav-number">2.2.</span> <span class="nav-text">B+树</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#性能调优"><span class="nav-number">3.</span> <span class="nav-text">性能调优</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#explain的作用"><span class="nav-number">3.1.</span> <span class="nav-text">explain的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#explain包含的信息"><span class="nav-number">3.2.</span> <span class="nav-text">explain包含的信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#id"><span class="nav-number">3.2.1.</span> <span class="nav-text">id</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#select-type"><span class="nav-number">3.3.</span> <span class="nav-text">select_type</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#type"><span class="nav-number">3.4.</span> <span class="nav-text">type</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#system"><span class="nav-number">3.4.1.</span> <span class="nav-text">system</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#const"><span class="nav-number">3.4.2.</span> <span class="nav-text">const</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#eq-ref"><span class="nav-number">3.4.3.</span> <span class="nav-text">eq_ref</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ref"><span class="nav-number">3.4.4.</span> <span class="nav-text">ref</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#range"><span class="nav-number">3.4.5.</span> <span class="nav-text">range</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#index"><span class="nav-number">3.4.6.</span> <span class="nav-text">index</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ALL"><span class="nav-number">3.4.7.</span> <span class="nav-text">ALL</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#possible-keys和key、key-len"><span class="nav-number">3.5.</span> <span class="nav-text">possible_keys和key、key_len</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ref-1"><span class="nav-number">3.6.</span> <span class="nav-text">ref</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rows"><span class="nav-number">3.7.</span> <span class="nav-text">rows</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#extra"><span class="nav-number">3.8.</span> <span class="nav-text">extra</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-filesort"><span class="nav-number">3.8.1.</span> <span class="nav-text">Using filesort</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-temporary"><span class="nav-number">3.8.2.</span> <span class="nav-text">Using temporary</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-index"><span class="nav-number">3.8.3.</span> <span class="nav-text">Using index</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#索引优化"><span class="nav-number">4.</span> <span class="nav-text">索引优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#全职匹配我最爱"><span class="nav-number">4.1.</span> <span class="nav-text">全职匹配我最爱</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#索引"><span class="nav-number">1.</span> <span class="nav-text">索引</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是索引"><span class="nav-number">1.1.</span> <span class="nav-text">什么是索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引的优缺点"><span class="nav-number">1.2.</span> <span class="nav-text">索引的优缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引分类"><span class="nav-number">1.3.</span> <span class="nav-text">索引分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本语法"><span class="nav-number">1.4.</span> <span class="nav-text">基本语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建索引"><span class="nav-number">1.4.1.</span> <span class="nav-text">创建索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除索引"><span class="nav-number">1.4.2.</span> <span class="nav-text">删除索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看索引"><span class="nav-number">1.4.3.</span> <span class="nav-text">查看索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他创建索引的方式"><span class="nav-number">1.4.4.</span> <span class="nav-text">其他创建索引的方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引的结构"><span class="nav-number">1.5.</span> <span class="nav-text">索引的结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建立索引与否的具体情况"><span class="nav-number">1.6.</span> <span class="nav-text">建立索引与否的具体情况</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#需建立索引的情况"><span class="nav-number">1.6.1.</span> <span class="nav-text">需建立索引的情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不需要创建索引的情况"><span class="nav-number">1.6.2.</span> <span class="nav-text">不需要创建索引的情况</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#B-Tree和B-Tree"><span class="nav-number">2.</span> <span class="nav-text">B-Tree和B+Tree</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#B-树"><span class="nav-number">2.1.</span> <span class="nav-text">B-树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-树-1"><span class="nav-number">2.2.</span> <span class="nav-text">B+树</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#性能调优"><span class="nav-number">3.</span> <span class="nav-text">性能调优</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#explain的作用"><span class="nav-number">3.1.</span> <span class="nav-text">explain的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#explain包含的信息"><span class="nav-number">3.2.</span> <span class="nav-text">explain包含的信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#id"><span class="nav-number">3.2.1.</span> <span class="nav-text">id</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#select-type"><span class="nav-number">3.3.</span> <span class="nav-text">select_type</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#type"><span class="nav-number">3.4.</span> <span class="nav-text">type</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#system"><span class="nav-number">3.4.1.</span> <span class="nav-text">system</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#const"><span class="nav-number">3.4.2.</span> <span class="nav-text">const</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#eq-ref"><span class="nav-number">3.4.3.</span> <span class="nav-text">eq_ref</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ref"><span class="nav-number">3.4.4.</span> <span class="nav-text">ref</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#range"><span class="nav-number">3.4.5.</span> <span class="nav-text">range</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#index"><span class="nav-number">3.4.6.</span> <span class="nav-text">index</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ALL"><span class="nav-number">3.4.7.</span> <span class="nav-text">ALL</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#possible-keys和key、key-len"><span class="nav-number">3.5.</span> <span class="nav-text">possible_keys和key、key_len</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ref-1"><span class="nav-number">3.6.</span> <span class="nav-text">ref</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rows"><span class="nav-number">3.7.</span> <span class="nav-text">rows</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#extra"><span class="nav-number">3.8.</span> <span class="nav-text">extra</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-filesort"><span class="nav-number">3.8.1.</span> <span class="nav-text">Using filesort</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-temporary"><span class="nav-number">3.8.2.</span> <span class="nav-text">Using temporary</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-index"><span class="nav-number">3.8.3.</span> <span class="nav-text">Using index</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#索引优化"><span class="nav-number">4.</span> <span class="nav-text">索引优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#全职匹配我最爱"><span class="nav-number">4.1.</span> <span class="nav-text">全职匹配我最爱</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最佳左前缀法则"><span class="nav-number">4.2.</span> <span class="nav-text">最佳左前缀法则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不要在索引列上做任何操作"><span class="nav-number">4.3.</span> <span class="nav-text">不要在索引列上做任何操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#范围右边全失效"><span class="nav-number">4.4.</span> <span class="nav-text">范围右边全失效</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#尽量使用覆盖索引"><span class="nav-number">4.5.</span> <span class="nav-text">尽量使用覆盖索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用不等于（！-或-lt-gt-）会使索引失效"><span class="nav-number">4.6.</span> <span class="nav-text">使用不等于（！=或&lt;&gt;）会使索引失效</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-null-或-is-not-null也无法使用索引"><span class="nav-number">4.7.</span> <span class="nav-text">is null 或 is not null也无法使用索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#like通配符以-开头会使索引失效"><span class="nav-number">4.8.</span> <span class="nav-text">like通配符以%开头会使索引失效</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串不加单引号导致索引失效"><span class="nav-number">4.9.</span> <span class="nav-text">字符串不加单引号导致索引失效</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#少用or，用or连接会使索引失效"><span class="nav-number">4.10.</span> <span class="nav-text">少用or，用or连接会使索引失效</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查询截取分析"><span class="nav-number">5.</span> <span class="nav-text">查询截取分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#小表驱动大表"><span class="nav-number">5.1.</span> <span class="nav-text">小表驱动大表</span></a></li></ol></li></ol></div>
             
 
           </div>

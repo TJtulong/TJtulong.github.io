@@ -14,13 +14,6 @@
 
 
 
-  
-  
-    
-    
-  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
-  <link href="/lib/pace/pace-theme-center-circle.min.css?v=1.0.2" rel="stylesheet">
-
 
 
 
@@ -94,29 +87,29 @@
 <meta property="og:site_name" content="椰子皮&#39;s Blog">
 <meta property="og:description" content="网络层只把分组发送到目的主机，但是真正通信的并不是主机而是主机中的进程。传输层提供了进程间的逻辑通信，传输层向高层用户屏蔽了下面网络层的核心细节，使应用程序看起来像是在两个传输层实体之间有一条端到端的逻辑通信信道。 传输层协议：TCP UDP 传输层两个协议应用场景TCP：  传输控制协议 TCP（Transmission Control Protocol）是面向连接的，可靠的流协议； 分段 编号">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/UDP%E9%A6%96%E9%83%A8.jpg">
-<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/rdt1.0.JPG">
-<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/rdt2.0.JPG">
-<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/rdt2.1.JPG">
-<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/rdt3.0.JPG">
-<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/N.JPG">
-<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/GBN.JPG">
-<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/SR.JPG">
-<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/TCP%E9%A6%96%E9%83%A8.png">
-<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/%E7%AA%97%E5%8F%A3.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/UDP%E9%A6%96%E9%83%A8.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/rdt1.0.JPG">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/rdt2.0.JPG">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/rdt2.1.JPG">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/rdt3.0.JPG">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/N.JPG">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/GBN.JPG">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/SR.JPG">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/TCP%E9%A6%96%E9%83%A8.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/%E7%AA%97%E5%8F%A3.jpg">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?RTTs=(1-a)*(RTTs)+a*RTT">
 <meta property="og:image" content="https://latex.codecogs.com/gif.latex?RTO=RTTs+4*RTT_d">
-<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/%E5%BF%AB%E9%80%9F%E9%87%8D%E4%BC%A0.png">
-<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.png">
-<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/%E5%9B%9B%E6%AC%A1%E6%8F%A1%E6%89%8B.jpg">
-<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6.jpg">
-<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/tcp%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6.png">
-<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/%E5%BF%AB%E9%87%8D%E4%BC%A0.png">
-<meta property="og:updated_time" content="2019-05-05T16:03:31.182Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/%E5%BF%AB%E9%80%9F%E9%87%8D%E4%BC%A0.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/%E5%9B%9B%E6%AC%A1%E6%8F%A1%E6%89%8B.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/tcp%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/%E5%BF%AB%E9%87%8D%E4%BC%A0.png">
+<meta property="og:updated_time" content="2019-05-15T06:16:29.045Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TCP&#x2F;IP协议之传输层">
 <meta name="twitter:description" content="网络层只把分组发送到目的主机，但是真正通信的并不是主机而是主机中的进程。传输层提供了进程间的逻辑通信，传输层向高层用户屏蔽了下面网络层的核心细节，使应用程序看起来像是在两个传输层实体之间有一条端到端的逻辑通信信道。 传输层协议：TCP UDP 传输层两个协议应用场景TCP：  传输控制协议 TCP（Transmission Control Protocol）是面向连接的，可靠的流协议； 分段 编号">
-<meta name="twitter:image" content="http://ppznxle2c.bkt.clouddn.com/UDP%E9%A6%96%E9%83%A8.jpg">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/UDP%E9%A6%96%E9%83%A8.jpg">
 
 
 
@@ -284,7 +277,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Tulong Xiao">
       <meta itemprop="description" content>
-      <meta itemprop="image" content="http://ppznxle2c.bkt.clouddn.com/IMG_1547.JPG">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/IMG_1547.JPG">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -437,14 +430,14 @@
 <li>分组首部开销小；</li>
 <li>使用UDP是可能实现可靠性数据传输的，需要通过应用程序自身中建立可靠性精致来完成。</li>
 </ul>
-<p><strong>UDP首部：</strong><br><img src="http://ppznxle2c.bkt.clouddn.com/UDP%E9%A6%96%E9%83%A8.jpg" alt="enter description here"><br>首部字段只有 8 个字节，包括源端口、目的端口、长度、检验和。12 字节的伪首部是为了计算检验和临时添加的。</p>
+<p><strong>UDP首部：</strong><br><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/UDP%E9%A6%96%E9%83%A8.jpg" alt="enter description here"><br>首部字段只有 8 个字节，包括源端口、目的端口、长度、检验和。12 字节的伪首部是为了计算检验和临时添加的。</p>
 <h1 id="可靠传输协议"><a href="#可靠传输协议" class="headerlink" title="可靠传输协议"></a>可靠传输协议</h1><p><strong>不错、不丢、不乱</strong></p>
 <h2 id="rdt1-0"><a href="#rdt1-0" class="headerlink" title="rdt1.0"></a>rdt1.0</h2><p><strong>经完全可靠信道的可靠数据传输协议：</strong></p>
 <ul>
 <li>不会发生错误(bit error)</li>
 <li>不会丢弃分组</li>
 </ul>
-<p><img src="http://ppznxle2c.bkt.clouddn.com/rdt1.0.JPG" alt="enter description here"></p>
+<p><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/rdt1.0.JPG" alt="enter description here"></p>
 <h2 id="rdt2-0"><a href="#rdt2-0" class="headerlink" title="rdt2.0"></a>rdt2.0</h2><p><strong>经具有比特差错信道的可靠数据传输</strong>：只发生位错误，不发生顺序错误。<em>利用校验和检测位错误。</em></p>
 <p>如何从错误中恢复：</p>
 <ul>
@@ -453,25 +446,25 @@
 <li>发送方收到NAK后，<strong>重传</strong>分组；</li>
 <li>基于这种重传机制的rdt协议称为<strong>ARQ</strong>(Automatic Repeat reQuest)协议。</li>
 </ul>
-<p><img src="http://ppznxle2c.bkt.clouddn.com/rdt2.0.JPG" alt="enter description here"></p>
+<p><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/rdt2.0.JPG" alt="enter description here"></p>
 <h2 id="rdt2-1"><a href="#rdt2-1" class="headerlink" title="rdt2.1"></a>rdt2.1</h2><p>rdt2.0中，如果ACK/NAK消息发生错误/被破坏(corrupted)如何处理：<br>如果ACK/NAK坏掉，发送方重传，但不能简单的重传，会产生重复分组。<br>解决方案为加入序列号(Sequence number): 发送方给每个分组增加序列号，接收方丢弃重复分组。</p>
 <h2 id="rdt2-2"><a href="#rdt2-2" class="headerlink" title="rdt2.2"></a>rdt2.2</h2><p><strong>与rdt 2.1功能相同，但是只使用ACK</strong>，接收方通过ACK告知最后一个被正确接收的分组，发送方收到重复ACK之后，采取与收到NAK消息相同的动作，重传当前分组。</p>
-<p><img src="http://ppznxle2c.bkt.clouddn.com/rdt2.1.JPG" alt="enter description here"></p>
-<h2 id="rdt3-0"><a href="#rdt3-0" class="headerlink" title="rdt3.0"></a>rdt3.0</h2><p><strong>经具有比特差错的丢包信道的可靠数据传输</strong><br>发送方等待“合理”时间，需要定时器，进行<strong>重传</strong><br><img src="http://ppznxle2c.bkt.clouddn.com/rdt3.0.JPG" alt="enter description here"></p>
+<p><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/rdt2.1.JPG" alt="enter description here"></p>
+<h2 id="rdt3-0"><a href="#rdt3-0" class="headerlink" title="rdt3.0"></a>rdt3.0</h2><p><strong>经具有比特差错的丢包信道的可靠数据传输</strong><br>发送方等待“合理”时间，需要定时器，进行<strong>重传</strong><br><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/rdt3.0.JPG" alt="enter description here"></p>
 <p>Rdt3.0能够正常工作，但性能很差。</p>
 <h1 id="滑动窗口协议"><a href="#滑动窗口协议" class="headerlink" title="滑动窗口协议"></a>滑动窗口协议</h1><p>允许发送方在收到ACK之前连续发送多个分组，需要：</p>
 <ul>
 <li>更大的<strong>序列号范围</strong>；</li>
 <li>发送方和/或接收方需要更大的存储空间以<strong>缓存分组</strong>。</li>
 </ul>
-<p><img src="http://ppznxle2c.bkt.clouddn.com/N.JPG" alt="enter description here"><br>随着协议的运行，窗口在序列号空间内向前滑动。窗口尺寸为N表示最多有N个等待确认的消息。</p>
+<p><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/N.JPG" alt="enter description here"><br>随着协议的运行，窗口在序列号空间内向前滑动。窗口尺寸为N表示最多有N个等待确认的消息。</p>
 <h2 id="GBN"><a href="#GBN" class="headerlink" title="GBN"></a>GBN</h2><p><strong>回退N步（Go-Back-N）</strong></p>
 <p>累计确认机制：ACK(n): 确认到序列号n(包含n)的分组均已被正确接收，可能收到重复ACK。<br>为空中的分组设置计时器(timer)，超时Timeout(n)事件时，重<strong>传序列号大于等于n，还未收到ACK的所有分组</strong>。</p>
 <p><strong>ACK机制</strong>: 发送拥有最高序列号的、已被正确接收的分组的ACK。</p>
-<p><strong>乱序到达的分组</strong>：由于接收方没有缓存，直接丢弃。<br><img src="http://ppznxle2c.bkt.clouddn.com/GBN.JPG" alt="enter description here"></p>
+<p><strong>乱序到达的分组</strong>：由于接收方没有缓存，直接丢弃。<br><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/GBN.JPG" alt="enter description here"></p>
 <h2 id="SR"><a href="#SR" class="headerlink" title="SR"></a>SR</h2><p>选择重传（Selective Repeat）</p>
 <p>GBN的重传次数过多，SR中接收方对每个分组单独进行确认<strong>设置缓存机制</strong>，缓存乱序到达的分组，这样发送方只重传那些没收到ACK的分组，为每个分组设置定时器。</p>
-<p><img src="http://ppznxle2c.bkt.clouddn.com/SR.JPG" alt="enter description here"></p>
+<p><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/SR.JPG" alt="enter description here"></p>
 <h1 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h1><ol>
 <li>点对点：一个发送方一个接收方；</li>
 <li>可靠的、按序的字节流；</li>
@@ -482,7 +475,7 @@
 <li>流量控制机制；</li>
 <li>拥塞控制机制。</li>
 </ol>
-<p><strong>tcp首部：</strong><br><img src="http://ppznxle2c.bkt.clouddn.com/TCP%E9%A6%96%E9%83%A8.png" alt="enter description here"></p>
+<p><strong>tcp首部：</strong><br><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/TCP%E9%A6%96%E9%83%A8.png" alt="enter description here"></p>
 <ul>
 <li><p><strong>序号</strong>  ：<strong>该报文段首字节的字节流编号</strong>，例如序号为 301，表示第一个字节的编号为 301，如果携带的数据长度为 100 字节，那么下一个报文段的序号应为 401。</p>
 </li>
@@ -502,7 +495,7 @@
 <h1 id="TCP-滑动窗口"><a href="#TCP-滑动窗口" class="headerlink" title="TCP 滑动窗口"></a>TCP 滑动窗口</h1><p><strong>窗口允许发送方在收到ACK之前连续发送多个分组，窗口的大小就是指无需等待确认应答而可以继续发送数据的最大值。</strong> 窗口是缓存的一部分，用来暂时存放字节流。发送方和接收方各有一个窗口，接收方通过 TCP 报文段中的窗口字段告诉发送方自己的窗口大小，发送方根据这个值和其它信息设置自己的窗口大小。</p>
 <p>发送窗口内的字节都允许被发送，接收窗口内的字节都允许被接收。如果发送窗口左部的字节已经发送并且收到了确认，那么就将发送窗口向右滑动一定距离，直到左部第一个字节不是已发送并且已确认的状态；接收窗口的滑动类似，接收窗口左部字节已经发送确认并交付主机，就向右滑动接收窗口。</p>
 <p>接收窗口只会对窗口内最后一个按序到达的字节进行确认，例如接收窗口已经收到的字节为 {31, 34, 35}，其中 {31} 按序到达，而 {34, 35} 就不是，因此只对字节 31 进行确认。发送方得到一个字节的确认之后，就知道这个字节之前的所有字节都已经被接收。</p>
-<p><div align="center"> <img src="http://ppznxle2c.bkt.clouddn.com/%E7%AA%97%E5%8F%A3.jpg" width="800"> </div><br></p>
+<p><div align="center"> <img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/%E7%AA%97%E5%8F%A3.jpg" width="800"> </div><br></p>
 <h1 id="TCP可靠数据传输"><a href="#TCP可靠数据传输" class="headerlink" title="TCP可靠数据传输"></a>TCP可靠数据传输</h1><p>TCP在IP层提供的不可靠服务基础上实现可靠数据传输服务，TCP的差错恢复机制是GBN协议和SR协议的混合体。</p>
 <h2 id="重传超时时间间隔"><a href="#重传超时时间间隔" class="headerlink" title="重传超时时间间隔"></a>重传超时时间间隔</h2><p>TCP使用单一重传定时器，需要对RTT（Round Trip Time）报文段往返时间进行估计。</p>
 <p>TCP 使用超时重传来实现可靠传输：如果一个已经发送的报文段在超时时间内没有收到确认，那么就重传这个报文段。一个报文段从发送再到接收到确认所经过的时间称为往返时间 RTT，加权平均往返时间 RTTs 计算如下：</p>
@@ -524,12 +517,12 @@
 <li>累计确认，如果确认此前未确认的报文段，更新滑动窗口SendBase</li>
 <li>如果窗口中还有未被确认的分组，重新启动定时器</li>
 </ul>
-<h2 id="快速重传机制"><a href="#快速重传机制" class="headerlink" title="快速重传机制"></a>快速重传机制</h2><p>TCP的实现中，如果发生超时，超时时间间隔将重新设置，即将超时时间间隔加倍，导致其间隔很大，重发丢失的分组之前要等待很长时间。因此TCP引入快速重传机制，通过重复ACK检测分组丢失，Sender会背靠背地发送多个分组，如果某个分组丢失，可能会引发多个重复的ACK。<br><img src="http://ppznxle2c.bkt.clouddn.com/%E5%BF%AB%E9%80%9F%E9%87%8D%E4%BC%A0.png" alt="快速重传：在定时器超时之前即
+<h2 id="快速重传机制"><a href="#快速重传机制" class="headerlink" title="快速重传机制"></a>快速重传机制</h2><p>TCP的实现中，如果发生超时，超时时间间隔将重新设置，即将超时时间间隔加倍，导致其间隔很大，重发丢失的分组之前要等待很长时间。因此TCP引入快速重传机制，通过重复ACK检测分组丢失，Sender会背靠背地发送多个分组，如果某个分组丢失，可能会引发多个重复的ACK。<br><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/%E5%BF%AB%E9%80%9F%E9%87%8D%E4%BC%A0.png" alt="快速重传：在定时器超时之前即
 进行重传"></p>
 <p>如果sender收到对同一数据的<strong>3个ACK</strong>，则假定该数据之后的段已经丢失。<strong>之所以设置为三次而不是两次的原因是即时报文段的顺序被替换了两次也不会触发重传机制。</strong></p>
 <h1 id="TCP-流量控制"><a href="#TCP-流量控制" class="headerlink" title="TCP 流量控制"></a>TCP 流量控制</h1><p>流量控制是为了控制发送方发送速率，保证接收方来得及接收，<strong>可以让发送端根据接收端的实际接受能力控制发送的数据量</strong>。</p>
 <p>接收方发送的确认报文中的<strong>窗口字段</strong>可以用来控制发送方窗口大小，从而影响发送方的发送速率。将窗口字段设置为 0，则发送方不能发送数据。</p>
-<h1 id="TCP-的三次握手"><a href="#TCP-的三次握手" class="headerlink" title="TCP 的三次握手"></a>TCP 的三次握手</h1><p><div align="center"> <img src="http://ppznxle2c.bkt.clouddn.com/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.png" width="600"> </div><br></p>
+<h1 id="TCP-的三次握手"><a href="#TCP-的三次握手" class="headerlink" title="TCP 的三次握手"></a>TCP 的三次握手</h1><p><div align="center"> <img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.png" width="600"> </div><br></p>
 <p>假设 A 为客户端，B 为服务器端。</p>
 <ul>
 <li>首先 B 处于 LISTEN（监听）状态，等待客户的连接请求。</li>
@@ -541,7 +534,7 @@
 <p><strong>三次握手的原因</strong> ：</p>
 <p><strong>第三次握手是为了防止失效的连接请求到达服务器，让服务器错误打开连接。</strong></p>
 <p>客户端发送的连接请求如果在网络中滞留，那么就会隔很长一段时间才能收到服务器端发回的连接确认。客户端等待一个超时重传时间之后，就会重新请求连接。但是这个滞留的连接请求最后还是会到达服务器，如果不进行三次握手，那么服务器就会打开两个连接。如果有第三次握手，客户端会忽略服务器之后发送的对滞留连接请求的连接确认，不进行第三次握手，因此就不会再次打开连接。</p>
-<h1 id="TCP-的四次挥手"><a href="#TCP-的四次挥手" class="headerlink" title="TCP 的四次挥手"></a>TCP 的四次挥手</h1><p><div align="center"> <img src="http://ppznxle2c.bkt.clouddn.com/%E5%9B%9B%E6%AC%A1%E6%8F%A1%E6%89%8B.jpg" width="600"> </div><br></p>
+<h1 id="TCP-的四次挥手"><a href="#TCP-的四次挥手" class="headerlink" title="TCP 的四次挥手"></a>TCP 的四次挥手</h1><p><div align="center"> <img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/%E5%9B%9B%E6%AC%A1%E6%8F%A1%E6%89%8B.jpg" width="600"> </div><br></p>
 <p>以下描述不讨论序号和确认号，因为序号和确认号的规则比较简单。并且不讨论 ACK，因为 ACK 在连接建立之后都为 1。</p>
 <ul>
 <li>A 发送连接释放报文，FIN=1。</li>
@@ -557,7 +550,7 @@
 <li>等待一段时间是为了让本连接持续时间内所产生的所有报文都从网络中消失，使得下一个新的连接不会出现旧的连接请求报文。</li>
 </ul>
 <h1 id="TCP-拥塞控制"><a href="#TCP-拥塞控制" class="headerlink" title="TCP 拥塞控制"></a>TCP 拥塞控制</h1><p>如果网络出现拥塞，分组将会丢失，此时发送方会继续重传，从而导致网络拥塞程度更高。因此当出现拥塞时，应当控制发送方的速率。这一点和流量控制很像，但是出发点不同。流量控制是为了让接收方能来得及接收，而拥塞控制是为了降低整个网络的拥塞程度。</p>
-<p><div align="center"> <img src="http://ppznxle2c.bkt.clouddn.com/%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6.jpg" width="500"> </div><br></p>
+<p><div align="center"> <img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6.jpg" width="500"> </div><br></p>
 <p>TCP 主要通过四个算法来进行拥塞控制：<strong>慢开始、拥塞避免、快重传、快恢复</strong>。</p>
 <p>发送方需要维护一个叫做<strong>拥塞窗口cwnd</strong>（congestion window）的状态变量，注意拥塞窗口与发送方窗口的区别：拥塞窗口只是一个状态变量，实际决定发送方能发送多少数据的是发送方窗口。</p>
 <p>为了便于讨论，做如下假设：</p>
@@ -565,13 +558,13 @@
 <li>接收方有足够大的接收缓存，因此不会发生流量控制；</li>
 <li>虽然 TCP 的窗口基于字节，但是这里设窗口的大小单位为报文段。</li>
 </ul>
-<p><div align="center"> <img src="http://ppznxle2c.bkt.clouddn.com/tcp%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6.png" width="800"> </div><br></p>
+<p><div align="center"> <img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/tcp%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6.png" width="800"> </div><br></p>
 <h2 id="慢开始与拥塞避免"><a href="#慢开始与拥塞避免" class="headerlink" title="慢开始与拥塞避免"></a>慢开始与拥塞避免</h2><p>发送的最初执行慢开始，令 cwnd = 1，发送方只能发送 1 个报文段；当收到确认后，将 cwnd 加倍，因此之后发送方能够发送的报文段数量为：2、4、8 …</p>
 <p>注意到慢开始每个轮次都将 cwnd 加倍，这样会让 cwnd 增长速度非常快，从而使得发送方发送的速度增长速度过快，网络拥塞的可能性也就更高。设置一个<strong>慢启动阈值ssthresh</strong>，当 cwnd &gt;= ssthresh 时，进入拥塞避免，每个轮次只将 cwnd 加 1。</p>
 <p>如果出现了超时，则令 ssthresh = cwnd / 2，然后重新执行慢开始。</p>
 <h2 id="快重传与快恢复"><a href="#快重传与快恢复" class="headerlink" title="快重传与快恢复"></a>快重传与快恢复</h2><p>在接收方，要求每次接收到报文段都应该对最后一个已收到的有序报文段进行确认。例如已经接收到 M<sub>1</sub> 和 M<sub>2</sub>，此时收到 M<sub>4</sub>，应当发送对 M<sub>2</sub> 的确认。<br>在发送方，如果收到<strong>三个重复确认</strong>，那么可以知道下一个报文段丢失，此时执行快重传，立即重传下一个报文段。例如收到三个 M<sub>2</sub>，则 M<sub>3</sub> 丢失，立即重传 M<sub>3</sub>。<br>在这种情况下，只是丢失个别报文段，而不是网络拥塞。因此执行<strong>快恢复</strong>，令 ssthresh = cwnd / 2 ，cwnd = ssthresh，注意到此时直接进入拥塞避免。</p>
 <p>慢开始和快恢复的快慢指的是 cwnd 的设定值，而不是 cwnd 的增长速率。慢开始 cwnd 设定为1，而快恢复 cwnd 设定为 ssthresh。</p>
-<p><div align="center"> <img src="http://ppznxle2c.bkt.clouddn.com/%E5%BF%AB%E9%87%8D%E4%BC%A0.png" width="600"> </div><br></p>
+<p><div align="center"> <img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/%E5%BF%AB%E9%87%8D%E4%BC%A0.png" width="600"> </div><br></p>
 
       
     </div>
@@ -682,7 +675,7 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image" src="http://ppznxle2c.bkt.clouddn.com/IMG_1547.JPG" alt="Tulong Xiao">
+              <img class="site-author-image" itemprop="image" src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/IMG_1547.JPG" alt="Tulong Xiao">
             
               <p class="site-author-name" itemprop="name">Tulong Xiao</p>
               <p class="site-description motion-element" itemprop="description">Almost Famous</p>

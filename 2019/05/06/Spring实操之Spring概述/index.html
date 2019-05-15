@@ -14,13 +14,6 @@
 
 
 
-  
-  
-    
-    
-  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
-  <link href="/lib/pace/pace-theme-center-circle.min.css?v=1.0.2" rel="stylesheet">
-
 
 
 
@@ -94,13 +87,13 @@
 <meta property="og:site_name" content="椰子皮&#39;s Blog">
 <meta property="og:description" content="Spring概述Spring是分层的Java SE/EE应用 full-stack（全栈式）轻量级开源框架，以IoC（Inverse Of Control：反转控制）和AOP（Aspect Oriented Programming：面向切面编程）为内核，提供了展现层Spring MVC和持久层Spring JDBC以及业务层事务管理等众多的企业级应用技术，还能整合开源世界众多著名的第三方框架和类库">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/spring-overview.png">
-<meta property="og:image" content="http://ppznxle2c.bkt.clouddn.com/spring%E4%BE%9D%E8%B5%96.png">
-<meta property="og:updated_time" content="2019-05-06T08:17:26.331Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/spring-overview.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/spring%E4%BE%9D%E8%B5%96.png">
+<meta property="og:updated_time" content="2019-05-15T06:16:29.038Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring实操之Spring概述">
 <meta name="twitter:description" content="Spring概述Spring是分层的Java SE/EE应用 full-stack（全栈式）轻量级开源框架，以IoC（Inverse Of Control：反转控制）和AOP（Aspect Oriented Programming：面向切面编程）为内核，提供了展现层Spring MVC和持久层Spring JDBC以及业务层事务管理等众多的企业级应用技术，还能整合开源世界众多著名的第三方框架和类库">
-<meta name="twitter:image" content="http://ppznxle2c.bkt.clouddn.com/spring-overview.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/spring-overview.png">
 
 
 
@@ -268,7 +261,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Tulong Xiao">
       <meta itemprop="description" content>
-      <meta itemprop="image" content="http://ppznxle2c.bkt.clouddn.com/IMG_1547.JPG">
+      <meta itemprop="image" content="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/IMG_1547.JPG">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -396,7 +389,7 @@
 <li><strong>降低JavaEE API的使用难度</strong><br>Spring对JavaEE API（如JDBC、JavaMail、远程调用等）进行了薄薄的封装层，使这些API的使用难度大为降低。</li>
 <li><strong>Java源码是经典学习范例</strong><br>Spring的源代码设计精妙、结构清晰、匠心独用，处处体现着大师对Java设计模式灵活运用以及对Java技术的高深造诣。它的源代码无意是Java技术的最佳实践的范例。</li>
 </ol>
-<h1 id="Spring的体系结构"><a href="#Spring的体系结构" class="headerlink" title="Spring的体系结构"></a>Spring的体系结构</h1><p><img src="http://ppznxle2c.bkt.clouddn.com/spring-overview.png" alt="enter description here"></p>
+<h1 id="Spring的体系结构"><a href="#Spring的体系结构" class="headerlink" title="Spring的体系结构"></a>Spring的体系结构</h1><p><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/spring-overview.png" alt="enter description here"></p>
 <h2 id="核心容器"><a href="#核心容器" class="headerlink" title="核心容器"></a>核心容器</h2><p>核心容器由spring-core，spring-beans，spring-context，spring-context-support和spring-expression（SpEL，Spring表达式语言，Spring Expression Language）等模块组成，它们的细节如下：</p>
 <ul>
 <li>spring-core模块提供了框架的基本组成部分，包括 IoC 和依赖注入功能。</li>
@@ -404,7 +397,7 @@
 <li>context模块建立在由core和 beans 模块的基础上建立起来的，它以一种类似于JNDI注册的方式访问对象。Context模块继承自Bean模块，并且添加了国际化（比如，使用资源束）、事件传播、资源加载和透明地创建上下文（比如，通过Servelet容器）等功能。Context模块也支持Java EE的功能，比如EJB、JMX和远程调用等。ApplicationContext接口是Context模块的焦点。spring-context-support提供了对第三方库集成到Spring上下文的支持，比如缓存（EhCache, Guava, JCache）、邮件（JavaMail）、调度（CommonJ, Quartz）、模板引擎（FreeMarker, JasperReports, Velocity）等。</li>
 <li>spring-expression模块提供了强大的表达式语言，用于在运行时查询和操作对象图。它是JSP2.1规范中定义的统一表达式语言的扩展，支持set和get属性值、属性赋值、方法调用、访问数组集合及索引的内容、逻辑算术运算、命名变量、通过名字从Spring IoC容器检索对象，还支持列表的投影、选择以及聚合等。</li>
 </ul>
-<p>它们的完整依赖关系如下图所示：<br><img src="http://ppznxle2c.bkt.clouddn.com/spring%E4%BE%9D%E8%B5%96.png" alt="enter description here"></p>
+<p>它们的完整依赖关系如下图所示：<br><img src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/spring%E4%BE%9D%E8%B5%96.png" alt="enter description here"></p>
 <h2 id="数据访问-集成"><a href="#数据访问-集成" class="headerlink" title="数据访问/集成"></a>数据访问/集成</h2><p>数据访问/集成层包括 JDBC，ORM，OXM，JMS 和事务处理模块，它们的细节如下：<br>（注：JDBC=Java Data Base Connectivity，ORM=Object Relational Mapping，OXM=Object XML Mapping，JMS=Java Message Service）</p>
 <ul>
 <li>JDBC 模块提供了JDBC抽象层，它消除了冗长的JDBC编码和对数据库供应商特定错误代码的解析。</li>
@@ -536,7 +529,7 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image" src="http://ppznxle2c.bkt.clouddn.com/IMG_1547.JPG" alt="Tulong Xiao">
+              <img class="site-author-image" itemprop="image" src="https://raw.githubusercontent.com/TJtulong/TJtulong.github.io/master/images/picture/IMG_1547.JPG" alt="Tulong Xiao">
             
               <p class="site-author-name" itemprop="name">Tulong Xiao</p>
               <p class="site-description motion-element" itemprop="description">Almost Famous</p>
