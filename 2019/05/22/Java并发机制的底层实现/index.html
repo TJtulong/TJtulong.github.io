@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="多线程,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本文参考：https://github.com/CyC2018/CS-Notes/blob/master/notes/Java%20%E5%B9%B6%E5%8F%91.md 锁优化对于同一问题的处理，并不一定是创建的线程数量越多，执行越快，这是由于线程有创建和上下文切换的开销。而锁的上下文消耗尤为严重，因此JDK6对锁进行了优化。 这里的锁优化主要是指JVM对synchronized的优化。 J">
+<meta name="keywords" content="多线程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java并发机制的底层实现">
+<meta property="og:url" content="http://yoursite.com/2019/05/22/Java并发机制的底层实现/index.html">
+<meta property="og:site_name" content="椰子皮&#39;s Blog">
+<meta property="og:description" content="本文参考：https://github.com/CyC2018/CS-Notes/blob/master/notes/Java%20%E5%B9%B6%E5%8F%91.md 锁优化对于同一问题的处理，并不一定是创建的线程数量越多，执行越快，这是由于线程有创建和上下文切换的开销。而锁的上下文消耗尤为严重，因此JDK6对锁进行了优化。 这里的锁优化主要是指JVM对synchronized的优化。 J">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://picture.tjtulong.top/MarkWord.png">
+<meta property="og:image" content="http://picture.tjtulong.top/MarkWord%E4%BF%A1%E6%81%AF.png">
+<meta property="og:image" content="http://picture.tjtulong.top/MarkWord%E4%BF%A1%E6%81%AF2.png">
+<meta property="og:image" content="http://picture.tjtulong.top/%E5%81%8F%E5%90%91%E9%94%81%E3%80%81%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81%E7%9A%84%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2.png">
+<meta property="og:image" content="http://picture.tjtulong.top/CAS.png">
+<meta property="og:image" content="http://picture.tjtulong.top/%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.png">
+<meta property="og:image" content="http://picture.tjtulong.top/%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B2.png">
+<meta property="og:image" content="http://picture.tjtulong.top/%E5%86%85%E5%AD%98%E9%97%B4%E4%BA%A4%E4%BA%92.png">
+<meta property="og:image" content="http://picture.tjtulong.top/%E7%BC%96%E8%AF%91%E5%99%A8%E9%87%8D%E6%8E%92%E5%BA%8F.png">
+<meta property="og:image" content="http://picture.tjtulong.top/AQS.png">
+<meta property="og:updated_time" content="2019-05-25T06:25:02.008Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java并发机制的底层实现">
+<meta name="twitter:description" content="本文参考：https://github.com/CyC2018/CS-Notes/blob/master/notes/Java%20%E5%B9%B6%E5%8F%91.md 锁优化对于同一问题的处理，并不一定是创建的线程数量越多，执行越快，这是由于线程有创建和上下文切换的开销。而锁的上下文消耗尤为严重，因此JDK6对锁进行了优化。 这里的锁优化主要是指JVM对synchronized的优化。 J">
+<meta name="twitter:image" content="http://picture.tjtulong.top/MarkWord.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/22/Java并发机制的底层实现/">
+
+
+
+
+
+  <title>Java并发机制的底层实现 | 椰子皮's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">椰子皮's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/22/Java并发机制的底层实现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tulong Xiao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="http://picture.tjtulong.top/QQ%E5%9B%BE%E7%89%8720190515225418.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="椰子皮's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java并发机制的底层实现</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-22T15:53:18+08:00">
+                2019-05-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/多线程/" itemprop="url" rel="index">
+                    <span itemprop="name">多线程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4.3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  15
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文参考：<a href="https://github.com/CyC2018/CS-Notes/blob/master/notes/Java%20%E5%B9%B6%E5%8F%91.md" target="_blank" rel="noopener">https://github.com/CyC2018/CS-Notes/blob/master/notes/Java%20%E5%B9%B6%E5%8F%91.md</a></p>
+<h1 id="锁优化"><a href="#锁优化" class="headerlink" title="锁优化"></a>锁优化</h1><p>对于同一问题的处理，并不一定是创建的线程数量越多，执行越快，这是由于<strong>线程有创建和上下文切换的开销</strong>。而锁的上下文消耗尤为严重，因此JDK6对锁进行了优化。</p>
+<p>这里的锁优化主要是指JVM对synchronized的优化。</p>
+<p>JDK 1.6引入了偏向锁和轻量级锁，从而让锁拥有了四个状态：<strong>无锁状态（unlocked）、偏向锁状态（biasble）、轻量级锁状态（lightweight locked）和重量级锁状态（inflated</strong>）。这几个状态会随着竞争逐渐升级，<strong>锁可以升级但不能降级</strong>。<br><a id="more"></a></p>
+<h2 id="偏向锁"><a href="#偏向锁" class="headerlink" title="偏向锁"></a>偏向锁</h2><p>HotSpot的作者发现：大多数情况下，锁不仅不存在多线程竞争，而且总是由同一线程多次获得，为了让线程获得锁的代价更低而引入了偏向锁。</p>
+<p>偏向锁的思想是偏向于让第一个获取锁对象的线程，这个线程在之后获取该锁就不再需要进行同步操作，甚至连 CAS 操作也不再需要。</p>
+<p>当锁对象第一次被线程获得的时候，进入偏向状态，标记为 1 01。同时使用 CAS 操作将线程 ID 记录到 Mark Word 中，如果 CAS 操作成功，这个线程以后每次进入这个锁相关的同步块就不需要再进行任何同步操作。</p>
+<p>当有另外一个线程去尝试获取这个锁对象时，偏向状态就宣告结束，此时撤销偏向（Revoke Bias）后恢复到未锁定状态或者轻量级锁状态。</p>
+<h2 id="轻量级锁"><a href="#轻量级锁" class="headerlink" title="轻量级锁"></a>轻量级锁</h2><p>以下是 HotSpot 虚拟机对象头的内存布局，这些数据被称为Mark Word。其中 tag bits 对应了五个状态，这些状态在右侧的state表格中给出。除了 marked for gc 状态，其它四个状态已经在前面介绍过了。</p>
+<p><div align="center"> <img src="http://picture.tjtulong.top/MarkWord.png" width="500"> </div><br></p>
+<p>下图左侧是一个线程的虚拟机栈，其中有一部分称为Lock Record的区域，这是在轻量级锁运行过程创建的，用于存放锁对象的Mark Word。而右侧就是一个锁对象，包含了Mark Word和其它信息。</p>
+<p><div align="center"> <img src="http://picture.tjtulong.top/MarkWord%E4%BF%A1%E6%81%AF.png" width="500"> </div><br></p>
+<p>轻量级锁是相对于传统的重量级锁而言，它使用CAS操作来避免重量级锁使用互斥量的开销。对于绝大部分的锁，在整个同步周期内都是不存在竞争的，因此也就不需要都使用互斥量进行同步，可以先采用CAS操作进行同步，如果CAS失败了再改用互斥量进行同步。</p>
+<p>当尝试获取一个锁对象时，如果锁对象标记为0 01，说明锁对象的锁未锁定（unlocked）状态。此时虚拟机在当前线程的虚拟机栈中创建Lock Record，然后<strong>使用 CAS 操作将对象的Mark Word更新为 Lock Record 指针</strong>。如果 CAS 操作成功了，那么线程就获取了该对象上的锁，并且对象的Mark Word的锁标记变为 00，表示该对象处于轻量级锁状态。</p>
+<p><div align="center"> <img src="http://picture.tjtulong.top/MarkWord%E4%BF%A1%E6%81%AF2.png" width="400"> </div><br></p>
+<p>如果 CAS 操作失败了，虚拟机首先会检查对象的 Mark Word 是否指向当前线程的虚拟机栈，如果是的话说明当前线程已经拥有了这个锁对象，那就可以直接进入同步块继续执行，否则说明这个锁对象已经被其他线程线程抢占了。如果有两条以上的线程争用同一个锁，那轻量级锁就不再有效，要<strong>膨胀为重量级锁</strong>。</p>
+<h2 id="重量级锁"><a href="#重量级锁" class="headerlink" title="重量级锁"></a>重量级锁</h2><p>重量级锁通过对象内部的监视器（monitor）实现，其中monitor的本质是依赖于底层操作系统的Mutex Lock实现，操作系统实现线程之间的切换需要<strong>从用户态到内核态的切换，切换成本非常高</strong>。</p>
+<h2 id="偏向锁、轻量级锁的状态转换"><a href="#偏向锁、轻量级锁的状态转换" class="headerlink" title="偏向锁、轻量级锁的状态转换"></a>偏向锁、轻量级锁的状态转换</h2><p><img src="http://picture.tjtulong.top/%E5%81%8F%E5%90%91%E9%94%81%E3%80%81%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81%E7%9A%84%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2.png" alt="enter description here"></p>
+<h2 id="自旋锁"><a href="#自旋锁" class="headerlink" title="自旋锁"></a>自旋锁</h2><p>互斥同步进入阻塞状态的开销都很大，应该尽量避免。在许多应用中，共享数据的锁定状态只会持续很短的一段时间。<strong>自旋锁的思想是让一个线程在请求一个共享数据的锁时执行忙循环（自旋）一段时间，如果在这段时间内能获得锁，就可以避免进入阻塞状态</strong>。</p>
+<p>自旋锁虽然能避免进入阻塞状态从而减少开销，但是它需要进行忙循环操作占用 CPU 时间，它只适用于共享数据的锁定状态很短的场景。</p>
+<p>在JDK1.6中引入了自适应的自旋锁。自适应意味着自旋的次数不再固定了，而是由前一次在同一个锁上的自旋次数及锁的拥有者的状态来决定。</p>
+<h2 id="锁消除"><a href="#锁消除" class="headerlink" title="锁消除"></a>锁消除</h2><p>锁消除是指对于被检测出不可能存在竞争的共享数据的锁进行消除。</p>
+<p>锁消除主要是通过逃逸分析来支持，如果堆上的共享数据不可能逃逸出去被其它线程访问到，那么就可以把它们当成私有数据对待，也就可以将它们的锁进行消除。</p>
+<p>对于一些看起来没有加锁的代码，其实隐式的加了很多锁。例如下面的字符串拼接代码就隐式加了锁：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">concatString</span><span class="params">(String s1, String s2, String s3)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> s1 + s2 + s3;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>String 是一个不可变的类，编译器会对 String 的拼接自动优化。在 JDK 1.5 之前，会转化为 StringBuffer 对象的连续 append() 操作：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">concatString</span><span class="params">(String s1, String s2, String s3)</span> </span>&#123;</span><br><span class="line">    StringBuffer sb = <span class="keyword">new</span> StringBuffer();</span><br><span class="line">    sb.append(s1);</span><br><span class="line">    sb.append(s2);</span><br><span class="line">    sb.append(s3);</span><br><span class="line">    <span class="keyword">return</span> sb.toString();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>每个 append() 方法中都有一个同步块。虚拟机观察变量 sb，很快就会发现它的动态作用域被限制在 concatString() 方法内部。也就是说，sb 的所有引用永远不会逃逸到 concatString() 方法之外，其他线程无法访问到它，因此可以进行消除。</p>
+<h2 id="锁粗化"><a href="#锁粗化" class="headerlink" title="锁粗化"></a>锁粗化</h2><p>如果一系列的连续操作都对同一个对象反复加锁和解锁，频繁的加锁操作就会导致性能损耗。</p>
+<p>上一节的示例代码中连续的 append() 方法就属于这类情况。如果虚拟机探测到由这样的一串零碎的操作都对同一个对象加锁，将会把加锁的范围扩展（粗化）到整个操作序列的外部。对于上一节的示例代码就是扩展到第一个 append() 操作之前直至最后一个 append() 操作之后，这样只需要加锁一次就可以了。</p>
+<p>总结Synchronized的执行过程：</p>
+<ol>
+<li>检测Mark Word里面是不是当前线程的ID，如果是，表示当前线程处于偏向锁 。</li>
+<li>如果不是，则使用CAS将当前线程的ID替换Mard Word，如果成功则表示当前线程获得偏向锁，置偏向标志位1 。</li>
+<li>如果失败，则说明发生竞争，撤销偏向锁，进而升级为轻量级锁。</li>
+<li>当前线程使用CAS将对象头的Mark Word替换为锁记录指针，如果成功，当前线程获得锁 。</li>
+<li>如果失败，表示其他线程竞争锁，当前线程便尝试使用自旋来获取锁。</li>
+<li>如果自旋成功则依然处于轻量级状态。</li>
+<li>如果自旋失败，则升级为重量级锁。</li>
+</ol>
+<p>[参考资料] <a href="https://www.jianshu.com/p/2bd4a3c8c30c" target="_blank" rel="noopener">https://www.jianshu.com/p/2bd4a3c8c30c</a></p>
+<h1 id="CAS"><a href="#CAS" class="headerlink" title="CAS"></a>CAS</h1><p>CAS是英文单词<strong>CompareAndSwap</strong>的缩写，中文意思是：比较并替换。CAS需要有3个操作数：<strong>内存地址V，旧的预期值A，即将要更新的目标值B</strong>。</p>
+<p>CAS指令执行时，当且仅当内存地址V的值与预期值A相等时，将内存地址V的值修改为B，否则就什么都不做。<strong>整个比较并替换的操作是一个原子操作，此操作具有volative读和写的内存操作</strong>。</p>
+<p>Java并发包原子操作类（Atomic开头）就是采用CAS机制。<br><img src="http://picture.tjtulong.top/CAS.png" alt="enter description here"></p>
+<p>从思想上来说，synchronized属于悲观锁，悲观的认为程序中的并发情况严重，所以严防死守，CAS属于乐观锁，乐观地认为程序中的并发情况不那么严重，所以让线程不断去重试更新。</p>
+<p>在java中除了上面提到的Atomic系列类，以及Lock系列类夺得底层实现，甚至在JAVA1.6以上版本，synchronized转变为重量级锁之前，也会采用CAS机制。</p>
+<p><strong>CAS的缺点：</strong><br>CAS虽然很高效的解决了原子操作问题，但是CAS仍然存在三大问题。</p>
+<ul>
+<li><strong>循环时间长开销很大：</strong><br>我们可以看到getAndAddInt方法执行时，如果CAS失败，会一直进行尝试。如果CAS长时间一直不成功，可能会给CPU带来很大的开销。</li>
+<li><strong>只能保证一个共享变量的原子操作：</strong><br>当对一个共享变量执行操作时，我们可以使用循环CAS的方式来保证原子操作，但是对多个共享变量操作时，循环CAS就无法保证操作的原子性，这个时候就可以用锁来保证原子性。</li>
+<li><strong>ABA问题:</strong><br>如果内存地址V初次读取的值是A，并且在准备赋值的时候检查到它的值仍然为A，那我们就能说它的值没有被其他线程改变过了吗？<br>如果在这段期间它的值曾经被改成了B，后来又被改回为A，那CAS操作就会误认为它从来没有被改变过。这个漏洞称为CAS操作的ABA问题Java并发包为了解决这个问题，提供了一个带有标记的原子引用类AtomicStampedReference，它可以通过控制变量值的<strong>版本</strong>来保证CAS的正确性。因此，在使用CAS前要考虑清楚ABA问题是否会影响程序并发的正确性，如果需要解决ABA问题，改用传统的互斥同步可能会比原子类更高效。</li>
+</ul>
+<p>[参考资料] <a href="https://blog.csdn.net/v123411739/article/details/79561458" target="_blank" rel="noopener">https://blog.csdn.net/v123411739/article/details/79561458</a></p>
+<h1 id="Java内存模型"><a href="#Java内存模型" class="headerlink" title="Java内存模型"></a>Java内存模型</h1><p>Java内存模型试图屏蔽各种硬件和操作系统的内存访问差异，以实现让 Java程序在各种平台下都能达到一致的内存访问效果。</p>
+<p>线程之间的共享变量存储在<strong>主内存</strong>(Main Memory)中，每个线程都有一个私有的<strong>本地内存</strong>(Local Memory)，本地内存中存储了该线程以读/写共享变量的<strong>副本</strong>。本地内存是JMM的一个抽象概念，并不真实存在。它涵盖了缓存、写缓冲区、寄存器以及其他的硬件和编译器优化。</p>
+<h2 id="主内存与工作内存"><a href="#主内存与工作内存" class="headerlink" title="主内存与工作内存"></a>主内存与工作内存</h2><p>处理器上的寄存器的读写的速度比内存快几个数量级，为了解决这种速度矛盾，在它们之间加入了高速缓存。</p>
+<p>加入高速缓存带来了一个新的问题：缓存一致性。如果多个缓存共享同一块主内存区域，那么多个缓存的数据可能会不一致，需要一些协议来解决这个问题。</p>
+<p><div align="center"> <img src="http://picture.tjtulong.top/%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.png" width="600px"> </div><br></p>
+<p>所有的变量都存储在主内存中，每个线程还有自己的工作内存，工作内存存储在高速缓存或者寄存器中，保存了该线程使用的变量的主内存副本拷贝。</p>
+<p>线程只能直接操作工作内存中的变量，不同线程之间的变量值传递需要通过主内存来完成。</p>
+<p><div align="center"> <img src="http://picture.tjtulong.top/%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B2.png" width="600px"> </div><br></p>
+<h2 id="内存间交互操作"><a href="#内存间交互操作" class="headerlink" title="内存间交互操作"></a>内存间交互操作</h2><p>Java 内存模型定义了 8 个操作来完成主内存和工作内存的交互操作。</p>
+<p><div align="center"> <img src="http://picture.tjtulong.top/%E5%86%85%E5%AD%98%E9%97%B4%E4%BA%A4%E4%BA%92.png" width="450px"> </div><br></p>
+<ul>
+<li>read：把一个变量的值从主内存传输到工作内存中</li>
+<li>load：在 read 之后执行，把 read 得到的值放入工作内存的变量副本中</li>
+<li>use：把工作内存中一个变量的值传递给执行引擎</li>
+<li>assign：把一个从执行引擎接收到的值赋给工作内存的变量</li>
+<li>store：把工作内存的一个变量的值传送到主内存中</li>
+<li>write：在 store 之后执行，把 store 得到的值放入主内存的变量中</li>
+<li>lock：作用于主内存的变量</li>
+<li>unlock</li>
+</ul>
+<h1 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h1><h2 id="volatile的特性"><a href="#volatile的特性" class="headerlink" title="volatile的特性"></a>volatile的特性</h2><p><strong>volatile保证了线程之间的可见性，也就是对一个volatile变量的读，总是能看到任意线程对这个volatile变量最后的写入。</strong></p>
+<p>对任意单个volatile变量的读/写具有原子性，但类似于volatile++这种复合操作不具有原子性。</p>
+<p>对一个volatile域的写，happens-before于任意后续对这个volatile域的读。</p>
+<h2 id="volatile的内存语义"><a href="#volatile的内存语义" class="headerlink" title="volatile的内存语义"></a>volatile的内存语义</h2><ul>
+<li>当写一个volatile变量时，JMM会把该线程对应的本地内存中的共享变量刷新到主内存；</li>
+<li>当读一个volatile变量时，JMM会把该线程对应的本地内存置为无效，线程接下来将从主内存中读取共享变量。</li>
+</ul>
+<h2 id="volatile内存语义的实现"><a href="#volatile内存语义的实现" class="headerlink" title="volatile内存语义的实现"></a>volatile内存语义的实现</h2><p>为了实现volatile内存语义，JMM会分别限制<strong>编译器重排序和处理器重排序</strong>。</p>
+<p><strong>编译器重排序：</strong><br><img src="http://picture.tjtulong.top/%E7%BC%96%E8%AF%91%E5%99%A8%E9%87%8D%E6%8E%92%E5%BA%8F.png" alt="enter description here"></p>
+<p><strong>strong text</strong>处理器重排序：<br>编译器在生成字节码时，会在指令中<strong>插入内存屏障</strong>来禁止特定类型的处理器重排序：</p>
+<ul>
+<li>在每个volatile写操作的前面插入一个StoreStore屏障</li>
+<li>在每个volatile写操作的前面插入一个StoreLoad屏障</li>
+<li>在每个volatile读操作的前面插入一个LoadLoad屏障</li>
+<li>在每个volatile读操作的前面插入一个LoadStore屏障</li>
+</ul>
+<h2 id="synchronized和volatile的区别"><a href="#synchronized和volatile的区别" class="headerlink" title="synchronized和volatile的区别"></a>synchronized和volatile的区别</h2><p>synchronized关键字和volatile关键字比较：</p>
+<ul>
+<li>volatile关键字是线程同步的轻量级实现，所以volatile性能肯定比synchronized关键字要好。但是volatile关键字只能用于变量而synchronized关键字可以修饰方法以及代码块。synchronized关键字在JavaSE1.6之后进行了主要包括为了减少获得锁和释放锁带来的性能消耗而引入的偏向锁和轻量级锁以及其它各种优化之后执行效率有了显著提升，实际开发中使用synchronized关键字的场景还是更多一些。</li>
+<li>多线程访问volatile关键字不会发生阻塞，而synchronized关键字可能会发生阻塞</li>
+<li>volatile关键字能保证数据的可见性，但不能保证数据的原子性。synchronized关键字两者都能保证。</li>
+<li>volatile关键字主要用于解决变量在多个线程之间的可见性，而 synchronized关键字解决的是多个线程之间访问资源的同步性。</li>
+</ul>
+<h1 id="final域的内存语义"><a href="#final域的内存语义" class="headerlink" title="final域的内存语义"></a>final域的内存语义</h1><p>对于final域，编译器和处理器要遵守两个重排序规则：</p>
+<ul>
+<li>在构造函数内对一个final域的写入，与随后把这个被构造对象的引用赋值给一个引用变量，这两个操作之间不能重排序。</li>
+<li>初次读一个包含final域的对象的引用，与随后初次读这个final域，这两个操作之间不能重排序。</li>
+</ul>
+<p><strong><em>目的：避免线程可能看到的final值被改变。</em></strong></p>
+<h1 id="happens-before"><a href="#happens-before" class="headerlink" title="happens-before"></a>happens-before</h1><p>JSR-133使用happens-before的概念来阐述操作之间的内存可见性，让线程遵守happens-before原则来解决多线程的可见性。如果一个操作 happens-before另一个操作，那么第一个操作的执行结果将对第二个操作可见</p>
+<p>注：两个操作之间有happens-before关系，并不意味着前一个操作必须在后一个操作之前执行，仅仅要求前一个操作对后一个操作可见。</p>
+<p><strong>happens-before规则：</strong></p>
+<ol>
+<li><strong>程序顺序规则</strong>：一个线程中的每个操作，happens-before于该线程中的任意后续操作，编译器不会对存在数据依赖关系的操作重排序(as-if-serial语义)。</li>
+<li><strong>监视器锁规则</strong>：对一个锁的解锁，happens-before于随后对这个锁的加锁。</li>
+<li><strong>volatile变量规则</strong>：对一个volatile域的写，happens-before于任意后续对这个volatile域的读。</li>
+<li><strong>传递性</strong>：如果A happens-before B，且B happens-before C，那么A happens-before C。</li>
+<li><strong>start()规则</strong>：如果线程A执行操作ThreadB.start()(启动线程B)，那么A线程的ThreadB.start()操作happens-before于线程B中的任意操作。</li>
+<li><strong>join()规则</strong>：如果线程A执行操作ThreadB.join()并成功返回,那么线程B中的任意操作happens-before于线程A从ThreadB.join()操作成功返回。</li>
+</ol>
+<h1 id="concurrent包"><a href="#concurrent包" class="headerlink" title="concurrent包"></a>concurrent包</h1><p>concurrent包的源代码通用化的实现模式：<br>首先，声明共享变量为volatile；<br>然后，使用CAS的原子条件更新来实现线程之间的同步；<br>同时，配合以volatile的读/写和CAS所具有的volatile读和写的内存语义来实现线程之间的通信。   </p>
+<p><strong>AQS</strong>，非阻塞数据结构和原子变量类（java.util.concurrent.atomic包中的类），这些concurrent包中的基础类都是使用这种模式来实现的，而concurrent包中的高层类又是依赖于这些基础类来实现的。从整体来看，concurrent包的实现示意图如下：</p>
+<p><img src="http://picture.tjtulong.top/AQS.png" alt="enter description here"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/多线程/" rel="tag"># 多线程</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/19/Java高并发编程/" rel="next" title="Java高并发编程">
+                <i class="fa fa-chevron-left"></i> Java高并发编程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="http://picture.tjtulong.top/QQ%E5%9B%BE%E7%89%8720190515225418.jpg" alt="Tulong Xiao">
+            
+              <p class="site-author-name" itemprop="name">Tulong Xiao</p>
+              <p class="site-description motion-element" itemprop="description">Almost Famous</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/TJtulong" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:TJtulong@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/2610493505/home" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/TJtulong" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-book"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.tongji.edu.cn/" title="同济大学" target="_blank">同济大学</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#锁优化"><span class="nav-number">1.</span> <span class="nav-text">锁优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#偏向锁"><span class="nav-number">1.1.</span> <span class="nav-text">偏向锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#轻量级锁"><span class="nav-number">1.2.</span> <span class="nav-text">轻量级锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重量级锁"><span class="nav-number">1.3.</span> <span class="nav-text">重量级锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#偏向锁、轻量级锁的状态转换"><span class="nav-number">1.4.</span> <span class="nav-text">偏向锁、轻量级锁的状态转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自旋锁"><span class="nav-number">1.5.</span> <span class="nav-text">自旋锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#锁消除"><span class="nav-number">1.6.</span> <span class="nav-text">锁消除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#锁粗化"><span class="nav-number">1.7.</span> <span class="nav-text">锁粗化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CAS"><span class="nav-number">2.</span> <span class="nav-text">CAS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java内存模型"><span class="nav-number">3.</span> <span class="nav-text">Java内存模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#主内存与工作内存"><span class="nav-number">3.1.</span> <span class="nav-text">主内存与工作内存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存间交互操作"><span class="nav-number">3.2.</span> <span class="nav-text">内存间交互操作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#volatile"><span class="nav-number">4.</span> <span class="nav-text">volatile</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#volatile的特性"><span class="nav-number">4.1.</span> <span class="nav-text">volatile的特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#volatile的内存语义"><span class="nav-number">4.2.</span> <span class="nav-text">volatile的内存语义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#volatile内存语义的实现"><span class="nav-number">4.3.</span> <span class="nav-text">volatile内存语义的实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#synchronized和volatile的区别"><span class="nav-number">4.4.</span> <span class="nav-text">synchronized和volatile的区别</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#final域的内存语义"><span class="nav-number">5.</span> <span class="nav-text">final域的内存语义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#happens-before"><span class="nav-number">6.</span> <span class="nav-text">happens-before</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#concurrent包"><span class="nav-number">7.</span> <span class="nav-text">concurrent包</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tulong Xiao</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
