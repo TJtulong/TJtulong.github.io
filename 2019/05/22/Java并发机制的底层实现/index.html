@@ -79,13 +79,13 @@
 
 
 
-<meta name="description" content="本文参考：https://github.com/CyC2018/CS-Notes/blob/master/notes/Java%20%E5%B9%B6%E5%8F%91.md 锁优化对于同一问题的处理，并不一定是创建的线程数量越多，执行越快，这是由于线程有创建和上下文切换的开销。而锁的上下文消耗尤为严重，因此JDK6对锁进行了优化。 这里的锁优化主要是指JVM对synchronized的优化。 J">
+<meta name="description" content="锁优化对于同一问题的处理，并不一定是创建的线程数量越多，执行越快，这是由于线程有创建和上下文切换的开销。而锁的上下文消耗尤为严重，因此JDK6对锁进行了优化。 这里的锁优化主要是指JVM对synchronized的优化。 JDK 1.6引入了偏向锁和轻量级锁，从而让锁拥有了四个状态：无锁状态（unlocked）、偏向锁状态（biasble）、轻量级锁状态（lightweight locked）和重">
 <meta name="keywords" content="多线程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java并发机制的底层实现">
 <meta property="og:url" content="http://yoursite.com/2019/05/22/Java并发机制的底层实现/index.html">
 <meta property="og:site_name" content="椰子皮&#39;s Blog">
-<meta property="og:description" content="本文参考：https://github.com/CyC2018/CS-Notes/blob/master/notes/Java%20%E5%B9%B6%E5%8F%91.md 锁优化对于同一问题的处理，并不一定是创建的线程数量越多，执行越快，这是由于线程有创建和上下文切换的开销。而锁的上下文消耗尤为严重，因此JDK6对锁进行了优化。 这里的锁优化主要是指JVM对synchronized的优化。 J">
+<meta property="og:description" content="锁优化对于同一问题的处理，并不一定是创建的线程数量越多，执行越快，这是由于线程有创建和上下文切换的开销。而锁的上下文消耗尤为严重，因此JDK6对锁进行了优化。 这里的锁优化主要是指JVM对synchronized的优化。 JDK 1.6引入了偏向锁和轻量级锁，从而让锁拥有了四个状态：无锁状态（unlocked）、偏向锁状态（biasble）、轻量级锁状态（lightweight locked）和重">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://picture.tjtulong.top/MarkWord.png">
 <meta property="og:image" content="http://picture.tjtulong.top/MarkWord%E4%BF%A1%E6%81%AF.png">
@@ -97,10 +97,10 @@
 <meta property="og:image" content="http://picture.tjtulong.top/%E5%86%85%E5%AD%98%E9%97%B4%E4%BA%A4%E4%BA%92.png">
 <meta property="og:image" content="http://picture.tjtulong.top/%E7%BC%96%E8%AF%91%E5%99%A8%E9%87%8D%E6%8E%92%E5%BA%8F.png">
 <meta property="og:image" content="http://picture.tjtulong.top/AQS.png">
-<meta property="og:updated_time" content="2019-05-25T06:25:02.008Z">
+<meta property="og:updated_time" content="2019-05-25T06:30:39.094Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java并发机制的底层实现">
-<meta name="twitter:description" content="本文参考：https://github.com/CyC2018/CS-Notes/blob/master/notes/Java%20%E5%B9%B6%E5%8F%91.md 锁优化对于同一问题的处理，并不一定是创建的线程数量越多，执行越快，这是由于线程有创建和上下文切换的开销。而锁的上下文消耗尤为严重，因此JDK6对锁进行了优化。 这里的锁优化主要是指JVM对synchronized的优化。 J">
+<meta name="twitter:description" content="锁优化对于同一问题的处理，并不一定是创建的线程数量越多，执行越快，这是由于线程有创建和上下文切换的开销。而锁的上下文消耗尤为严重，因此JDK6对锁进行了优化。 这里的锁优化主要是指JVM对synchronized的优化。 JDK 1.6引入了偏向锁和轻量级锁，从而让锁拥有了四个状态：无锁状态（unlocked）、偏向锁状态（biasble）、轻量级锁状态（lightweight locked）和重">
 <meta name="twitter:image" content="http://picture.tjtulong.top/MarkWord.png">
 
 
@@ -384,8 +384,7 @@
       
 
       
-        <p>本文参考：<a href="https://github.com/CyC2018/CS-Notes/blob/master/notes/Java%20%E5%B9%B6%E5%8F%91.md" target="_blank" rel="noopener">https://github.com/CyC2018/CS-Notes/blob/master/notes/Java%20%E5%B9%B6%E5%8F%91.md</a></p>
-<h1 id="锁优化"><a href="#锁优化" class="headerlink" title="锁优化"></a>锁优化</h1><p>对于同一问题的处理，并不一定是创建的线程数量越多，执行越快，这是由于<strong>线程有创建和上下文切换的开销</strong>。而锁的上下文消耗尤为严重，因此JDK6对锁进行了优化。</p>
+        <h1 id="锁优化"><a href="#锁优化" class="headerlink" title="锁优化"></a>锁优化</h1><p>对于同一问题的处理，并不一定是创建的线程数量越多，执行越快，这是由于<strong>线程有创建和上下文切换的开销</strong>。而锁的上下文消耗尤为严重，因此JDK6对锁进行了优化。</p>
 <p>这里的锁优化主要是指JVM对synchronized的优化。</p>
 <p>JDK 1.6引入了偏向锁和轻量级锁，从而让锁拥有了四个状态：<strong>无锁状态（unlocked）、偏向锁状态（biasble）、轻量级锁状态（lightweight locked）和重量级锁状态（inflated</strong>）。这几个状态会随着竞争逐渐升级，<strong>锁可以升级但不能降级</strong>。<br><a id="more"></a></p>
 <h2 id="偏向锁"><a href="#偏向锁" class="headerlink" title="偏向锁"></a>偏向锁</h2><p>HotSpot的作者发现：大多数情况下，锁不仅不存在多线程竞争，而且总是由同一线程多次获得，为了让线程获得锁的代价更低而引入了偏向锁。</p>
@@ -500,6 +499,7 @@
 <h1 id="concurrent包"><a href="#concurrent包" class="headerlink" title="concurrent包"></a>concurrent包</h1><p>concurrent包的源代码通用化的实现模式：<br>首先，声明共享变量为volatile；<br>然后，使用CAS的原子条件更新来实现线程之间的同步；<br>同时，配合以volatile的读/写和CAS所具有的volatile读和写的内存语义来实现线程之间的通信。   </p>
 <p><strong>AQS</strong>，非阻塞数据结构和原子变量类（java.util.concurrent.atomic包中的类），这些concurrent包中的基础类都是使用这种模式来实现的，而concurrent包中的高层类又是依赖于这些基础类来实现的。从整体来看，concurrent包的实现示意图如下：</p>
 <p><img src="http://picture.tjtulong.top/AQS.png" alt="enter description here"></p>
+<p>本文参考：<a href="https://github.com/CyC2018/CS-Notes/blob/master/notes/Java%20%E5%B9%B6%E5%8F%91.md" target="_blank" rel="noopener">https://github.com/CyC2018/CS-Notes/blob/master/notes/Java%20%E5%B9%B6%E5%8F%91.md</a></p>
 
       
     </div>
@@ -539,6 +539,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/29/Spring源码阅读/" rel="prev" title="Spring源码阅读">
+                Spring源码阅读 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -617,7 +621,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -628,7 +632,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -639,7 +643,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
