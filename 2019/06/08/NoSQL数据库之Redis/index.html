@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="分布式,数据库,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="NoSQL为什么用NoSQLNoSQL(NoSQL = Not Only SQL)，意即“不仅仅是SQL”，泛指非关系型的数据库。随着互联网web2.0网站的兴起，传统的关系数据库在应付web2.0网站，特别是超大规模和高并发的SNS类型的web2.0纯动态网站已经显得力不从心，暴露了很多难以克服的问题，而非关系型的数据库则由于其本身的特点得到了非常迅速的发展。NoSQL数据库的产生就是为了解决大">
+<meta name="keywords" content="分布式,数据库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NoSQL数据库之Redis">
+<meta property="og:url" content="http://yoursite.com/2019/06/08/NoSQL数据库之Redis/index.html">
+<meta property="og:site_name" content="椰子皮&#39;s Blog">
+<meta property="og:description" content="NoSQL为什么用NoSQLNoSQL(NoSQL = Not Only SQL)，意即“不仅仅是SQL”，泛指非关系型的数据库。随着互联网web2.0网站的兴起，传统的关系数据库在应付web2.0网站，特别是超大规模和高并发的SNS类型的web2.0纯动态网站已经显得力不从心，暴露了很多难以克服的问题，而非关系型的数据库则由于其本身的特点得到了非常迅速的发展。NoSQL数据库的产生就是为了解决大">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://picture.tjtulong.top/CAP.JPG">
+<meta property="og:image" content="http://picture.tjtulong.top/20190308100952233.png">
+<meta property="og:image" content="http://picture.tjtulong.top/20190308104348451.png">
+<meta property="og:image" content="http://picture.tjtulong.top/20190308105801960.png">
+<meta property="og:image" content="http://picture.tjtulong.top/20190308124058118.png">
+<meta property="og:image" content="http://picture.tjtulong.top/20190308130006589.png">
+<meta property="og:image" content="http://picture.tjtulong.top/2019030813482316.png">
+<meta property="og:image" content="http://picture.tjtulong.top/%E4%BA%8B%E5%8A%A1%E5%91%BD%E4%BB%A4.JPG">
+<meta property="og:image" content="http://picture.tjtulong.top/Screenshot.png">
+<meta property="og:image" content="http://picture.tjtulong.top/%E8%96%AA%E7%81%AB%E7%9B%B8%E4%BC%A0.JPG">
+<meta property="og:updated_time" content="2019-06-10T16:13:02.942Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NoSQL数据库之Redis">
+<meta name="twitter:description" content="NoSQL为什么用NoSQLNoSQL(NoSQL = Not Only SQL)，意即“不仅仅是SQL”，泛指非关系型的数据库。随着互联网web2.0网站的兴起，传统的关系数据库在应付web2.0网站，特别是超大规模和高并发的SNS类型的web2.0纯动态网站已经显得力不从心，暴露了很多难以克服的问题，而非关系型的数据库则由于其本身的特点得到了非常迅速的发展。NoSQL数据库的产生就是为了解决大">
+<meta name="twitter:image" content="http://picture.tjtulong.top/CAP.JPG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/06/08/NoSQL数据库之Redis/">
+
+
+
+
+
+  <title>NoSQL数据库之Redis | 椰子皮's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">椰子皮's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/08/NoSQL数据库之Redis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tulong Xiao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="http://picture.tjtulong.top/QQ%E5%9B%BE%E7%89%8720190515225418.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="椰子皮's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">NoSQL数据库之Redis</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-08T15:36:03+08:00">
+                2019-06-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/分布式/" itemprop="url" rel="index">
+                    <span itemprop="name">分布式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  6.5k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  27
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="NoSQL"><a href="#NoSQL" class="headerlink" title="NoSQL"></a>NoSQL</h1><h2 id="为什么用NoSQL"><a href="#为什么用NoSQL" class="headerlink" title="为什么用NoSQL"></a>为什么用NoSQL</h2><p>NoSQL(NoSQL = Not Only SQL)，意即“不仅仅是SQL”，泛指非<strong>关系型的数据库</strong>。随着互联网web2.0网站的兴起，传统的关系数据库在应付web2.0网站，特别是超大规模和高并发的SNS类型的web2.0纯动态网站已经显得力不从心，暴露了很多难以克服的问题，而非关系型的数据库则由于其本身的特点得到了非常迅速的发展。NoSQL数据库的产生就是为了解决大规模数据集合多重数据种类带来的挑战，尤其是大数据应用难题，包括超大规模数据的存储。</p>
+<p>谷歌或Facebook每天为他们的用户收集万亿比特的数据，<strong>这些类型的数据存储不需要固定的模式，无需多余操作就可以横向扩展</strong>。</p>
+<a id="more"></a>
+<p>优势：</p>
+<ul>
+<li>易扩展</li>
+<li>大数据量高性能：一秒读11万，写7万次</li>
+<li>多样灵活的数据模型</li>
+</ul>
+<h2 id="阿里巴巴的数据存储"><a href="#阿里巴巴的数据存储" class="headerlink" title="阿里巴巴的数据存储"></a>阿里巴巴的数据存储</h2><ol>
+<li>基本数据信息：名称、价格，出厂日期，生产厂商等<br><strong>MySQL数据库</strong></li>
+<li>商品描述、详情、评价信息(多文字类)<br><strong>文档数据库MongDB</strong></li>
+<li>商品图片<br><strong>淘宝自己的TFS</strong></li>
+<li>商品的关键字<br><strong>搜索引擎ISearch、Solr</strong></li>
+<li>商品的波段性的热点高频信息<br><strong>内存数据库：tair、Redis、Memcache</strong></li>
+<li>商品的交易、价格计算、积分累计<br><strong>支付宝接口</strong></li>
+</ol>
+<h2 id="NoSQL数据模型"><a href="#NoSQL数据模型" class="headerlink" title="NoSQL数据模型"></a>NoSQL数据模型</h2><p>聚合模型：</p>
+<ul>
+<li>KV键值对 Redis</li>
+<li>文档型数据库（bson较多）Mongodb</li>
+<li>列族</li>
+<li>图形</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"> <span class="attr">"customer"</span>:&#123;</span><br><span class="line">   <span class="attr">"id"</span>:<span class="number">1136</span>,</span><br><span class="line">   <span class="attr">"name"</span>:<span class="string">"Z3"</span>,</span><br><span class="line">   <span class="attr">"billingAddress"</span>:[&#123;<span class="attr">"city"</span>:<span class="string">"beijing"</span>&#125;],</span><br><span class="line">   <span class="attr">"orders"</span>:[</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"id"</span>:<span class="number">17</span>,</span><br><span class="line">      <span class="attr">"customerId"</span>:<span class="number">1136</span>,</span><br><span class="line">      <span class="attr">"orderItems"</span>:[&#123;<span class="attr">"productId"</span>:<span class="number">27</span>,<span class="attr">"price"</span>:<span class="number">77.5</span>,<span class="attr">"productName"</span>:<span class="string">"thinking in java"</span>&#125;],</span><br><span class="line">      <span class="attr">"shippingAddress"</span>:[&#123;<span class="attr">"city"</span>:<span class="string">"beijing"</span>&#125;]</span><br><span class="line">      <span class="string">"orderPayment"</span>:[&#123;<span class="attr">"ccinfo"</span>:<span class="string">"111-222-333"</span>,<span class="attr">"txnid"</span>:<span class="string">"asdfadcd334"</span>,<span class="attr">"billingAddress"</span>:&#123;<span class="attr">"city"</span>:<span class="string">"beijing"</span>&#125;&#125;],</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="CAP"><a href="#CAP" class="headerlink" title="CAP"></a>CAP</h2><p>分布式系统不可能同时满足一致性（C：Consistency）、可用性（A：Availability）和分区容忍性（P：Partition Tolerance），最多只能同时满足其中两项。</p>
+<p><div align="center"> <img src="http://picture.tjtulong.top/CAP.JPG" width="450px"> </div><br></p>
+<h3 id="一致性"><a href="#一致性" class="headerlink" title="一致性"></a>一致性</h3><p>一致性指的是多个数据副本是否能保持一致的特性，在一致性的条件下，系统在执行数据更新操作之后能够从一致性状态转移到另一个一致性状态。</p>
+<p>对系统的一个数据更新成功之后，如果所有用户都能够读取到最新的值，该系统就被认为具有强一致性。</p>
+<h3 id="可用性"><a href="#可用性" class="headerlink" title="可用性"></a>可用性</h3><p>可用性指分布式系统在面对各种异常时可以提供正常服务的能力，可以用系统可用时间占总时间的比值来衡量，4个9的可用性表示系统 99.99% 的时间是可用的。</p>
+<p>在可用性条件下，要求系统提供的服务一直处于可用的状态，对于用户的每一个操作请求总是能够在有限的时间内返回结果。</p>
+<h3 id="分区容忍性"><a href="#分区容忍性" class="headerlink" title="分区容忍性"></a>分区容忍性</h3><p>网络分区指分布式系统中的节点被划分为多个区域，每个区域内部可以通信，但是区域之间无法通信。</p>
+<p>在分区容忍性条件下，分布式系统在遇到任何网络分区故障的时候，仍然需要能对外提供一致性和可用性的服务，除非是整个网络环境都发生了故障。</p>
+<h3 id="权衡"><a href="#权衡" class="headerlink" title="权衡"></a>权衡</h3><p>在分布式系统中，<strong>分区容忍性必不可少</strong>，因为需要总是假设网络是不可靠的。因此，<strong>CAP 理论实际上是要在可用性和一致性之间做权衡</strong>。</p>
+<p>可用性和一致性往往是冲突的，很难使它们同时满足。在多个节点之间进行数据同步时，</p>
+<ul>
+<li>为了保证一致性（CP），不能访问未同步完成的节点，也就失去了部分可用性；</li>
+<li><strong>为了保证可用性（AP常用）</strong>，允许读取所有节点的数据，但是数据可能不一致。</li>
+</ul>
+<p>数据库：</p>
+<ul>
+<li>CA 传统Oracle数据库</li>
+<li>AP 大多数网站架构的选择</li>
+<li>CP Redis、Mongodb</li>
+</ul>
+<h2 id="Base"><a href="#Base" class="headerlink" title="Base"></a>Base</h2><p>BASE就是为了解决关系数据库强一致性引起的问题而引起的可用性降低而提出的解决方案。</p>
+<p>BASE其实是下面三个术语的缩写：</p>
+<ul>
+<li>基本可用（Basically Available）</li>
+<li>软状态（Soft state）</li>
+<li>最终一致（Eventually consistent）</li>
+</ul>
+<p>它的思想是通过让系统放松对某一时刻数据一致性的要求来换取系统整体伸缩性和性能上改观，缘由在于大型系统往往由于地域分布和极高性能的要求，不可能采用分布式事务来完成这些指标，要想获得这些指标，我们必须采用另外一种方式来完成，这里BASE就是解决这个问题的办法。</p>
+<h1 id="什么是Redis"><a href="#什么是Redis" class="headerlink" title="什么是Redis"></a>什么是Redis</h1><p>Redis是Remote Dictionary Server(远程数据服务)的缩写<br>是由意大利人antirez开发的一款<strong>内存高速缓存数据库</strong>（而mySQL数据库中的数据存放在硬盘中）。该软件采用C语言编写，数据模型为<strong>key-value</strong>，它具有丰富的数据结构、可持久化，保证了数据的安全。</p>
+<p>对于新闻页面，可以采用<strong>页面缓存</strong>，常用在CMS内存管理系统中；<br>对于商城商品，各个部分业务比较独立，可以采用<strong>数据缓存</strong>，Redis即是数据缓存，可以减轻数据库的负载；<br>取最新N个数据的操作，如：可以将最新的10条评论的ID放在Redis的List集合里面。</p>
+<h1 id="Redis的安装与启动"><a href="#Redis的安装与启动" class="headerlink" title="Redis的安装与启动"></a>Redis的安装与启动</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><ol>
+<li>下载稳定版 redis（ <a href="http://redis.io/download" target="_blank" rel="noopener">http://redis.io/download</a> ）</li>
+<li>将下载的压缩文件 redis-2.6.15.tar.gz传入Linux系统</li>
+<li>进入压缩包所在目录并解压文件</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar zxvf redis-2.6.15</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>make redis-2.6.15即可自动安装</li>
+<li>若出现<em>command not found CC</em> 的错误，则说明没有安装gcc环境，安装即可</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install gcc</span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li>若出现报错 <em>zmalloc.h:50:31: 错误：jemalloc/jemalloc.h</em>，输入下面语句：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make MALLOC=libc</span><br></pre></td></tr></table></figure>
+<ol start="7">
+<li>make成功后会在src文件夹下产生一些二进制可执行文件，包括redis-server、redis-cl等</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ find . -type f -executable</span><br><span class="line">./redis-benchmark //用于进行redis性能测试的工具</span><br><span class="line">./redis-check-dump //用于修复出问题的dump.rdb文件</span><br><span class="line">./redis-cli //redis的客户端</span><br><span class="line">./redis-server //redis的服务端</span><br><span class="line">./redis-check-aof //用于修复出问题的AOF文件</span><br><span class="line">./redis-sentinel //用于集群管理</span><br></pre></td></tr></table></figure>
+<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./redis-server</span><br></pre></td></tr></table></figure>
+<p>即在前端启动了Redis<br><img src="http://picture.tjtulong.top/20190308100952233.png" alt="在这里插入图片描述">输入Ctrl+C即可停止服务。</p>
+<p>修改redis.conf配置文件，daemonize = yes 设置为<strong>后台启动</strong>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./redis-server redis.conf</span><br></pre></td></tr></table></figure>
+<p><strong>简单使用</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./redis-cli   //启动Redis客户端</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">redis 127.0.0.1:6379&gt; set name tom</span><br><span class="line">OK</span><br><span class="line">redis 127.0.0.1:6379&gt; get name</span><br><span class="line">&quot;tom&quot;</span><br></pre></td></tr></table></figure>
+<p>关闭操作：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">redis 127.0.0.1:6379&gt; SHUTDOWN</span><br><span class="line">redis 127.0.0.1:6379&gt; EXEC</span><br></pre></td></tr></table></figure>
+<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><ul>
+<li>单进程</li>
+<li>默认16个数据库，类似数组下表从零开始，初始默认使用零号库，可以使用<code>SELECT &lt;dbid&gt;</code>命令在连接上指定数据库id；</li>
+<li><code>dbsize</code>查看当前数据库的key的数量</li>
+<li><code>flushdb</code>：清空当前库</li>
+<li><code>flushall</code>：通杀全部库</li>
+<li>统一密码管理，16个库都是同样密码，要么都连上，要么一个也连接不上</li>
+<li>Redis索引都是从零开始</li>
+<li>默认端口是6379</li>
+</ul>
+<h1 id="五大数据类型"><a href="#五大数据类型" class="headerlink" title="五大数据类型"></a>五大数据类型</h1><ul>
+<li>String（字符串）</li>
+<li>Hash（哈希）</li>
+<li>List（列表）：本质是链表</li>
+<li>Set（集合）</li>
+<li>Zset（sorted set：有序集合）</li>
+</ul>
+<p><a href="http://redisdoc.com/" target="_blank" rel="noopener">http://redisdoc.com/</a></p>
+<h2 id="key的操作"><a href="#key的操作" class="headerlink" title="key的操作"></a>key的操作</h2><p>redis本质上一个key-value 数据库，在Redis中，key除了<strong>‘空格’和‘/n’</strong>不能作为名字的组成外，其它均可。<br><strong>注意：</strong></p>
+<ol>
+<li>key不要太长，尽量不要超过1024字节，这不仅消耗内存，而且会降低查找的效率；</li>
+<li>key也不要太短，太短的话，key的可读性会降低；</li>
+<li>在一个项目中，key最好使用统一的命名模式，例如user:10000:passwd。</li>
+</ol>
+<p>key的相关命令<br><img src="http://picture.tjtulong.top/20190308104348451.png" alt="在这里插入图片描述"></p>
+<pre><code>redis 127.0.0.1:6379&gt; exists name
+(integer) 1
+
+redis 127.0.0.1:6379&gt; type name
+string
+
+redis 127.0.0.1:6379&gt; keys a*
+1)&quot;addr&quot;
+2)&quot;age&quot;
+
+redis 127.0.0.1:6379&gt; dbsize
+(integer) 4
+
+redis 127.0.0.1:6379&gt; del jf0ej093jrjfpkefplk%%&amp;*()
+(integer) 1
+
+redis 127.0.0.1:6379&gt; rename age mingzi
+OK
+redis 127.0.0.1:6379&gt; select 1   //选择第二个数据库（下标从0开始）
+OK
+redis 127.0.0.1:6379&gt; flushdb
+OK
+</code></pre><h2 id="String类型操作"><a href="#String类型操作" class="headerlink" title="String类型操作"></a>String类型操作</h2><p>如果只使用redis中的字符串类型，且不使用redis的持久化功能，那redis就memcache类似了，这说明strings类型是一个很基础的数据类型，也是任何存储系统都必备的数据类型。我们甚至可以把一个图片文件的内容作为字符串来存储。</p>
+<p><strong>常用操作：</strong><br><img src="http://picture.tjtulong.top/20190308105801960.png" alt="在这里插入图片描述"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">redis 127.0.0.1:6379&gt; mset color1 red color2 green color3 blue</span><br><span class="line">OK</span><br><span class="line">redis 127.0.0.1:6379&gt; mget color1 color2 color3</span><br></pre></td></tr></table></figure></p>
+<p><strong>incr key</strong> ：对key的值做加加操作,并返回新的值。注意incr一个不是int的value会返回错误，incr一个不存在的key，则设置key为1。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">redis 127.0.0.1:6379&gt; incr num</span><br><span class="line">(integer) 1</span><br><span class="line">redis 127.0.0.1:6379&gt; get num</span><br><span class="line">&quot;1&quot;</span><br><span class="line">redis 127.0.0.1:6379&gt; incr num</span><br><span class="line">(integer) 2</span><br><span class="line">redis 127.0.0.1:6379&gt; get num</span><br><span class="line">&quot;2&quot;</span><br><span class="line"></span><br><span class="line">redis 127.0.0.1:6379&gt; incrby num 30</span><br><span class="line">(integer) 32</span><br><span class="line"></span><br><span class="line">redis 127.0.0.1:6379&gt; append color3 andyellow</span><br><span class="line">redis 127.0.0.1:6379&gt; get color3</span><br><span class="line">&quot;blueandyellow&quot;</span><br><span class="line"></span><br><span class="line">redis 127.0.0.1:6379&gt; substr color3 4 6</span><br><span class="line">&quot;and&quot;</span><br></pre></td></tr></table></figure>
+<p><strong>getrange</strong>:获取指定区间范围内的值，类似between……and的关系<br>从零到负一表示全部；setrange设置指定区间范围内的值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">redis 127.0.0.1:6379&gt; set k1 tjtulong</span><br><span class="line">OK</span><br><span class="line">redis 127.0.0.1:6379&gt; getrange k1 2 8</span><br><span class="line">&quot;tulong&quot;</span><br></pre></td></tr></table></figure>
+<p><strong>setex</strong>:设置带过期时间的key，动态设置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">redis 127.0.0.1:6379&gt; setex k2 10 xiao</span><br><span class="line">OK</span><br><span class="line">redis 127.0.0.1:6379&gt; ttl k2</span><br><span class="line">(integer) 5</span><br><span class="line">redis 127.0.0.1:6379&gt; get k2</span><br><span class="line">(nil)</span><br></pre></td></tr></table></figure>
+<p><strong>setnx</strong>:只有在 key 不存在时设置 key 的值。</p>
+<h2 id="List链表类型"><a href="#List链表类型" class="headerlink" title="List链表类型"></a>List链表类型</h2><p>redis的list类型其实就是一个每个子元素都是string类型的<strong>双向链表</strong>。我们可以通过push,pop操作从链表的头部或者尾部添加删除元素。这使得list既可以用作栈，也可以用作队列。<br>例如：一个网页想获得最近登录系统的前10个用户，如果用mysql则需要对整个表进行操作，消耗资源，如果用Redis链表即可快速保存和获取。<br><strong>List常用操作：</strong><br><img src="http://picture.tjtulong.top/20190308124058118.png" alt="在这里插入图片描述">保存最新登录的5个用户：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">redis 127.0.0.1:6379[1]&gt; lpush newlogin tom</span><br><span class="line">(integer) 1</span><br><span class="line">redis 127.0.0.1:6379[1]&gt; lpush newlogin mary</span><br><span class="line">(integer) 2</span><br><span class="line">redis 127.0.0.1:6379[1]&gt; lpush newlogin linken</span><br><span class="line">(integer) 3</span><br><span class="line">redis 127.0.0.1:6379[1]&gt; lpush newlogin xiaoming</span><br><span class="line">(integer) 4</span><br><span class="line">redis 127.0.0.1:6379[1]&gt; lpush newlogin jack</span><br><span class="line">(integer) 5</span><br><span class="line">redis 127.0.0.1:6379[1]&gt; lpush newlogin xiaoli</span><br><span class="line">(integer) 6</span><br><span class="line">redis 127.0.0.1:6379[1]&gt; rpop newlogin</span><br><span class="line">&quot;tom&quot;</span><br><span class="line"></span><br><span class="line">//通过范围查找链表中元素</span><br><span class="line">redis 127.0.0.1:6379[1]&gt; lrange newlogin 0 4</span><br><span class="line">1) &quot;xiaoli&quot;</span><br><span class="line">2) &quot;jack&quot;</span><br><span class="line">3) &quot;xiaoming&quot;</span><br><span class="line">4) &quot;linken&quot;</span><br><span class="line">5) &quot;mary&quot;</span><br></pre></td></tr></table></figure>
+<p>通过索引获取列表中的元素 <code>lindex key index</code></p>
+<p><code>ltrim key 开始index 结束index</code>，截取指定范围的值后再赋值给key</p>
+<p>在list某个已有值的前后再添加具体值: <code>linsert key  before/after 值1 值2</code></p>
+<p><strong>链表的操作无论是头和尾效率都极高，但假如是对中间元素进行操作，效率较低了。</strong></p>
+<h2 id="Set集合类型"><a href="#Set集合类型" class="headerlink" title="Set集合类型"></a>Set集合类型</h2><p>redis的set是string类型的<strong>无序集合</strong>，set元素最大可以包含(2的32次方-1)个元素，set的是通过hashtable实现的，hashtable会随着添加或者删除自动的调整大小。<br>set集合类型除了基本的添加删除操作，其他有用的操作还包含集合的取并集(union)，交集(intersection)，差集(difference)，可用<strong>好友推荐</strong>功能。<br><img src="http://picture.tjtulong.top/20190308130006589.png" alt="在这里插入图片描述"></p>
+<pre><code>redis 127.0.0.1:6379[1]&gt; sadd tomFri mary
+(integer) 1
+redis 127.0.0.1:6379[1]&gt; sadd tomFri jack
+(integer) 1
+redis 127.0.0.1:6379[1]&gt; sadd tomFri xiaoming
+(integer) 1
+redis 127.0.0.1:6379[1]&gt; sadd tomFri wangwu
+(integer) 1
+redis 127.0.0.1:6379[1]&gt; sadd linkenFri yuehan
+(integer) 1
+redis 127.0.0.1:6379[1]&gt; sadd linkenFri daxiong
+(integer) 1
+redis 127.0.0.1:6379[1]&gt; sadd linkenFri xiaoming
+(integer) 1
+redis 127.0.0.1:6379[1]&gt; sadd linkenFri wangwu
+(integer) 1
+
+//取交集和并集
+redis 127.0.0.1:6379[1]&gt; sinter tomFri linkenFri
+1) &quot;xiaoming&quot;
+2) &quot;wangwu&quot;
+redis 127.0.0.1:6379[1]&gt; sunion tomFri linkenFri
+1) &quot;yuehan&quot;
+2) &quot;mary&quot;
+3) &quot;daxiong&quot;
+4) &quot;xiaoming&quot;
+5) &quot;jack&quot;
+6) &quot;wangwu&quot;
+redis 127.0.0.1:6379[1]&gt; smove tomFri linkenFri mary
+(integer) 1
+redis 127.0.0.1:6379[1]&gt; scard tomFri
+(integer) 3
+</code></pre><h2 id="SortSet排序集合类型"><a href="#SortSet排序集合类型" class="headerlink" title="SortSet排序集合类型"></a>SortSet排序集合类型</h2><p>和Set一样SortedSet也是string类型元素的集合，不同的是每个元素都会关联一个double类型的score。SortedSet的实现是skip list和hash table的混合体。当元素被添加到集合中时，一个元素到score的映射被添加到hash table中，另一个score到元素的映射被添加到skip list并按照score排序，所以就<strong>可以有序的获取集合中的元素</strong>。<br>每个元素都是值+权的组合；<br><img src="http://picture.tjtulong.top/2019030813482316.png" alt="在这里插入图片描述"><br>应用案例：<strong>获得热门帖子回复量信息</strong></p>
+<pre><code>redis 127.0.0.1:6379[1]&gt; zadd hotmessage 102 11
+(integer) 1
+redis 127.0.0.1:6379[1]&gt; zadd hotmessage 141 12
+(integer) 1
+redis 127.0.0.1:6379[1]&gt; zadd hotmessage 159 13
+(integer) 1
+redis 127.0.0.1:6379[1]&gt; zadd hotmessage 72 14
+(integer) 1
+redis 127.0.0.1:6379[1]&gt; zrevrange hotmessage 0 100
+1) &quot;15&quot;
+2) &quot;13&quot;
+3) &quot;12&quot;
+4) &quot;11&quot;
+5) &quot;14&quot;
+//删除排名倒数第一的元素
+redis 127.0.0.1:6379[1]&gt; zremrangebyrank hotmessage 0 0
+(integer) 1
+redis 127.0.0.1:6379[1]&gt; zrevrange hotmessage 0 100
+1) &quot;15&quot;
+2) &quot;13&quot;
+3) &quot;12&quot;
+4) &quot;11&quot;
+</code></pre><h2 id="Hash类型"><a href="#Hash类型" class="headerlink" title="Hash类型"></a>Hash类型</h2><p>hashes，即哈希。哈希是从redis-2.0.0版本之后才有的数据结构。hashes存的是字符串和字符串值之间的映射，比如一个用户要存储其全名、姓氏、年龄等等，就很适合使用哈希。</p>
+<p>hset：建立哈希并赋值<br>hget：取值<br>hmset：建立哈希表<br>hmget：获取值<br>hgetall：获取所有<br>hdel：删除<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">//建立哈希，并赋值</span><br><span class="line">127.0.0.1:6379&gt; HMSET user:001 username antirez password P1pp0 age 34 </span><br><span class="line">OK</span><br><span class="line">//列出哈希的内容</span><br><span class="line">127.0.0.1:6379&gt; HGETALL user:001 </span><br><span class="line">1) &quot;username&quot;</span><br><span class="line">2) &quot;antirez&quot;</span><br><span class="line">3) &quot;password&quot;</span><br><span class="line">4) &quot;P1pp0&quot;</span><br><span class="line">5) &quot;age&quot;</span><br><span class="line">6) &quot;34&quot;</span><br><span class="line">//更改哈希中的某一个值</span><br><span class="line">127.0.0.1:6379&gt; HSET user:001 password 12345 </span><br><span class="line">(integer) 0</span><br><span class="line">//再次列出哈希的内容</span><br><span class="line">127.0.0.1:6379&gt; HGETALL user:001 </span><br><span class="line">1) &quot;username&quot;</span><br><span class="line">2) &quot;antirez&quot;</span><br><span class="line">3) &quot;password&quot;</span><br><span class="line">4) &quot;12345&quot;</span><br><span class="line">5) &quot;age&quot;</span><br><span class="line">6) &quot;34&quot;</span><br></pre></td></tr></table></figure></p>
+<h1 id="配置文件redis-conf"><a href="#配置文件redis-conf" class="headerlink" title="配置文件redis.conf"></a>配置文件redis.conf</h1><p><strong>UNITS</strong></p>
+<ol>
+<li>配置大小单位,开头定义了一些基本的度量单位，只支持bytes，不支持bit</li>
+<li>对大小写不敏感</li>
+</ol>
+<p><strong>INCLUDES</strong><br>可以通过includes包含，redis.conf可以作为总闸，包含其他</p>
+<p><strong>GENERAL通用</strong><br>设置ip地址，端口，超时时间等通用配置</p>
+<p>SNAPSHOTTING快照、REPLICATION复制</p>
+<p><strong>SECURITY安全</strong><br>可以设置密码<code>config set requirepass &#39;123456&#39;</code></p>
+<p><strong>LIMITS限制</strong></p>
+<ul>
+<li>maxclients 最大连接数</li>
+<li>maxmemory 内存上限</li>
+<li>maxmemory-policy 移除算法（lru、random、ttl）</li>
+<li>maxmemory-samples 设置样本数量</li>
+</ul>
+<h1 id="持久化"><a href="#持久化" class="headerlink" title="持久化"></a>持久化</h1><p>redis是一个支持持久化的内存数据库，也就是说redis需要经常将内存中的数据同步到磁盘来保证持久化，这是相对memcache来说的一个大的优势。redis支持两种持久化方式，一种是 Snapshotting（快照）也是默认方式，另一种是Append-only file（缩写aof）的方式。</p>
+<h2 id="RDB持久化"><a href="#RDB持久化" class="headerlink" title="RDB持久化"></a>RDB持久化</h2><p><strong>在指定的时间间隔内将内存中的数据集快照写入磁盘（Snapshot快照），它恢复时是将快照文件直接读到内存里</strong>。</p>
+<p>Redis会单独创建（fork）一个子进程来进行持久化，会先将数据写入到一个临时文件中，待持久化过程都结束了，再用这个临时文件替换上次持久化好的文件。整个过程中，<strong>主进程是不进行任何IO操作的</strong>，这就确保了极高的性能。如果需要进行大规模数据的恢复，且对于数据恢复的完整性不是非常敏感，那RDB方式要比AOF方式更加的高效。RDB的缺点是最后一次持久化后的数据可能丢失，同时fork的时候，内存中的数据被克隆了一份，大致2倍的膨胀性需要考虑。</p>
+<p>快照是默认的持久化方式，一次性把redis中全部数据保存在硬盘上。<br>快照持久化的储存文件为<strong>dump. rmp</strong><br>快照保存配置：<br>save 900 1   900秒内如果超过1个key被修改，则发起快照保存<br>save 300 10  300秒内容如超过10个key被修改，则发起快照保存<br><strong>数据修改的频率非常高，备份的频率也高。</strong></p>
+<p>在shutdown后会自动存储一次快照，也可以直接save（阻塞），执行flushall命令，也会产生dump.rdb文件，但里面是空的，无意义</p>
+<p>手动快照持久化：./redis-cli bgsave</p>
+<h2 id="AOF持久化"><a href="#AOF持久化" class="headerlink" title="AOF持久化"></a>AOF持久化</h2><p>开启AOF持久化（会将以前的数据删除），删除旧进程，开启新进程。<br><strong><em>AOF方式是将执行过的写指令记录下来，在数据恢复时按照从前到后的顺序再将指令都执行一遍。</em></strong></p>
+<p>默认没有开启。<br><strong>appendonly yes 开启</strong><br>appendonly.aof文件保存</p>
+<p>AOF持久化备份频率非常高<br>有三种方式如下（默认是：每秒fsync一次）</p>
+<ol>
+<li>appendonly yes                //启用aof持久化方式</li>
+<li>appendfsync always         //每次收到写命令就立即强制写入磁盘，最慢的，但是保证完全的持久化，不推荐使用</li>
+<li>appendfsync everysec      //每秒钟强制写入磁盘一次，在性能和持久化方面做了很好的折中，<strong>推荐</strong></li>
+<li>appendfsync no          //完全依赖os，性能最好,持久化没保证</li>
+</ol>
+<p><em>注：dump.rmp和appendonly.aof同时存在时找appendonly.aof</em></p>
+<p><strong>为aof备份做优化处理（重写）</strong><br>AOF采用文件追加方式，文件会越来越大为避免出现此种情况，新增了重写机制，当AOF文件的大小超过所设定的阈值时，Redis就会启动AOF文件的内容压缩，只保留可以恢复数据的最小指令集。可以使用命令bgrewriteaof。</p>
+<p>Redis会记录上次重写时的AOF大小，默认配置是当AOF文件大小是上次rewrite后大小的一倍且文件大于64M时触发<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./redis-cli bgrewiteaof</span><br></pre></td></tr></table></figure></p>
+<h2 id="建议同时使用"><a href="#建议同时使用" class="headerlink" title="建议同时使用"></a>建议同时使用</h2><p>因为RDB文件只用作后备用途，建议只在Slave上持久化RDB文件，而且只要15分钟备份一次就够了，只保留save 900 1这条规则。</p>
+<p>如果Enalbe AOF，好处是在最恶劣情况下也只会丢失不超过两秒数据，启动脚本较简单只load自己的AOF文件就可以了。代价一是带来了持续的IO，二是AOF rewrite的最后将rewrite过程中产生的新数据写到新文件造成的阻塞几乎是不可避免的。只要硬盘许可，应该尽量减少AOF rewrite的频率，AOF重写的基础大小默认值64M太小了，可以设到5G以上。默认超过原大小100%大小时重写，可以改到适当的数值。</p>
+<p>如果不Enable AOF，仅靠Master-Slave Replication实现高可用性也可以，能省掉一大笔IO也减少了rewrite时带来的系统波动。代价是如果Master/Slave同时倒掉，会丢失十几分钟的数据，启动脚本也要比较两个Master/Slave中的RDB文件，载入较新的那个。新浪微博就选用了这种架构</p>
+<h1 id="Redis的事务"><a href="#Redis的事务" class="headerlink" title="Redis的事务"></a>Redis的事务</h1><p>一个队列中，一次性、顺序性、排他性的执行一系列命令。</p>
+<p>redis 事务的相关命令：<br><img src="http://picture.tjtulong.top/%E4%BA%8B%E5%8A%A1%E5%91%BD%E4%BB%A4.JPG" alt="enter description here"></p>
+<h2 id="case1：正常事务"><a href="#case1：正常事务" class="headerlink" title="case1：正常事务"></a>case1：正常事务</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">redis 127.0.0.1:6379&gt; MULTI</span><br><span class="line">OK</span><br><span class="line">redis 127.0.0.1:6379&gt; set k1 v1</span><br><span class="line">QUEUED</span><br><span class="line">redis 127.0.0.1:6379&gt; set k2 v2</span><br><span class="line">QUEUED</span><br><span class="line">redis 127.0.0.1:6379&gt; get k2</span><br><span class="line">QUEUED</span><br><span class="line">redis 127.0.0.1:6379&gt; EXEC</span><br><span class="line">1) OK</span><br><span class="line">2) OK</span><br><span class="line">3) &quot;v2&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="case2：放弃事务"><a href="#case2：放弃事务" class="headerlink" title="case2：放弃事务"></a>case2：放弃事务</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">redis 127.0.0.1:6379&gt; MULTI</span><br><span class="line">OK</span><br><span class="line">redis 127.0.0.1:6379&gt; set k1 v1</span><br><span class="line">QUEUED</span><br><span class="line">redis 127.0.0.1:6379&gt; set k2 22</span><br><span class="line">QUEUED</span><br><span class="line">redis 127.0.0.1:6379&gt; set k3 33</span><br><span class="line">QUEUED</span><br><span class="line">redis 127.0.0.1:6379&gt; DISCARD</span><br><span class="line">OK</span><br><span class="line">redis 127.0.0.1:6379&gt; get k2</span><br><span class="line">&quot;v2&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="case3：全体连坐"><a href="#case3：全体连坐" class="headerlink" title="case3：全体连坐"></a>case3：全体连坐</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">redis 127.0.0.1:6379&gt; MULTI</span><br><span class="line">OK</span><br><span class="line">redis 127.0.0.1:6379&gt; set k1 v1</span><br><span class="line">QUEUED</span><br><span class="line">redis 127.0.0.1:6379&gt; set k2 v2</span><br><span class="line">QUEUED</span><br><span class="line">redis 127.0.0.1:6379&gt; set k3 v3</span><br><span class="line">QUEUED</span><br><span class="line">redis 127.0.0.1:6379&gt; getset k3</span><br><span class="line">(error) ERR wrong number of arguments for &apos;getset&apos; command</span><br><span class="line">redis 127.0.0.1:6379&gt; set k4 v4</span><br><span class="line">QUEUED</span><br><span class="line">redis 127.0.0.1:6379&gt; EXEC</span><br><span class="line">(error) EXECABORT Transaction discarded because of previous errors.</span><br><span class="line">redis 127.0.0.1:6379&gt; get k4</span><br><span class="line">(nil)</span><br></pre></td></tr></table></figure>
+<h2 id="case4：冤头债主"><a href="#case4：冤头债主" class="headerlink" title="case4：冤头债主"></a>case4：冤头债主</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">redis 127.0.0.1:6379&gt; MULTI</span><br><span class="line">OK</span><br><span class="line">redis 127.0.0.1:6379&gt; incr k1</span><br><span class="line">QUEUED</span><br><span class="line">redis 127.0.0.1:6379&gt; set k2 22</span><br><span class="line">QUEUED</span><br><span class="line">redis 127.0.0.1:6379&gt; set k3 33</span><br><span class="line">QUEUED</span><br><span class="line">redis 127.0.0.1:6379&gt; get k3</span><br><span class="line">QUEUED</span><br><span class="line">redis 127.0.0.1:6379&gt; EXEC</span><br><span class="line">1) (error) ERR value is not an integer or out of range</span><br><span class="line">2) OK</span><br><span class="line">3) OK</span><br><span class="line">4) &quot;33&quot;</span><br></pre></td></tr></table></figure>
+<p><em>说明Redis对事务部分支持</em></p>
+<h2 id="case5：watch监控"><a href="#case5：watch监控" class="headerlink" title="case5：watch监控"></a>case5：watch监控</h2><p>类似于乐观锁 CAS</p>
+<p>client1：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">redis 127.0.0.1:6379&gt; WATCH balance</span><br><span class="line">OK</span><br></pre></td></tr></table></figure>
+<p>clint2：对balance进行改变</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">redis 127.0.0.1:6379&gt; set balance 800</span><br><span class="line">OK</span><br></pre></td></tr></table></figure>
+<p>clint1：事务操作失败</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">redis 127.0.0.1:6379&gt; MULTI</span><br><span class="line">OK</span><br><span class="line">redis 127.0.0.1:6379&gt; DECRBY balence 20</span><br><span class="line">QUEUED</span><br><span class="line">redis 127.0.0.1:6379&gt; INCRBY debt 20</span><br><span class="line">QUEUED</span><br><span class="line">redis 127.0.0.1:6379&gt; EXEC</span><br><span class="line">(nil)</span><br><span class="line">redis 127.0.0.1:6379&gt; get balence</span><br><span class="line">&quot;800&quot;</span><br></pre></td></tr></table></figure>
+<p><strong>特性：</strong></p>
+<ul>
+<li>没有隔离级别的概念：队列中的命令没有提交之前都不会实际的被执行，因为事务提交前任何指令都不会被实际执行，也就不存在”事务内的查询要看到事务里的更新，在事务外查询不能看到”这个问题，也没有行锁表锁的问题。</li>
+<li>不保证原子性：redis同一个事务中如果有一条命令执行失败，其后的命令仍然会被执行，没有回滚。</li>
+</ul>
+<h1 id="主从模式"><a href="#主从模式" class="headerlink" title="主从模式"></a>主从模式</h1><p>主从复制，即主机数据更新后根据配置和策略，自动同步到备机的master/slaver机制，Master以写为主，Slave以读为主。</p>
+<p>作用：</p>
+<ul>
+<li>读写分离</li>
+<li>容灾机制</li>
+</ul>
+<h2 id="一主二仆"><a href="#一主二仆" class="headerlink" title="一主二仆"></a>一主二仆</h2><p>从服务器命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">slaveof 192.168.39.159 6379</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://picture.tjtulong.top/Screenshot.png" alt="enter description here"></p>
+<p>通过命令<code>info replication</code>可以得到节点信息：是主还是从。</p>
+<p>当主服务器断掉后，两个从服务器还是从服务器，依然只能读不能写；</p>
+<p>当从服务器断掉后，再开启时，变为master。</p>
+<h2 id="薪火相传"><a href="#薪火相传" class="headerlink" title="薪火相传"></a>薪火相传</h2><p>上一个Slave可以是下一个slave的Master，Slave同样可以接收其他<br>slaves的连接和同步请求，那么该slave作为了链条中下一个的master,<br>可以有效减轻master的写压力，<strong>去中心化</strong>。</p>
+<p><img src="http://picture.tjtulong.top/%E8%96%AA%E7%81%AB%E7%9B%B8%E4%BC%A0.JPG" alt="enter description here"></p>
+<p>79——&gt;80——-&gt;81</p>
+<h2 id="反客为主"><a href="#反客为主" class="headerlink" title="反客为主"></a>反客为主</h2><p><code>SLAVEOF no one</code>变为主服务器</p>
+<h2 id="复制原理"><a href="#复制原理" class="headerlink" title="复制原理"></a>复制原理</h2><p>slave启动成功连接到master后会发送一个sync命令，Master接到命令启动后台的存盘进程，同时收集所有接收到的用于修改数据集命令，在后台进程执行完毕之后，master将传送整个数据文件到slave，以完成一次完全同步。</p>
+<p><strong>全量复制：</strong> 而slave服务在接收到数据库文件数据后，将其存盘并加载到内存中。<br><strong>增量复制：</strong> Master继续将新的所有收集到的修改命令依次传给slave,完成同步。<br>但是只要是重新连接master,一次完全同步（全量复制)将被自动执行</p>
+<h2 id="哨兵模式"><a href="#哨兵模式" class="headerlink" title="哨兵模式"></a>哨兵模式</h2><p>概念：反客为主的自动版，能够后台监控主机是否故障，如果故障了根据投票数自动将从库转换为主库。</p>
+<p><strong>使用方式：</strong></p>
+<ol>
+<li>自定义的/myredis目录下新建sentinel.conf文件，名字绝不能错；</li>
+<li>配置哨兵,填写内容：<code>sentinel monitor 被监控数据库名字(自己起名字) 127.0.0.1 6379 1</code>，最后一个数字1，表示主机挂掉后salve投票看让谁接替成为主机，得票数多少后成为主机；</li>
+<li>启动哨兵：<code>redis-sentinel /myredis/sentinel.conf</code>；</li>
+<li>正常主从操作；</li>
+<li>原有的master挂了；</li>
+<li>投票新选，产生新的master；<br>7.如果之前的master重启回来，成为slave；</li>
+</ol>
+<h2 id="复制的缺点"><a href="#复制的缺点" class="headerlink" title="复制的缺点"></a>复制的缺点</h2><p>由于所有的写操作都是先在Master上操作，然后同步更新到Slave上，所以从Master同步到Slave机器有一定的延迟，当系统很繁忙的时候，延迟问题会更加严重，Slave机器数量的增加也会使这个问题更加严重。</p>
+<h1 id="Jedis"><a href="#Jedis" class="headerlink" title="Jedis"></a>Jedis</h1><h2 id="Java连接Redis"><a href="#Java连接Redis" class="headerlink" title="Java连接Redis"></a>Java连接Redis</h2><p>Maven坐标</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>redis.clients<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jedis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.9.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>连接服务器：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestPing</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        Jedis jedis = <span class="keyword">new</span> Jedis(<span class="string">"127.0.0.1"</span>,<span class="number">6379</span>);</span><br><span class="line">        System.out.println(jedis.ping());</span><br><span class="line">		<span class="comment">// pong</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="常用API"><a href="#常用API" class="headerlink" title="常用API"></a>常用API</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test02</span> </span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">     Jedis jedis = <span class="keyword">new</span> Jedis(<span class="string">"127.0.0.1"</span>,<span class="number">6379</span>);</span><br><span class="line">     <span class="comment">//key</span></span><br><span class="line">     Set&lt;String&gt; keys = jedis.keys(<span class="string">"*"</span>);</span><br><span class="line">     <span class="keyword">for</span> (Iterator iterator = keys.iterator(); iterator.hasNext();) &#123;</span><br><span class="line">       String key = (String) iterator.next();</span><br><span class="line">       System.out.println(key);</span><br><span class="line">     &#125;</span><br><span class="line">     System.out.println(<span class="string">"jedis.exists====&gt;"</span>+jedis.exists(<span class="string">"k2"</span>));</span><br><span class="line">     System.out.println(jedis.ttl(<span class="string">"k1"</span>));</span><br><span class="line">     <span class="comment">//String</span></span><br><span class="line">     <span class="comment">//jedis.append("k1","myreids");</span></span><br><span class="line">     System.out.println(jedis.get(<span class="string">"k1"</span>));</span><br><span class="line">     jedis.set(<span class="string">"k4"</span>,<span class="string">"k4_redis"</span>);</span><br><span class="line">     System.out.println(<span class="string">"----------------------------------------"</span>);</span><br><span class="line">     jedis.mset(<span class="string">"str1"</span>,<span class="string">"v1"</span>,<span class="string">"str2"</span>,<span class="string">"v2"</span>,<span class="string">"str3"</span>,<span class="string">"v3"</span>);</span><br><span class="line">     System.out.println(jedis.mget(<span class="string">"str1"</span>,<span class="string">"str2"</span>,<span class="string">"str3"</span>));</span><br><span class="line">     <span class="comment">//list</span></span><br><span class="line">     System.out.println(<span class="string">"----------------------------------------"</span>);</span><br><span class="line">     <span class="comment">//jedis.lpush("mylist","v1","v2","v3","v4","v5");</span></span><br><span class="line">     List&lt;String&gt; list = jedis.lrange(<span class="string">"mylist"</span>,<span class="number">0</span>,-<span class="number">1</span>);</span><br><span class="line">     <span class="keyword">for</span> (String element : list) &#123;</span><br><span class="line">       System.out.println(element);</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="comment">//set</span></span><br><span class="line">     jedis.sadd(<span class="string">"orders"</span>,<span class="string">"jd001"</span>);</span><br><span class="line">     jedis.sadd(<span class="string">"orders"</span>,<span class="string">"jd002"</span>);</span><br><span class="line">     jedis.sadd(<span class="string">"orders"</span>,<span class="string">"jd003"</span>);</span><br><span class="line">     Set&lt;String&gt; set1 = jedis.smembers(<span class="string">"orders"</span>);</span><br><span class="line">     <span class="keyword">for</span> (Iterator iterator = set1.iterator(); iterator.hasNext();) &#123;</span><br><span class="line">       String string = (String) iterator.next();</span><br><span class="line">       System.out.println(string);</span><br><span class="line">     &#125;</span><br><span class="line">     jedis.srem(<span class="string">"orders"</span>,<span class="string">"jd002"</span>);</span><br><span class="line">     System.out.println(jedis.smembers(<span class="string">"orders"</span>).size());</span><br><span class="line">     <span class="comment">//hash</span></span><br><span class="line">     jedis.hset(<span class="string">"hash1"</span>,<span class="string">"userName"</span>,<span class="string">"lisi"</span>);</span><br><span class="line">     System.out.println(jedis.hget(<span class="string">"hash1"</span>,<span class="string">"userName"</span>));</span><br><span class="line">     Map&lt;String,String&gt; map = <span class="keyword">new</span> HashMap&lt;String,String&gt;();</span><br><span class="line">     map.put(<span class="string">"telphone"</span>,<span class="string">"13811814763"</span>);</span><br><span class="line">     map.put(<span class="string">"address"</span>,<span class="string">"atguigu"</span>);</span><br><span class="line">     map.put(<span class="string">"email"</span>,<span class="string">"abc@163.com"</span>);</span><br><span class="line">     jedis.hmset(<span class="string">"hash2"</span>,map);</span><br><span class="line">     List&lt;String&gt; result = jedis.hmget(<span class="string">"hash2"</span>, <span class="string">"telphone"</span>,<span class="string">"email"</span>);</span><br><span class="line">     <span class="keyword">for</span> (String element : result) &#123;</span><br><span class="line">       System.out.println(element);</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="comment">//zset</span></span><br><span class="line">     jedis.zadd(<span class="string">"zset01"</span>,<span class="number">60</span>d,<span class="string">"v1"</span>);</span><br><span class="line">     jedis.zadd(<span class="string">"zset01"</span>,<span class="number">70</span>d,<span class="string">"v2"</span>);</span><br><span class="line">     jedis.zadd(<span class="string">"zset01"</span>,<span class="number">80</span>d,<span class="string">"v3"</span>);</span><br><span class="line">     jedis.zadd(<span class="string">"zset01"</span>,<span class="number">90</span>d,<span class="string">"v4"</span>);</span><br><span class="line">     </span><br><span class="line">     Set&lt;String&gt; s1 = jedis.zrange(<span class="string">"zset01"</span>,<span class="number">0</span>,-<span class="number">1</span>);</span><br><span class="line">     <span class="keyword">for</span> (Iterator iterator = s1.iterator(); iterator.hasNext();) &#123;</span><br><span class="line">       String string = (String) iterator.next();</span><br><span class="line">       System.out.println(string);</span><br><span class="line">     &#125;         </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">transMethod</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">   Jedis jedis = <span class="keyword">new</span> Jedis(<span class="string">"127.0.0.1"</span>, <span class="number">6379</span>);</span><br><span class="line">   <span class="keyword">int</span> balance;<span class="comment">// 可用余额</span></span><br><span class="line">   <span class="keyword">int</span> debt;<span class="comment">// 欠额</span></span><br><span class="line">   <span class="keyword">int</span> amtToSubtract = <span class="number">10</span>;<span class="comment">// 实刷额度</span></span><br><span class="line"></span><br><span class="line">   jedis.watch(<span class="string">"balance"</span>);</span><br><span class="line">   <span class="comment">//jedis.set("balance","5");//此句不该出现，讲课方便。模拟其他程序已经修改了该条目</span></span><br><span class="line">   Thread.sleep(<span class="number">7000</span>);</span><br><span class="line">   balance = Integer.parseInt(jedis.get(<span class="string">"balance"</span>));</span><br><span class="line">   <span class="keyword">if</span> (balance &lt; amtToSubtract) &#123;</span><br><span class="line">     jedis.unwatch();</span><br><span class="line">     System.out.println(<span class="string">"modify"</span>);</span><br><span class="line">     <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">   &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">     System.out.println(<span class="string">"***********transaction"</span>);</span><br><span class="line">     Transaction transaction = jedis.multi();</span><br><span class="line">     transaction.decrBy(<span class="string">"balance"</span>, amtToSubtract);</span><br><span class="line">     transaction.incrBy(<span class="string">"debt"</span>, amtToSubtract);</span><br><span class="line">     transaction.exec();</span><br><span class="line">     balance = Integer.parseInt(jedis.get(<span class="string">"balance"</span>));</span><br><span class="line">     debt = Integer.parseInt(jedis.get(<span class="string">"debt"</span>));</span><br><span class="line"></span><br><span class="line">     System.out.println(<span class="string">"*******"</span> + balance);</span><br><span class="line">     System.out.println(<span class="string">"*******"</span> + debt);</span><br><span class="line">     <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/分布式/" rel="tag"># 分布式</a>
+          
+            <a href="/tags/数据库/" rel="tag"># 数据库</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/07/Head-First-Zookeeper/" rel="next" title="Head First Zookeeper">
+                <i class="fa fa-chevron-left"></i> Head First Zookeeper
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="http://picture.tjtulong.top/QQ%E5%9B%BE%E7%89%8720190515225418.jpg" alt="Tulong Xiao">
+            
+              <p class="site-author-name" itemprop="name">Tulong Xiao</p>
+              <p class="site-description motion-element" itemprop="description">Almost Famous</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/TJtulong" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:TJtulong@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/2610493505/home" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/TJtulong" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-book"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.tongji.edu.cn/" title="同济大学" target="_blank">同济大学</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#NoSQL"><span class="nav-number">1.</span> <span class="nav-text">NoSQL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么用NoSQL"><span class="nav-number">1.1.</span> <span class="nav-text">为什么用NoSQL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#阿里巴巴的数据存储"><span class="nav-number">1.2.</span> <span class="nav-text">阿里巴巴的数据存储</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NoSQL数据模型"><span class="nav-number">1.3.</span> <span class="nav-text">NoSQL数据模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CAP"><span class="nav-number">1.4.</span> <span class="nav-text">CAP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一致性"><span class="nav-number">1.4.1.</span> <span class="nav-text">一致性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可用性"><span class="nav-number">1.4.2.</span> <span class="nav-text">可用性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分区容忍性"><span class="nav-number">1.4.3.</span> <span class="nav-text">分区容忍性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#权衡"><span class="nav-number">1.4.4.</span> <span class="nav-text">权衡</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Base"><span class="nav-number">1.5.</span> <span class="nav-text">Base</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是Redis"><span class="nav-number">2.</span> <span class="nav-text">什么是Redis</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis的安装与启动"><span class="nav-number">3.</span> <span class="nav-text">Redis的安装与启动</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">3.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动"><span class="nav-number">3.2.</span> <span class="nav-text">启动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#说明"><span class="nav-number">3.3.</span> <span class="nav-text">说明</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五大数据类型"><span class="nav-number">4.</span> <span class="nav-text">五大数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#key的操作"><span class="nav-number">4.1.</span> <span class="nav-text">key的操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#String类型操作"><span class="nav-number">4.2.</span> <span class="nav-text">String类型操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#List链表类型"><span class="nav-number">4.3.</span> <span class="nav-text">List链表类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Set集合类型"><span class="nav-number">4.4.</span> <span class="nav-text">Set集合类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SortSet排序集合类型"><span class="nav-number">4.5.</span> <span class="nav-text">SortSet排序集合类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hash类型"><span class="nav-number">4.6.</span> <span class="nav-text">Hash类型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置文件redis-conf"><span class="nav-number">5.</span> <span class="nav-text">配置文件redis.conf</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#持久化"><span class="nav-number">6.</span> <span class="nav-text">持久化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RDB持久化"><span class="nav-number">6.1.</span> <span class="nav-text">RDB持久化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AOF持久化"><span class="nav-number">6.2.</span> <span class="nav-text">AOF持久化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建议同时使用"><span class="nav-number">6.3.</span> <span class="nav-text">建议同时使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis的事务"><span class="nav-number">7.</span> <span class="nav-text">Redis的事务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#case1：正常事务"><span class="nav-number">7.1.</span> <span class="nav-text">case1：正常事务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#case2：放弃事务"><span class="nav-number">7.2.</span> <span class="nav-text">case2：放弃事务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#case3：全体连坐"><span class="nav-number">7.3.</span> <span class="nav-text">case3：全体连坐</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#case4：冤头债主"><span class="nav-number">7.4.</span> <span class="nav-text">case4：冤头债主</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#case5：watch监控"><span class="nav-number">7.5.</span> <span class="nav-text">case5：watch监控</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#主从模式"><span class="nav-number">8.</span> <span class="nav-text">主从模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一主二仆"><span class="nav-number">8.1.</span> <span class="nav-text">一主二仆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#薪火相传"><span class="nav-number">8.2.</span> <span class="nav-text">薪火相传</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反客为主"><span class="nav-number">8.3.</span> <span class="nav-text">反客为主</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复制原理"><span class="nav-number">8.4.</span> <span class="nav-text">复制原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#哨兵模式"><span class="nav-number">8.5.</span> <span class="nav-text">哨兵模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复制的缺点"><span class="nav-number">8.6.</span> <span class="nav-text">复制的缺点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Jedis"><span class="nav-number">9.</span> <span class="nav-text">Jedis</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Java连接Redis"><span class="nav-number">9.1.</span> <span class="nav-text">Java连接Redis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用API"><span class="nav-number">9.2.</span> <span class="nav-text">常用API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事务"><span class="nav-number">9.3.</span> <span class="nav-text">事务</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tulong Xiao</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
