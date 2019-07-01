@@ -252,6 +252,466 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/30/商城仿写开发总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tulong Xiao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="http://picture.tjtulong.top/QQ%E5%9B%BE%E7%89%8720190515225418.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="椰子皮's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/30/商城仿写开发总结/" itemprop="url">商城仿写开发总结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-30T15:08:25+08:00">
+                2019-06-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/项目/" itemprop="url" rel="index">
+                    <span itemprop="name">项目</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.5k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="项目介绍"><a href="#项目介绍" class="headerlink" title="项目介绍"></a>项目介绍</h1><p>mall网上商城是一个综合性的 B2B2C 平台，类似京东商城、天猫商城。网站采用商家入驻的模式，商家入驻平台提交申请，有平台进行资质审核，审核通过后，商家拥有独立的管理后台录入商品信息。商品经过平台审核后即可发布。mall网上商城主要分为<strong>网站前台、运营商后台、商家管理后台</strong>三个子系统。</p>
+<ul>
+<li>网站前台主要包括网站首页、商家首页、商品详细页、搜索页、会员中心、订单与支付相关页面、秒杀频道等业务功能。</li>
+<li>运营商后台主要包括商家审核、品牌管理、规格管理、模板管理、商品分类管理、商品审核、广告类型管理、广告管理、订单查询、商家结算等业务功能。</li>
+<li>商家管理包括商品上架功能。</li>
+</ul>
+<h1 id="系统架构"><a href="#系统架构" class="headerlink" title="系统架构"></a>系统架构</h1><p>SOA架构（后端框架采用Spring +SpringMVC+mybatis +Dubbox 。前端采用angularJS + Bootstrap。）</p>
+<p><strong>构架图：</strong><br><img src="http://picture.tjtulong.top/%E5%93%81%E4%BC%98%E8%B4%AD%E6%9E%84%E6%9E%B6%E5%9B%BE.png" alt="在这里插入图片描述"></p>
+<h1 id="项目模块"><a href="#项目模块" class="headerlink" title="项目模块"></a>项目模块</h1><p><strong>项目共包括以下模块：</strong></p>
+<ul>
+<li>mall-parent (聚合工程)</li>
+<li>mall-pojo （通用实体类层）</li>
+<li>mall-dao （通用数据访问层）</li>
+<li>mall-common （通用工具类模块）</li>
+<li>mall-sellergoods-interface （商家商品服务接口层）</li>
+<li>mall-sellergoods-service （商家商品服务）</li>
+<li>mall-sellergoods-web （运营商管理系统）</li>
+<li>mall-shop-web （商家管理系统）</li>
+<li>mall-content-interface  （广告服务接口）</li>
+<li>mall-content-service  （广告服务）</li>
+<li>mall-portal-web （门户）</li>
+<li>mall-solr-util （搜索导入工具）</li>
+<li>mall-search-service （商品搜索服务接口）</li>
+<li>mall-search-service （商品搜索服务）</li>
+<li>mall-search-web （商品搜索）</li>
+<li>mall-page-interface （页面静态化服务接口）</li>
+<li>mall-page-service （页面静态化服务）</li>
+<li>mall-page-web （静态化页面）</li>
+<li>itcast_sms （短信发送工具）</li>
+<li>pinnyougou-user-interface （用户服务接口）</li>
+<li>pinnyougou-user-web （用户中心服务）</li>
+<li>pinnyougou-user-web （用户中心）</li>
+<li>mall-cart-interface （购物车服务接口）</li>
+<li>mall-cart-service （购物车服务）</li>
+<li>mall-cart-web （购物车）</li>
+<li>mall-order-interface （订单服务接口）</li>
+<li>mall-order-service （订单服务）</li>
+<li>mall-order-web （订单系统）</li>
+<li>mall-seckill-interface （秒杀服务接口）</li>
+<li>mall-seckill-service （秒杀服务）</li>
+<li>mall-seckill-web （秒杀频道）</li>
+<li>mall-task-service （业务调度服务）</li>
+</ul>
+<p><strong>服务之间依赖关系：</strong><br><img src="http://picture.tjtulong.top/%E5%93%81%E4%BC%98%E8%B4%AD%E6%9C%8D%E5%8A%A1%E4%BE%9D%E8%B5%96.png" alt="在这里插入图片描述"></p>
+<h1 id="应用技术点"><a href="#应用技术点" class="headerlink" title="应用技术点"></a>应用技术点</h1><h2 id="Dubbox-分布式服务框架"><a href="#Dubbox-分布式服务框架" class="headerlink" title="Dubbox 分布式服务框架"></a>Dubbox 分布式服务框架</h2><p>Dubbox是一个基于RPC的远程服务调用的分布式服务框架。</p>
+<p>官方推荐使用 zookeeper <strong>注册中心</strong>。注册中心负责服务地址的注册与查找，相当于目录服务，服务提供者和消费者只在启动时与注册中心交互，注册中心不转发请求，压力较小。</p>
+<p><img src="http://picture.tjtulong.top/dubbox.png" alt></p>
+<p>通过Maven引入依赖后，在Spring配置文件引入dubbo配置即可：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 引用dubbo 服务 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:application</span> <span class="attr">name</span>=<span class="string">"mall-shop-web"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:registry</span> <span class="attr">address</span>=<span class="string">"zookeeper://192.168.25.132:2181"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:annotation</span> <span class="attr">package</span>=<span class="string">"com.mall.shop.controller"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="前端框架AngularJS"><a href="#前端框架AngularJS" class="headerlink" title="前端框架AngularJS"></a>前端框架AngularJS</h2><p>AngularJS是一款优秀的前端JS框架。AngularJS有着诸多特性，最为核心的是：MVC、模块化、自动化双向数据绑定、依赖注入等等。</p>
+<p><img src="http://picture.tjtulong.top/angularjs.png" alt></p>
+<p>可以方便地进行异步请求：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">   <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"angular.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span>	</span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">	var app=angular.module('myApp',[]); //定义了一个叫myApp的模块</span></span><br><span class="line"><span class="undefined">	//定义控制器</span></span><br><span class="line"><span class="undefined">	app.controller('myController',function($scope,$http)&#123;		</span></span><br><span class="line"><span class="undefined">		$scope.findAll=function()&#123;</span></span><br><span class="line"><span class="undefined">			$http.get('data.json').success(</span></span><br><span class="line"><span class="undefined">				function(response)&#123;</span></span><br><span class="line"><span class="undefined">					$scope.list=response;</span></span><br><span class="line"><span class="undefined">				&#125;					</span></span><br><span class="line"><span class="undefined">			);				</span></span><br><span class="line"><span class="undefined">		&#125;			</span></span><br><span class="line"><span class="undefined">	&#125;);	</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="Spring-Security"><a href="#Spring-Security" class="headerlink" title="Spring Security"></a>Spring Security</h2><p>Spring Security是一个能够为基于Spring的企业应用系统提供声明式的安全访问控制解决方案的安全框架。</p>
+<p><strong>创建spring 配置文件spring-security.xml</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 以下页面不被拦截 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">http</span> <span class="attr">pattern</span>=<span class="string">"/login.html"</span> <span class="attr">security</span>=<span class="string">"none"</span>&gt;</span><span class="tag">&lt;/<span class="name">http</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">http</span> <span class="attr">pattern</span>=<span class="string">"/login_error.html"</span> <span class="attr">security</span>=<span class="string">"none"</span>&gt;</span><span class="tag">&lt;/<span class="name">http</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 页面拦截规则 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">http</span> <span class="attr">use-expressions</span>=<span class="string">"false"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">intercept-url</span> <span class="attr">pattern</span>=<span class="string">"/*"</span> <span class="attr">access</span>=<span class="string">"ROLE_USER"</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">form-login</span> <span class="attr">login-page</span>=<span class="string">"/login.html"</span> <span class="attr">default-target-url</span>=<span class="string">"/index.html"</span> <span class="attr">authentication-failure-url</span>=<span class="string">"/login_error.html"</span>/&gt;</span>	</span><br><span class="line">	<span class="tag">&lt;<span class="name">csrf</span> <span class="attr">disabled</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">http</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="Solr服务器"><a href="#Solr服务器" class="headerlink" title="Solr服务器"></a>Solr服务器</h2><p><strong>Elasticsearch和Solr的区别</strong></p>
+<p>背景：它们都是基于Lucene搜索服务器基础之上开发，一款优秀的，<strong>高性能</strong>的企业级搜索服务器。高性能的原因是基于分词技术构建的<strong>倒排索引</strong>的方式进行查询。</p>
+<p>开发语言：都是基于java语言开发</p>
+<p>诞生时间：Solr(2004年)、Elasticsearch（2010年，更新，功能更强大）</p>
+<p><strong>区别：</strong></p>
+<ol>
+<li>当实时建立索引时，Solr会产生io阻塞，而es不会，es查询性能要高于solr；</li>
+<li>在不断动态添加数据的时候，solr的检索速率会变慢，但es则没有变化；</li>
+<li>Solr利用zookeeper进行分布式管理，es自身带有分布式系统管理功能；</li>
+<li>Solr一般要部署到web服务器上，如tomcat上，Solr的本质是一个动态的web项目；</li>
+<li>Solr支持更多的格式数据（xml,json,csv等），而es仅支持json文件格式；</li>
+<li>Solr是传统搜索的有力解决放案，但es更适用于新兴的实时搜索应用；</li>
+<li>Solr官网提供的功能更多，而es本身更注重于核心功能。</li>
+</ol>
+<h1 id="业务"><a href="#业务" class="headerlink" title="业务"></a>业务</h1><h2 id="运营商业务"><a href="#运营商业务" class="headerlink" title="运营商业务"></a>运营商业务</h2><p>品牌、规格、模板的增删改查</p>
+<p><img src="http://picture.tjtulong.top/%E6%A8%A1%E6%9D%BF%E7%AE%A1%E7%90%86.JPG" alt></p>
+<p>商家审核：</p>
+<p><img src="http://picture.tjtulong.top/%E5%95%86%E5%AE%B6%E5%AE%A1%E6%A0%B8.JPG" alt></p>
+<h1 id="其他技术点"><a href="#其他技术点" class="headerlink" title="其他技术点"></a>其他技术点</h1><ul>
+<li>MyBatis分页插件PageHelper</li>
+<li>前端分层开发</li>
+<li>下拉框select2</li>
+<li>Spring Security框架</li>
+<li>BCrypt加密算法</li>
+<li>kindeditor富文本编辑器</li>
+<li>分布式文件服务器FastDFS</li>
+<li>注解式事务配置</li>
+<li>Redis缓存数据库——Spring Data Redis</li>
+<li>搜索解决方案Solr——Spring Data Solr</li>
+<li>中文分析器IK Analyzer</li>
+<li>Solr（高亮显示、分类列表、过滤查询、价格区间搜索、排序）</li>
+<li>网页静态化Freemarker</li>
+<li>FTL指令</li>
+<li>消息中间件ActiveMQ减小耦合</li>
+<li>SpringBoot微服务框架</li>
+<li>短信发送平台-阿里大于</li>
+<li>单点登录CAS</li>
+<li>CAS客户端与SpringSecurity集成</li>
+<li>Cookie与Redis存储购物车</li>
+<li>JS跨域请求</li>
+<li>分布式ID生成器（snowflake算法）</li>
+<li>二维码生成</li>
+<li>微信支付SDK</li>
+<li>Redis实现秒杀业务</li>
+<li>任务调度SpringTask</li>
+<li>Maven Profile</li>
+<li>MongoDB数据库</li>
+<li>Zookeeper集群</li>
+<li>SolrCloud集群</li>
+<li>Redis Cluster集群</li>
+<li>数据库分片中间件-MyCat</li>
+<li>反向代理服务器Nginx</li>
+<li>Docker容器</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/27/小木匠数值模拟软件交流社区开发总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tulong Xiao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="http://picture.tjtulong.top/QQ%E5%9B%BE%E7%89%8720190515225418.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="椰子皮's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/27/小木匠数值模拟软件交流社区开发总结/" itemprop="url">小木匠数值模拟软件交流社区开发总结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-27T23:41:09+08:00">
+                2019-06-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/项目/" itemprop="url" rel="index">
+                    <span itemprop="name">项目</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.9k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  15
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="小木匠项目简介"><a href="#小木匠项目简介" class="headerlink" title="小木匠项目简介"></a>小木匠项目简介</h1><p><strong>小木匠</strong>是一个数值分析科研人员的专属学术交流平台，包括<strong>头条，问答，活动，交友，吐槽和招聘</strong>六大频道。</p>
+<p><img src="http://picture.tjtulong.top/%E9%A6%96%E9%A1%B5.jpg" alt></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/06/27/小木匠数值模拟软件交流社区开发总结/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/16/SpringBoot与数据访问/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1682,361 +2142,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/03/SpringMVC源码分析/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Tulong Xiao">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="http://picture.tjtulong.top/QQ%E5%9B%BE%E7%89%8720190515225418.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="椰子皮's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/06/03/SpringMVC源码分析/" itemprop="url">SpringMVC源码分析</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-03T21:06:30+08:00">
-                2019-06-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SpringMVC/" itemprop="url" rel="index">
-                    <span itemprop="name">SpringMVC</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1.8k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  8
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>参考：<a href="http://www.tianxiaobo.com/2018/06/29/Spring-MVC-%E5%8E%9F%E7%90%86%E6%8E%A2%E7%A7%98-%E4%B8%80%E4%B8%AA%E8%AF%B7%E6%B1%82%E7%9A%84%E6%97%85%E8%A1%8C%E8%BF%87%E7%A8%8B/" target="_blank" rel="noopener">田小波的博客</a></p>
-<h1 id="一个请求的流程"><a href="#一个请求的流程" class="headerlink" title="一个请求的流程"></a>一个请求的流程</h1><p><img src="http://picture.tjtulong.top/%E8%AF%B7%E6%B1%82%E8%BF%87%E7%A8%8B.jpg" alt="enter description here"><br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/06/03/SpringMVC源码分析/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </p></div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/30/SpringMVC基本操作/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Tulong Xiao">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="http://picture.tjtulong.top/QQ%E5%9B%BE%E7%89%8720190515225418.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="椰子皮's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/05/30/SpringMVC基本操作/" itemprop="url">SpringMVC基本操作</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-30T13:56:14+08:00">
-                2019-05-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SpringMVC/" itemprop="url" rel="index">
-                    <span itemprop="name">SpringMVC</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  5.5k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  25
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="SpringMVC的基本概念"><a href="#SpringMVC的基本概念" class="headerlink" title="SpringMVC的基本概念"></a>SpringMVC的基本概念</h1><h2 id="MVC模型"><a href="#MVC模型" class="headerlink" title="MVC模型"></a>MVC模型</h2><p>MVC全名是Model View Controller，是模型(model)－视图(view)－控制器(controller)的缩写，是一种用于设计创建 Web 应用程序表现层的模式。<br><img src="http://picture.tjtulong.top/MVC%E6%A8%A1%E5%9E%8B.JPG" alt="enter description here"><br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/05/30/SpringMVC基本操作/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </p></div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2089,7 +2194,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-count">37</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2100,7 +2205,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2111,7 +2216,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">21</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

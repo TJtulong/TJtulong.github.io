@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="项目,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="项目介绍mall网上商城是一个综合性的 B2B2C 平台，类似京东商城、天猫商城。网站采用商家入驻的模式，商家入驻平台提交申请，有平台进行资质审核，审核通过后，商家拥有独立的管理后台录入商品信息。商品经过平台审核后即可发布。mall网上商城主要分为网站前台、运营商后台、商家管理后台三个子系统。  网站前台主要包括网站首页、商家首页、商品详细页、搜索页、会员中心、订单与支付相关页面、秒杀频道等业务功">
+<meta name="keywords" content="项目">
+<meta property="og:type" content="article">
+<meta property="og:title" content="商城仿写开发总结">
+<meta property="og:url" content="http://yoursite.com/2019/06/30/商城仿写开发总结/index.html">
+<meta property="og:site_name" content="椰子皮&#39;s Blog">
+<meta property="og:description" content="项目介绍mall网上商城是一个综合性的 B2B2C 平台，类似京东商城、天猫商城。网站采用商家入驻的模式，商家入驻平台提交申请，有平台进行资质审核，审核通过后，商家拥有独立的管理后台录入商品信息。商品经过平台审核后即可发布。mall网上商城主要分为网站前台、运营商后台、商家管理后台三个子系统。  网站前台主要包括网站首页、商家首页、商品详细页、搜索页、会员中心、订单与支付相关页面、秒杀频道等业务功">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://picture.tjtulong.top/%E5%93%81%E4%BC%98%E8%B4%AD%E6%9E%84%E6%9E%B6%E5%9B%BE.png">
+<meta property="og:image" content="http://picture.tjtulong.top/%E5%93%81%E4%BC%98%E8%B4%AD%E6%9C%8D%E5%8A%A1%E4%BE%9D%E8%B5%96.png">
+<meta property="og:image" content="http://picture.tjtulong.top/dubbox.png">
+<meta property="og:image" content="http://picture.tjtulong.top/angularjs.png">
+<meta property="og:image" content="http://picture.tjtulong.top/%E6%A8%A1%E6%9D%BF%E7%AE%A1%E7%90%86.JPG">
+<meta property="og:image" content="http://picture.tjtulong.top/%E5%95%86%E5%AE%B6%E5%AE%A1%E6%A0%B8.JPG">
+<meta property="og:updated_time" content="2019-07-01T06:52:59.594Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="商城仿写开发总结">
+<meta name="twitter:description" content="项目介绍mall网上商城是一个综合性的 B2B2C 平台，类似京东商城、天猫商城。网站采用商家入驻的模式，商家入驻平台提交申请，有平台进行资质审核，审核通过后，商家拥有独立的管理后台录入商品信息。商品经过平台审核后即可发布。mall网上商城主要分为网站前台、运营商后台、商家管理后台三个子系统。  网站前台主要包括网站首页、商家首页、商品详细页、搜索页、会员中心、订单与支付相关页面、秒杀频道等业务功">
+<meta name="twitter:image" content="http://picture.tjtulong.top/%E5%93%81%E4%BC%98%E8%B4%AD%E6%9E%84%E6%9E%B6%E5%9B%BE.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/06/30/商城仿写开发总结/">
+
+
+
+
+
+  <title>商城仿写开发总结 | 椰子皮's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">椰子皮's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/30/商城仿写开发总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tulong Xiao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="http://picture.tjtulong.top/QQ%E5%9B%BE%E7%89%8720190515225418.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="椰子皮's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">商城仿写开发总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-30T15:08:25+08:00">
+                2019-06-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/项目/" itemprop="url" rel="index">
+                    <span itemprop="name">项目</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.5k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="项目介绍"><a href="#项目介绍" class="headerlink" title="项目介绍"></a>项目介绍</h1><p>mall网上商城是一个综合性的 B2B2C 平台，类似京东商城、天猫商城。网站采用商家入驻的模式，商家入驻平台提交申请，有平台进行资质审核，审核通过后，商家拥有独立的管理后台录入商品信息。商品经过平台审核后即可发布。mall网上商城主要分为<strong>网站前台、运营商后台、商家管理后台</strong>三个子系统。</p>
+<ul>
+<li>网站前台主要包括网站首页、商家首页、商品详细页、搜索页、会员中心、订单与支付相关页面、秒杀频道等业务功能。</li>
+<li>运营商后台主要包括商家审核、品牌管理、规格管理、模板管理、商品分类管理、商品审核、广告类型管理、广告管理、订单查询、商家结算等业务功能。</li>
+<li>商家管理包括商品上架功能。</li>
+</ul>
+<h1 id="系统架构"><a href="#系统架构" class="headerlink" title="系统架构"></a>系统架构</h1><p>SOA架构（后端框架采用Spring +SpringMVC+mybatis +Dubbox 。前端采用angularJS + Bootstrap。）</p>
+<p><strong>构架图：</strong><br><img src="http://picture.tjtulong.top/%E5%93%81%E4%BC%98%E8%B4%AD%E6%9E%84%E6%9E%B6%E5%9B%BE.png" alt="在这里插入图片描述"></p>
+<h1 id="项目模块"><a href="#项目模块" class="headerlink" title="项目模块"></a>项目模块</h1><p><strong>项目共包括以下模块：</strong></p>
+<ul>
+<li>mall-parent (聚合工程)</li>
+<li>mall-pojo （通用实体类层）</li>
+<li>mall-dao （通用数据访问层）</li>
+<li>mall-common （通用工具类模块）</li>
+<li>mall-sellergoods-interface （商家商品服务接口层）</li>
+<li>mall-sellergoods-service （商家商品服务）</li>
+<li>mall-sellergoods-web （运营商管理系统）</li>
+<li>mall-shop-web （商家管理系统）</li>
+<li>mall-content-interface  （广告服务接口）</li>
+<li>mall-content-service  （广告服务）</li>
+<li>mall-portal-web （门户）</li>
+<li>mall-solr-util （搜索导入工具）</li>
+<li>mall-search-service （商品搜索服务接口）</li>
+<li>mall-search-service （商品搜索服务）</li>
+<li>mall-search-web （商品搜索）</li>
+<li>mall-page-interface （页面静态化服务接口）</li>
+<li>mall-page-service （页面静态化服务）</li>
+<li>mall-page-web （静态化页面）</li>
+<li>itcast_sms （短信发送工具）</li>
+<li>pinnyougou-user-interface （用户服务接口）</li>
+<li>pinnyougou-user-web （用户中心服务）</li>
+<li>pinnyougou-user-web （用户中心）</li>
+<li>mall-cart-interface （购物车服务接口）</li>
+<li>mall-cart-service （购物车服务）</li>
+<li>mall-cart-web （购物车）</li>
+<li>mall-order-interface （订单服务接口）</li>
+<li>mall-order-service （订单服务）</li>
+<li>mall-order-web （订单系统）</li>
+<li>mall-seckill-interface （秒杀服务接口）</li>
+<li>mall-seckill-service （秒杀服务）</li>
+<li>mall-seckill-web （秒杀频道）</li>
+<li>mall-task-service （业务调度服务）</li>
+</ul>
+<p><strong>服务之间依赖关系：</strong><br><img src="http://picture.tjtulong.top/%E5%93%81%E4%BC%98%E8%B4%AD%E6%9C%8D%E5%8A%A1%E4%BE%9D%E8%B5%96.png" alt="在这里插入图片描述"></p>
+<h1 id="应用技术点"><a href="#应用技术点" class="headerlink" title="应用技术点"></a>应用技术点</h1><h2 id="Dubbox-分布式服务框架"><a href="#Dubbox-分布式服务框架" class="headerlink" title="Dubbox 分布式服务框架"></a>Dubbox 分布式服务框架</h2><p>Dubbox是一个基于RPC的远程服务调用的分布式服务框架。</p>
+<p>官方推荐使用 zookeeper <strong>注册中心</strong>。注册中心负责服务地址的注册与查找，相当于目录服务，服务提供者和消费者只在启动时与注册中心交互，注册中心不转发请求，压力较小。</p>
+<p><img src="http://picture.tjtulong.top/dubbox.png" alt></p>
+<p>通过Maven引入依赖后，在Spring配置文件引入dubbo配置即可：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 引用dubbo 服务 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:application</span> <span class="attr">name</span>=<span class="string">"mall-shop-web"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:registry</span> <span class="attr">address</span>=<span class="string">"zookeeper://192.168.25.132:2181"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:annotation</span> <span class="attr">package</span>=<span class="string">"com.mall.shop.controller"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="前端框架AngularJS"><a href="#前端框架AngularJS" class="headerlink" title="前端框架AngularJS"></a>前端框架AngularJS</h2><p>AngularJS是一款优秀的前端JS框架。AngularJS有着诸多特性，最为核心的是：MVC、模块化、自动化双向数据绑定、依赖注入等等。</p>
+<p><img src="http://picture.tjtulong.top/angularjs.png" alt></p>
+<p>可以方便地进行异步请求：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">   <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"angular.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span>	</span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">	var app=angular.module('myApp',[]); //定义了一个叫myApp的模块</span></span><br><span class="line"><span class="undefined">	//定义控制器</span></span><br><span class="line"><span class="undefined">	app.controller('myController',function($scope,$http)&#123;		</span></span><br><span class="line"><span class="undefined">		$scope.findAll=function()&#123;</span></span><br><span class="line"><span class="undefined">			$http.get('data.json').success(</span></span><br><span class="line"><span class="undefined">				function(response)&#123;</span></span><br><span class="line"><span class="undefined">					$scope.list=response;</span></span><br><span class="line"><span class="undefined">				&#125;					</span></span><br><span class="line"><span class="undefined">			);				</span></span><br><span class="line"><span class="undefined">		&#125;			</span></span><br><span class="line"><span class="undefined">	&#125;);	</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="Spring-Security"><a href="#Spring-Security" class="headerlink" title="Spring Security"></a>Spring Security</h2><p>Spring Security是一个能够为基于Spring的企业应用系统提供声明式的安全访问控制解决方案的安全框架。</p>
+<p><strong>创建spring 配置文件spring-security.xml</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 以下页面不被拦截 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">http</span> <span class="attr">pattern</span>=<span class="string">"/login.html"</span> <span class="attr">security</span>=<span class="string">"none"</span>&gt;</span><span class="tag">&lt;/<span class="name">http</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">http</span> <span class="attr">pattern</span>=<span class="string">"/login_error.html"</span> <span class="attr">security</span>=<span class="string">"none"</span>&gt;</span><span class="tag">&lt;/<span class="name">http</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 页面拦截规则 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">http</span> <span class="attr">use-expressions</span>=<span class="string">"false"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">intercept-url</span> <span class="attr">pattern</span>=<span class="string">"/*"</span> <span class="attr">access</span>=<span class="string">"ROLE_USER"</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">form-login</span> <span class="attr">login-page</span>=<span class="string">"/login.html"</span> <span class="attr">default-target-url</span>=<span class="string">"/index.html"</span> <span class="attr">authentication-failure-url</span>=<span class="string">"/login_error.html"</span>/&gt;</span>	</span><br><span class="line">	<span class="tag">&lt;<span class="name">csrf</span> <span class="attr">disabled</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">http</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="Solr服务器"><a href="#Solr服务器" class="headerlink" title="Solr服务器"></a>Solr服务器</h2><p><strong>Elasticsearch和Solr的区别</strong></p>
+<p>背景：它们都是基于Lucene搜索服务器基础之上开发，一款优秀的，<strong>高性能</strong>的企业级搜索服务器。高性能的原因是基于分词技术构建的<strong>倒排索引</strong>的方式进行查询。</p>
+<p>开发语言：都是基于java语言开发</p>
+<p>诞生时间：Solr(2004年)、Elasticsearch（2010年，更新，功能更强大）</p>
+<p><strong>区别：</strong></p>
+<ol>
+<li>当实时建立索引时，Solr会产生io阻塞，而es不会，es查询性能要高于solr；</li>
+<li>在不断动态添加数据的时候，solr的检索速率会变慢，但es则没有变化；</li>
+<li>Solr利用zookeeper进行分布式管理，es自身带有分布式系统管理功能；</li>
+<li>Solr一般要部署到web服务器上，如tomcat上，Solr的本质是一个动态的web项目；</li>
+<li>Solr支持更多的格式数据（xml,json,csv等），而es仅支持json文件格式；</li>
+<li>Solr是传统搜索的有力解决放案，但es更适用于新兴的实时搜索应用；</li>
+<li>Solr官网提供的功能更多，而es本身更注重于核心功能。</li>
+</ol>
+<h1 id="业务"><a href="#业务" class="headerlink" title="业务"></a>业务</h1><h2 id="运营商业务"><a href="#运营商业务" class="headerlink" title="运营商业务"></a>运营商业务</h2><p>品牌、规格、模板的增删改查</p>
+<p><img src="http://picture.tjtulong.top/%E6%A8%A1%E6%9D%BF%E7%AE%A1%E7%90%86.JPG" alt></p>
+<p>商家审核：</p>
+<p><img src="http://picture.tjtulong.top/%E5%95%86%E5%AE%B6%E5%AE%A1%E6%A0%B8.JPG" alt></p>
+<h1 id="其他技术点"><a href="#其他技术点" class="headerlink" title="其他技术点"></a>其他技术点</h1><ul>
+<li>MyBatis分页插件PageHelper</li>
+<li>前端分层开发</li>
+<li>下拉框select2</li>
+<li>Spring Security框架</li>
+<li>BCrypt加密算法</li>
+<li>kindeditor富文本编辑器</li>
+<li>分布式文件服务器FastDFS</li>
+<li>注解式事务配置</li>
+<li>Redis缓存数据库——Spring Data Redis</li>
+<li>搜索解决方案Solr——Spring Data Solr</li>
+<li>中文分析器IK Analyzer</li>
+<li>Solr（高亮显示、分类列表、过滤查询、价格区间搜索、排序）</li>
+<li>网页静态化Freemarker</li>
+<li>FTL指令</li>
+<li>消息中间件ActiveMQ减小耦合</li>
+<li>SpringBoot微服务框架</li>
+<li>短信发送平台-阿里大于</li>
+<li>单点登录CAS</li>
+<li>CAS客户端与SpringSecurity集成</li>
+<li>Cookie与Redis存储购物车</li>
+<li>JS跨域请求</li>
+<li>分布式ID生成器（snowflake算法）</li>
+<li>二维码生成</li>
+<li>微信支付SDK</li>
+<li>Redis实现秒杀业务</li>
+<li>任务调度SpringTask</li>
+<li>Maven Profile</li>
+<li>MongoDB数据库</li>
+<li>Zookeeper集群</li>
+<li>SolrCloud集群</li>
+<li>Redis Cluster集群</li>
+<li>数据库分片中间件-MyCat</li>
+<li>反向代理服务器Nginx</li>
+<li>Docker容器</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/项目/" rel="tag"># 项目</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/27/小木匠数值模拟软件交流社区开发总结/" rel="next" title="小木匠数值模拟软件交流社区开发总结">
+                <i class="fa fa-chevron-left"></i> 小木匠数值模拟软件交流社区开发总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="http://picture.tjtulong.top/QQ%E5%9B%BE%E7%89%8720190515225418.jpg" alt="Tulong Xiao">
+            
+              <p class="site-author-name" itemprop="name">Tulong Xiao</p>
+              <p class="site-description motion-element" itemprop="description">Almost Famous</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/TJtulong" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:TJtulong@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/2610493505/home" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/TJtulong" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-book"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.tongji.edu.cn/" title="同济大学" target="_blank">同济大学</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#项目介绍"><span class="nav-number">1.</span> <span class="nav-text">项目介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#系统架构"><span class="nav-number">2.</span> <span class="nav-text">系统架构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#项目模块"><span class="nav-number">3.</span> <span class="nav-text">项目模块</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#应用技术点"><span class="nav-number">4.</span> <span class="nav-text">应用技术点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Dubbox-分布式服务框架"><span class="nav-number">4.1.</span> <span class="nav-text">Dubbox 分布式服务框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#前端框架AngularJS"><span class="nav-number">4.2.</span> <span class="nav-text">前端框架AngularJS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-Security"><span class="nav-number">4.3.</span> <span class="nav-text">Spring Security</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Solr服务器"><span class="nav-number">4.4.</span> <span class="nav-text">Solr服务器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#业务"><span class="nav-number">5.</span> <span class="nav-text">业务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#运营商业务"><span class="nav-number">5.1.</span> <span class="nav-text">运营商业务</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他技术点"><span class="nav-number">6.</span> <span class="nav-text">其他技术点</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tulong Xiao</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

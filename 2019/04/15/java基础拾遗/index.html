@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="椰子皮&#39;s Blog">
 <meta property="og:description" content="本文总结了部分javase中常见的知识点，并对其进行了深入分析。 1. 为什么重写equals，还要重写hashcode？ HashMap中，如果要比较key 是否相等，要同时使用这两个函数！因为自定义的类的hashcode()方法继承于Object 类，其hashcode码为默认的内存地址，这样即便有相同含义的两个对象，比较也是不相等的。 12// System类中的方法同样可以得到hashco">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-16T09:35:15.991Z">
+<meta property="og:updated_time" content="2019-06-30T08:51:59.956Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java基础拾遗">
 <meta name="twitter:description" content="本文总结了部分javase中常见的知识点，并对其进行了深入分析。 1. 为什么重写equals，还要重写hashcode？ HashMap中，如果要比较key 是否相等，要同时使用这两个函数！因为自定义的类的hashcode()方法继承于Object 类，其hashcode码为默认的内存地址，这样即便有相同含义的两个对象，比较也是不相等的。 12// System类中的方法同样可以得到hashco">
@@ -336,7 +336,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2.8k
+                  2.9k
                 </span>
               
 
@@ -352,7 +352,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  10
+                  11
                 </span>
               
             </div>
@@ -472,6 +472,14 @@
 <p>基本类型没有继承Object类，如果一个方法需要Object类型的参数时，较难处理，因此Java提供了这些基本类型的包装类，自动装箱是Java 编译器在基本数据类型和对应的对象包装类型之间做的一个转化。比如：把int直接赋值转化成Integer，double转化成Double等等。反之就是自动拆箱。</p>
 <p>特殊情形：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Integer ina = <span class="number">2</span>;</span><br><span class="line">Integer inb = <span class="number">2</span>;</span><br><span class="line">System.out.println(ina == inb); <span class="comment">//输出true</span></span><br></pre></td></tr></table></figure></p>
 <p>这是由于系统把-128~127之间的整数自动装箱成Integer实例，并放入cache的数组中缓存起来，以后-128~127之间的整数自动装箱时直接指向对应的数组元素，因此地址相同。</p>
+<p><strong>10.自增变量面试题</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line">    i = i++;</span><br><span class="line">    <span class="keyword">int</span> j = i++;</span><br><span class="line">    <span class="keyword">int</span> k = i + ++i*i++;</span><br><span class="line">    System.out.println(i);<span class="comment">//4</span></span><br><span class="line">    System.out.println(j);<span class="comment">//1</span></span><br><span class="line">    System.out.pringln(k);<span class="comment">//11</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>i = i++对应的字节码操作指令为：</p>
+<ol>
+<li>把i的值压入操作数栈</li>
+<li>i变量自增1</li>
+<li>把操作数栈中的值<strong>(1)</strong>赋值给i</li>
+</ol>
 
       
     </div>
@@ -584,7 +592,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-count">37</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -595,7 +603,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -606,7 +614,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">21</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
