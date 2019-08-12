@@ -87,10 +87,12 @@
 <meta property="og:site_name" content="椰子皮&#39;s Blog">
 <meta property="og:description" content="本文总结了部分javase中常见的知识点，并对其进行了深入分析。 1. 为什么重写equals，还要重写hashcode？ HashMap中，如果要比较key 是否相等，要同时使用这两个函数！因为自定义的类的hashcode()方法继承于Object 类，其hashcode码为默认的内存地址，这样即便有相同含义的两个对象，比较也是不相等的。 12// System类中的方法同样可以得到hashco">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-30T08:51:59.956Z">
+<meta property="og:image" content="http://picture.tjtulong.top/%E5%9B%9B%E7%A7%8D%E4%BF%AE%E9%A5%B0%E7%AC%A6.jpg">
+<meta property="og:updated_time" content="2019-07-05T02:53:22.382Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java基础拾遗">
 <meta name="twitter:description" content="本文总结了部分javase中常见的知识点，并对其进行了深入分析。 1. 为什么重写equals，还要重写hashcode？ HashMap中，如果要比较key 是否相等，要同时使用这两个函数！因为自定义的类的hashcode()方法继承于Object 类，其hashcode码为默认的内存地址，这样即便有相同含义的两个对象，比较也是不相等的。 12// System类中的方法同样可以得到hashco">
+<meta name="twitter:image" content="http://picture.tjtulong.top/%E5%9B%9B%E7%A7%8D%E4%BF%AE%E9%A5%B0%E7%AC%A6.jpg">
 
 
 
@@ -336,7 +338,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2.9k
+                  3.9k
                 </span>
               
 
@@ -352,7 +354,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  11
+                  14
                 </span>
               
             </div>
@@ -480,6 +482,37 @@
 <li>i变量自增1</li>
 <li>把操作数栈中的值<strong>(1)</strong>赋值给i</li>
 </ol>
+<p><strong>11.重载与重写的区别</strong><br>重载： 发生在同一个类中，方法名必须相同，<strong>参数类型不同、个数不同、顺序不同（三者必须有一个不同）</strong>，方法返回值和访问修饰符可以不同，发生在编译时。<br>重写： 发生在父子类中，方法名、参数列表必须相同，返回值范围小于等于父类，抛出的异常范围小于等于父类，访问修饰符范围大于等于父类（<strong>两同两小一大</strong>）；如果父类方法访问修饰符为 private 则子类就不能重写该方法。</p>
+<p><img src="http://picture.tjtulong.top/%E5%9B%9B%E7%A7%8D%E4%BF%AE%E9%A5%B0%E7%AC%A6.jpg" alt></p>
+<p><strong>12.final关键字</strong></p>
+<p>final关键字主要用在三个地方：变量、方法、类。</p>
+<ol>
+<li>对于一个final成员变量，如果是基本数据类型的变量，则其数值一旦在初始化（<strong>普通初始化块、构造器</strong>）之后便不能更改；如果是引用类型的变量，则在对其初始化之后便不能再让其指向另一个对象。</li>
+<li>当用final修饰一个类时，表明这个类不能被继承。final类中的所有成员方法都会被隐式地指定为final方法。</li>
+<li>使用final方法的原因有两个。第一个原因是把方法锁定，以防任何继承类修改它的含义；第二个原因是效率。在早期的Java实现版本中，会将final方法转为内嵌调用。但是如果方法过于庞大，可能看不到内嵌调用带来的<br> 任何性能提升（现在的Java版本已经不需要使用final方法进行这些优化了）。类中所有的private方法都隐式地指定为final。</li>
+</ol>
+<p><strong>13.内部类</strong></p>
+<p>Java从JDK1.1开始引入内部类，内部类的主要作用如下：</p>
+<ol>
+<li>内部类提供了更好的封装，可以把内部类隐藏在外部类之内，不允许同一个包中的其他类访问；</li>
+<li>内部类可以直接访问外部类的私有数据，因为内部类被当成其外部类成员，同一个类的成员之间可以相互访问，但外部类不能直接访问内部类的实现细节，如内部类的成员变量，必须先创建对象；</li>
+<li>匿名内部类适用于创建那些仅需要一次使用的类。</li>
+</ol>
+<p><strong>14.Java的四种引用</strong></p>
+<ol>
+<li><p>强引用</p>
+<p>不会被GC，当空间不足时。Jvm宁愿抛出OutOfMemory错误，使得程序终止，也不会考随意回收具有强引用的对象来解决内存不足的问题。强引用的举例：Object obj=new Object();</p>
+</li>
+<li><p>软引用</p>
+<p>内存空间足够，垃圾回收器就不会回收它，如果内存空间不足了，就会回收这些对象的内存。软引用作用是实现内存敏感的高速缓存。软引用可以和一个引用队列联合使用，如果软引用所引用的对象被垃圾回收，Java虚拟机会把软应用加入到与之关联的引用队列中。</p>
+</li>
+<li><p>弱引用</p>
+<p>一旦发现了只具有弱引用的对象，不管当前内存空间足够与否，都会回收它的内存。很软引用类似，只是回收的更快。weak引用对象常常用于Map数据结构中，引用占用的内存空间较大的对象。</p>
+</li>
+<li><p>虚引用 </p>
+<p>虚引用当垃圾回收器准备回收一个对象时，如果发现它还有虚引用，就会在回收对象的内存之前，把这个虚引用加入到与之关联的引用队列中。程序可以通过判断引用队列中是否已经加入了虚引用，来了解被引用的对象是否将要被垃圾回收。如果程序发现某个虚引用已经被加入到引用队列，那么就可以在所引用的对象的内存被回收之前采取必要的行动。</p>
+</li>
+</ol>
 
       
     </div>
@@ -592,7 +625,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -603,7 +636,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -614,7 +647,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
