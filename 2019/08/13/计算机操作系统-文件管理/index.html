@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="操作系统,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="文件的定义：一组有意义的信息的集合。 文件的属性：文件名、标识符、类型、位置、大小、创建时间、修改时间…… 文件系统的结构层次：  文件的逻辑结构所谓“逻辑结构”，就是指在用户来看，文件内部的数据应该是如何组织起来的。 无结构文件文件内部的数据就是一系列二进制流或字符流组成，又称”流式文件“，如.txt文件。 有结构文件由一组相似的记录组成，又称记录式文件。每条记录又由若干个数据项组成，如数据库表">
+<meta name="keywords" content="操作系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机操作系统--文件管理">
+<meta property="og:url" content="http://yoursite.com/2019/08/13/计算机操作系统-文件管理/index.html">
+<meta property="og:site_name" content="椰子皮&#39;s Blog">
+<meta property="og:description" content="文件的定义：一组有意义的信息的集合。 文件的属性：文件名、标识符、类型、位置、大小、创建时间、修改时间…… 文件系统的结构层次：  文件的逻辑结构所谓“逻辑结构”，就是指在用户来看，文件内部的数据应该是如何组织起来的。 无结构文件文件内部的数据就是一系列二进制流或字符流组成，又称”流式文件“，如.txt文件。 有结构文件由一组相似的记录组成，又称记录式文件。每条记录又由若干个数据项组成，如数据库表">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://picture.tjtulong.top/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84%E5%B1%82%E6%AC%A1.JPG">
+<meta property="og:image" content="http://picture.tjtulong.top/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%B4%A2%E5%BC%95%E6%96%87%E4%BB%B6.JPG">
+<meta property="og:image" content="http://picture.tjtulong.top/%E7%B4%A2%E5%BC%95%E9%A1%BA%E5%BA%8F%E6%96%87%E4%BB%B6.JPG">
+<meta property="og:image" content="http://picture.tjtulong.top/%E6%96%87%E4%BB%B6%E6%8E%A7%E5%88%B6%E5%9D%97.JPG">
+<meta property="og:image" content="http://picture.tjtulong.top/%E5%A4%9A%E7%BA%A7%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84.JPG">
+<meta property="og:image" content="http://picture.tjtulong.top/%E6%97%A0%E7%8E%AF%E5%9B%BE%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84.JPG">
+<meta property="og:image" content="http://picture.tjtulong.top/%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB%E7%A1%AC%E9%93%BE%E6%8E%A5.png">
+<meta property="og:image" content="http://picture.tjtulong.top/%E7%A3%81%E7%9B%98%E5%9D%97.JPG">
+<meta property="og:image" content="http://picture.tjtulong.top/%E7%A3%81%E7%9B%98%E8%BF%9E%E7%BB%AD%E5%AD%98%E5%82%A8.JPG">
+<meta property="og:image" content="http://picture.tjtulong.top/%E9%9A%90%E5%BC%8F%E9%93%BE%E6%8E%A5.png">
+<meta property="og:image" content="http://picture.tjtulong.top/%E6%98%BE%E5%BC%8F%E9%93%BE%E6%8E%A5.png">
+<meta property="og:image" content="http://picture.tjtulong.top/%E5%8D%95%E7%BA%A7%E7%B4%A2%E5%BC%95.png">
+<meta property="og:image" content="http://picture.tjtulong.top/%E5%A4%9A%E7%BA%A7%E7%B4%A2%E5%BC%95.png">
+<meta property="og:image" content="http://picture.tjtulong.top/%E6%B7%B7%E5%90%88%E7%B4%A2%E5%BC%95.png">
+<meta property="og:image" content="http://picture.tjtulong.top/%E4%BD%8D%E7%A4%BA%E5%9B%BE.png">
+<meta property="og:image" content="http://picture.tjtulong.top/%E7%A3%81%E7%9B%98%E7%BB%93%E6%9E%84.jpg">
+<meta property="og:image" content="http://picture.tjtulong.top/%E6%9C%80%E7%9F%AD%E6%97%B6%E9%97%B4%E4%BC%98%E5%85%88.png">
+<meta property="og:image" content="http://picture.tjtulong.top/%E7%94%B5%E6%A2%AF%E7%AE%97%E6%B3%95.png">
+<meta property="og:updated_time" content="2019-08-14T13:06:23.427Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="计算机操作系统--文件管理">
+<meta name="twitter:description" content="文件的定义：一组有意义的信息的集合。 文件的属性：文件名、标识符、类型、位置、大小、创建时间、修改时间…… 文件系统的结构层次：  文件的逻辑结构所谓“逻辑结构”，就是指在用户来看，文件内部的数据应该是如何组织起来的。 无结构文件文件内部的数据就是一系列二进制流或字符流组成，又称”流式文件“，如.txt文件。 有结构文件由一组相似的记录组成，又称记录式文件。每条记录又由若干个数据项组成，如数据库表">
+<meta name="twitter:image" content="http://picture.tjtulong.top/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84%E5%B1%82%E6%AC%A1.JPG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/08/13/计算机操作系统-文件管理/">
+
+
+
+
+
+  <title>计算机操作系统--文件管理 | 椰子皮's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">椰子皮's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/13/计算机操作系统-文件管理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tulong Xiao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="http://picture.tjtulong.top/QQ%E5%9B%BE%E7%89%8720190515225418.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="椰子皮's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">计算机操作系统--文件管理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-13T20:50:43+08:00">
+                2019-08-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/操作系统/" itemprop="url" rel="index">
+                    <span itemprop="name">操作系统</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4.1k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  14
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文件的定义：一组有意义的信息的集合。</p>
+<p>文件的属性：文件名、标识符、类型、位置、大小、创建时间、修改时间……</p>
+<p>文件系统的结构层次：</p>
+<p><img src="http://picture.tjtulong.top/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84%E5%B1%82%E6%AC%A1.JPG" alt></p>
+<h1 id="文件的逻辑结构"><a href="#文件的逻辑结构" class="headerlink" title="文件的逻辑结构"></a>文件的逻辑结构</h1><p>所谓“逻辑结构”，就是指在用户来看，文件内部的数据应该是如何组织起来的。</p>
+<h2 id="无结构文件"><a href="#无结构文件" class="headerlink" title="无结构文件"></a>无结构文件</h2><p>文件内部的数据就是一系列二进制流或字符流组成，又称”<strong>流式文件</strong>“，如.txt文件。</p>
+<h2 id="有结构文件"><a href="#有结构文件" class="headerlink" title="有结构文件"></a>有结构文件</h2><p>由一组相似的记录组成，又称记录式文件。每条记录又由若干个数据项组成，如数据库表文件，每条记录有一个数据项可以作为<strong>关键字</strong>。根据各条记录的长度，又可以分为<strong>定长记录和可变长记录</strong>两种。</p>
+<p>根据有结构文件中的各条记录在逻辑上如何组织，可分为三类：</p>
+<a id="more"></a>
+<h3 id="顺序文件"><a href="#顺序文件" class="headerlink" title="顺序文件"></a>顺序文件</h3><p>顺序文件：文件中的记录一个接一个地在逻辑上顺序排列，记录可以是定长的或可变长的。各个记录在物理上可以顺序存储或链式存储。</p>
+<ul>
+<li><p>顺序存储：逻辑上相邻的记录物理上也相邻（类似于顺序表）。</p>
+<p><strong>可变长记录</strong>：无法实现随机存取。每次只能从第一个记录开始依次往后查找。因为对于顺序存储下的可变长记录，除了记录内容还需要显式地给出记录长度。</p>
+<p><strong>定长记录</strong>：可实现随机存取。记录长度为L，则第i个记录存放的相对位置是i*L。若采用串结构，无法快速找到某关键字对应的记录。若采用顺序结构，可以快速找到某关键字对应的记录（如折半查找）</p>
+</li>
+<li><p>链式存储：逻辑上相邻的记录物理上不一定相邻（类似于链表）。无论是定长还是可变长记录，链式存储都无法实现随机存取，每次只能从第一个记录开始依次往后查找。</p>
+</li>
+</ul>
+<h3 id="索引文件"><a href="#索引文件" class="headerlink" title="索引文件"></a>索引文件</h3><p>解决可变长记录查找速度慢的问题。</p>
+<p>建立一张索引表以加快文件检索速度。每条记录对应一个索引项。索引表本身是定长记录的顺序文件。因此可以快速找到第i个记录对应的索引项。</p>
+<p><img src="http://picture.tjtulong.top/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%B4%A2%E5%BC%95%E6%96%87%E4%BB%B6.JPG" alt></p>
+<p>每当要增加删除‘一个记录时，需要对索引表进行修改。由于索引文件有很快的检索速度，因此主要用于对信息处理的及时性要求比较高的场合。</p>
+<h3 id="索引顺序文件"><a href="#索引顺序文件" class="headerlink" title="索引顺序文件"></a>索引顺序文件</h3><p>针对索引文件本身占据空间较大的问题，引入了索引顺序文件。</p>
+<p>索引顺序文件是索引文件和顺序文件思想的结合。索引顺序文件中，同样会文件建立一张索引表，但不同的是：并不是每个记录对应一个索引表项，而是<strong>一组记录对应一个索引表项</strong>。</p>
+<p><img src="http://picture.tjtulong.top/%E7%B4%A2%E5%BC%95%E9%A1%BA%E5%BA%8F%E6%96%87%E4%BB%B6.JPG" alt></p>
+<p>为了进一步提高检索效率，可以为顺序文件建立多级索引表。</p>
+<h1 id="文件目录"><a href="#文件目录" class="headerlink" title="文件目录"></a>文件目录</h1><h2 id="文件控制块"><a href="#文件控制块" class="headerlink" title="文件控制块"></a>文件控制块</h2><p>文件控制块是实现文件目录的关键数据结构。</p>
+<p><img src="http://picture.tjtulong.top/%E6%96%87%E4%BB%B6%E6%8E%A7%E5%88%B6%E5%9D%97.JPG" alt></p>
+<p><strong>FCB</strong>的有序集合称为“文件目录”，一个<strong>FCB</strong>就是一个文件<strong>目录项</strong>。FCB中包含了文件的基本信息（文件名、物理地址、逻辑结构、物理结构等），存取控制信息（是否可读/可写、用户访问权限等），使用信息（如文件的建立时间、修改时间等）。<strong>FCB实现了文件名和文件之间的映射</strong>。使用户（用户程序）可以实现“按名存取”。</p>
+<h2 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h2><h3 id="单级目录结构"><a href="#单级目录结构" class="headerlink" title="单级目录结构"></a>单级目录结构</h3><p>早期的操作系统并不支持多级目录，整个系统中只建立一张目录表，每个文件占一个目录项。单级目录实现了按名存取，但是不允许文件重名，无法多用户操作。</p>
+<h3 id="两级目录结构"><a href="#两级目录结构" class="headerlink" title="两级目录结构"></a>两级目录结构</h3><p>早期的多用户操作系统，采用两级目录。分为<strong>主文件目录</strong>（MFD，Master File Directory）和<strong>用户文件目录</strong>（UFD，User File Directory）。两级目录结构依然缺乏灵活性，用户不能对自己的文件进行分类。</p>
+<h3 id="多级目录结构"><a href="#多级目录结构" class="headerlink" title="多级目录结构"></a>多级目录结构</h3><p>也称树形目录结构</p>
+<p><img src="http://picture.tjtulong.top/%E5%A4%9A%E7%BA%A7%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84.JPG" alt></p>
+<p>用户或用户进程要访问某个文件时要用文件路径名标识符文件，文件路径名是个字符串。各级目录之间用“/”隔开。从根目录出发的路径称为<strong>绝对路径</strong>。系统会根据绝对路径一层层地找到下一级目录。</p>
+<p>也可以通过<strong>当前目录</strong>，根据<strong>相对路径</strong>查找。</p>
+<h3 id="无环图目录结构"><a href="#无环图目录结构" class="headerlink" title="无环图目录结构"></a>无环图目录结构</h3><p>树形目录可以很方便地对文件进行分类，层次结构清晰，也能够更有效地进行文件地管理和保护。但是，树形结构不便于实现文件共享。为此，进一步提出了无环图目录结构。</p>
+<p><img src="http://picture.tjtulong.top/%E6%97%A0%E7%8E%AF%E5%9B%BE%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84.JPG" alt></p>
+<p>在树形目录结构地基础上，增加一些指向同一节点的有向边，使整个目录成为一个有向无环图。可以更方便地实现多个用户间的文件共享。</p>
+<p>可以用不同的文件名指向同一个文件，甚至指向同一个目录（共享同一目录下的所有内容）。需要为每个共享结点设置一个共享计数器，用于记录此时有多少个地方在共享该结点。用户提出删除结点的请求时，只是删除该用户的FCB、并使共享计数器减1，并不会直接删除共享节点。</p>
+<h2 id="索引节点"><a href="#索引节点" class="headerlink" title="索引节点"></a>索引节点</h2><p>为了FCB的大小，较少磁盘I/O次数，将<strong>除了文件名之外的所有信息都放到索引节点中</strong>，每个文件对应一个索引节点。目录项中只包含文件名、索引节点指针，因此每个目录项的长度大幅减小，每个磁盘块可以存放更多的目录项，因此检索文件时磁盘I/O次数会减少很多。</p>
+<h1 id="文件管理功能"><a href="#文件管理功能" class="headerlink" title="文件管理功能"></a>文件管理功能</h1><h2 id="文件共享"><a href="#文件共享" class="headerlink" title="文件共享"></a>文件共享</h2><p>文件共享使<strong>多个用户（进程）共享同一份文件</strong>，系统中只需保留该文件的一份副本。否则，每个使用共享文件的用户都有各自的副本，会造成对存储空间的极大浪费。</p>
+<p><strong>1.基于索引结点的共享方式（硬链接）</strong></p>
+<p>在树形结构的目录中，当有两个或多个用户要共享一个子目录或文件时，必须将共享文件或子目录链接到两个或多个用户的目录中，才能方便地找到该文件。</p>
+<p><img src="http://picture.tjtulong.top/%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB%E7%A1%AC%E9%93%BE%E6%8E%A5.png" alt></p>
+<p>在索引结点中还应有一个<strong>链接计数count</strong>。当count=2时，表示有两个用户目录项链接到本文件上，共享此文件。添加和删除用户时count随之变化，count为0时，将删除此文件。</p>
+<p><strong>2.基于索引结点的共享方式（软链接）</strong></p>
+<p>为使用户B能共享用户A的一个文件F，可创建一LINK类型名为Flink的新文件，并将文件Flink写入用户B的目录中，以实现用户B的目录与文件F的链接。在Flink文件中只包含被链接文件F的路径名。此链接方法被称为符号链接。类似于windows系统中的快捷方式。</p>
+<h2 id="文件保护"><a href="#文件保护" class="headerlink" title="文件保护"></a>文件保护</h2><h3 id="口令保护"><a href="#口令保护" class="headerlink" title="口令保护"></a>口令保护</h3><p>为文件设置一个“口令”，用户想要访问文件时需要提供口令，由系统验证口令是否正确。</p>
+<p>系统开销少，但口令存放在FCB中或索引结点中，因此不安全。</p>
+<h3 id="加密保护"><a href="#加密保护" class="headerlink" title="加密保护"></a>加密保护</h3><p>用一个密码对文件异或加密，用户想要访问文件时，需要提供相同的密码才能正确的解密。</p>
+<p>安全性高，但解密/加密需要消耗一定的资源和时间</p>
+<h3 id="访问控制"><a href="#访问控制" class="headerlink" title="访问控制"></a>访问控制</h3><p>用一个控制访问表（ACL）记录各个用户（或各组用户）对文件的访问权限。</p>
+<p>对文件的访问类型可分为：读/写/执行/删除等</p>
+<p>实现灵活，可以实现复制的文件保护功能。</p>
+<h1 id="文件磁盘块管理"><a href="#文件磁盘块管理" class="headerlink" title="文件磁盘块管理"></a>文件磁盘块管理</h1><h2 id="文件的物理结构"><a href="#文件的物理结构" class="headerlink" title="文件的物理结构"></a>文件的物理结构</h2><p>文件的物理结构管理是对<strong>非空闲磁盘块</strong>的管理。</p>
+<p>磁盘块的大小与内存块、页面大小相同。逻辑块号与磁盘块一一对应。</p>
+<p><img src="http://picture.tjtulong.top/%E7%A3%81%E7%9B%98%E5%9D%97.JPG" alt></p>
+<h3 id="连续分配"><a href="#连续分配" class="headerlink" title="连续分配"></a>连续分配</h3><p>连续分配方式要求每个文件在磁盘上占有一组连续的块。这种分配方式保证了逻辑文件中的的记录顺序与存储器中的文件占用盘块的顺序是<strong>一致的</strong>。</p>
+<p><img src="http://picture.tjtulong.top/%E7%A3%81%E7%9B%98%E8%BF%9E%E7%BB%AD%E5%AD%98%E5%82%A8.JPG" alt></p>
+<font color="red">物理块号 = 起始块号 + 逻辑块号</font>
+
+<p>优点在于连续分配的文件在顺序读/写时速度最快。</p>
+<p>缺点在于，文件长度<strong>不宜动态增加</strong>，因为一个文件末尾后的盘块可能已经分配给其他文件，一旦需要增加， 就需要大量移动盘块。在外存上使用紧凑技术所花费的时间远比内存紧凑一次所花费的时间多得多。</p>
+<h3 id="链接分配"><a href="#链接分配" class="headerlink" title="链接分配"></a>链接分配</h3><p>链接分配是釆取<strong>离散分配</strong>的方式，消除了外部碎片，故而显著地<strong>提高了磁盘空间的利用率</strong>；又因为是根据文件的当前需求，为它分配必需的盘块，当文件动态增长时，可以动态地再为它分配盘块，故而<strong>无需事先知道文件的大小</strong>。此外，对文件的<strong>增、删、改也非常方便</strong>。</p>
+<p>链接分配又可以分为隐式链接和显式链接两种形式。</p>
+<p><strong>隐式链接：</strong></p>
+<p>文件，目录中每个目录项都包括<strong>指向链接文件第一盘块和最后一个盘块的指针</strong>。磁盘块分布在磁盘的任何地方，除最后一个盘块外，每一个盘块都有指向下一个盘块的指针，这些指针对用户是透明的。</p>
+<p><img src="http://picture.tjtulong.top/%E9%9A%90%E5%BC%8F%E9%93%BE%E6%8E%A5.png" alt></p>
+<p>优点：很方便文件拓展，不会有碎片问题，外存利用率高。</p>
+<p>缺点：隐式链接只适用于顺序访问，对随机访问时极其低效的</p>
+<p><strong>显式链接：</strong></p>
+<p><img src="http://picture.tjtulong.top/%E6%98%BE%E5%BC%8F%E9%93%BE%E6%8E%A5.png" alt></p>
+<p>显示链接把用于链接文件各物理块的指针，显示地存放在内存的一张<strong>链接表</strong>中。该表在整个磁盘仅设置一张。表的序号从0开始，直至N-1，N为盘块总数，在每个表项中存放链接指针，即下一个盘块号。由于查找记录的过程是<strong>在内存中进行的，因而提高了检索速度，减少了访问磁盘的次数</strong>。</p>
+<p>但FAT需要占用较大的内存空间。</p>
+<h3 id="索引分配"><a href="#索引分配" class="headerlink" title="索引分配"></a>索引分配</h3><p>在打开某个文件时，只需把该文件占用的盘块号的编号调入内存即可，<strong>无需把整个FAT调入内存</strong>。为此，将每个文件所对应的盘块号集中地放在一起，索引分配方式就是基于此想法所形成的一种分配方式。</p>
+<p><strong>1.单级索引</strong></p>
+<p>其为每个文件分配一个索引表，再把分配给该文件的所有盘块号都记录在该索引块中，因而该索引块就是一个含有许多磁盘块号的数组。在建立一个文件时，只需要在为之建立的目录项中填上指向该索引块的指针。</p>
+<p><img src="http://picture.tjtulong.top/%E5%8D%95%E7%BA%A7%E7%B4%A2%E5%BC%95.png" alt></p>
+<p><strong>2.多级索引</strong></p>
+<p><strong>当文件太大时，索引块太多，单级索引是低效的</strong>。此时，为这些索引块再建立一级索引，称为第一级索引，还可再建立索引，称为第二级索引等等。称为多级索引分配。</p>
+<p><img src="http://picture.tjtulong.top/%E5%A4%9A%E7%BA%A7%E7%B4%A2%E5%BC%95.png" alt></p>
+<p><strong>3.混合索引</strong></p>
+<p>将<strong>多种索引分配方式相结合</strong>而形成的一种分配方式，如直接地址，一次间接地址，多次间接地址。</p>
+<p><strong>Unix</strong> SystemV的分配采用了三级索引分配方式。共设置了13个索引地址项。前10个：iaddr(0)~iaddr(9)为直接地址项，iaddr(10)为一次间接地址项，iaddr(11)为二次间接地址项，iaddr(12)为三次间接地址项。</p>
+<p><img src="http://picture.tjtulong.top/%E6%B7%B7%E5%90%88%E7%B4%A2%E5%BC%95.png" alt></p>
+<h2 id="文件的储存空间管理"><a href="#文件的储存空间管理" class="headerlink" title="文件的储存空间管理"></a>文件的储存空间管理</h2><p>磁盘的划分：分为<strong>文件卷和目录区</strong>。</p>
+<p>目录区包含文件目录、空闲表、位式图、超级快等用于文件管理的数据。</p>
+<h3 id="空闲表法"><a href="#空闲表法" class="headerlink" title="空闲表法"></a>空闲表法</h3><p>空闲表法属于<strong>连续分配方式</strong>，它与内存的动态分配方式雷同，它为每个文件分配一块连续的存储空间，即系统也为外存上所有空闲区建立一张空闲表，每个空闲区对应于一个空闲表项，其中包括表项序号、该空闲区的第一个盘块号、该区的空闲盘块号等信息，再将所有空闲区按其起始盘块号递增排列。</p>
+<p>空闲盘区的分配与内存的动态分配类似，同样采用<strong>首次适应算法，循环首次适应算法</strong>等。</p>
+<h3 id="空闲链表法"><a href="#空闲链表法" class="headerlink" title="空闲链表法"></a>空闲链表法</h3><p>空闲链表法是<strong>将所有空闲盘区拉成一条空闲链</strong>。把链表分成两种形式，空闲盘块链和空闲盘区链。</p>
+<h3 id="位式图法"><a href="#位式图法" class="headerlink" title="位式图法"></a>位式图法</h3><p>利用二进制的一位表示磁盘中的一个盘块的使用情况，<strong>当其值为0时，表示对应的盘块空闲，为1时，表示已经分配</strong>，磁盘上的所有盘块都有一个二进制位与之对应。由所有盘块所对应的位构成一个集合，称为位示图，通常可用m×n个位数来构成位示图，并使m×n等于磁盘的总块数。</p>
+<p><img src="http://picture.tjtulong.top/%E4%BD%8D%E7%A4%BA%E5%9B%BE.png" alt></p>
+<p>优点：由于位示图很小，占用空间少，因而可将其保存在内存中，进而使在每次进行盘区分配时，无需首先把盘区分配表读入内存，节省磁盘启动时间。</p>
+<h1 id="磁盘"><a href="#磁盘" class="headerlink" title="磁盘"></a>磁盘</h1><p>磁盘的表面由一些<strong>磁性物质</strong>组成，可以用这些磁性物质来记录二进制数据。</p>
+<h2 id="磁盘结构"><a href="#磁盘结构" class="headerlink" title="磁盘结构"></a>磁盘结构</h2><ul>
+<li>盘面（Platter）：一个磁盘有多个盘面；</li>
+<li>磁道（Track）：盘面上的圆形带状区域，一个盘面可以有多个磁道；</li>
+<li>扇区（Track Sector）：磁道上的一个弧段，一个磁道可以有多个扇区，它是最小的物理储存单位，目前主要有 512 bytes 与 4 K 两种大小；</li>
+<li>磁头（Head）：与盘面非常接近，能够将盘面上的磁场转换为电信号（读），或者将电信号转换为盘面的磁场（写）；</li>
+<li>制动手臂（Actuator arm）：用于在磁道之间移动磁头；</li>
+<li>主轴（Spindle）：使整个盘面转动。</li>
+</ul>
+<p><img src="http://picture.tjtulong.top/%E7%A3%81%E7%9B%98%E7%BB%93%E6%9E%84.jpg" alt></p>
+<h2 id="磁盘调度算法"><a href="#磁盘调度算法" class="headerlink" title="磁盘调度算法"></a>磁盘调度算法</h2><p>读写一个磁盘块的时间的影响因素有：</p>
+<ul>
+<li><strong>旋转时间</strong>（主轴转动盘面，使得磁头移动到适当的扇区上）</li>
+<li><strong>寻道时间</strong>（制动手臂移动，使得磁头移动到适当的磁道上）</li>
+<li><strong>实际的数据传输时间</strong></li>
+</ul>
+<p>其中，寻道时间最长，因此磁盘调度的主要目标是使磁盘的平均寻道时间最短。</p>
+<h3 id="先来先服务"><a href="#先来先服务" class="headerlink" title="先来先服务"></a>先来先服务</h3><blockquote>
+<p>FCFS, First Come First Served</p>
+</blockquote>
+<p>按照磁盘请求的顺序进行调度。</p>
+<p>优点是公平和简单。缺点也很明显，因为未对寻道做任何优化，使平均寻道时间可能较长。</p>
+<h3 id="最短寻道时间优先"><a href="#最短寻道时间优先" class="headerlink" title="最短寻道时间优先"></a>最短寻道时间优先</h3><blockquote>
+<p>SSTF, Shortest Seek Time First</p>
+</blockquote>
+<p>优先调度与当前磁头所在磁道距离最近的磁道。</p>
+<p>虽然平均寻道时间比较低，但是不够公平。如果新到达的磁道请求总是比一个在等待的磁道请求近，那么在等待的磁道请求会一直等待下去，也就是出现饥饿现象。具体来说，两端的磁道请求更容易出现饥饿现象。</p>
+<p><img src="http://picture.tjtulong.top/%E6%9C%80%E7%9F%AD%E6%97%B6%E9%97%B4%E4%BC%98%E5%85%88.png" alt></p>
+<h3 id="电梯算法"><a href="#电梯算法" class="headerlink" title="电梯算法"></a>电梯算法</h3><blockquote>
+<p>SCAN</p>
+</blockquote>
+<p>电梯总是保持一个方向运行，直到该方向没有请求为止，然后改变运行方向。</p>
+<p>电梯算法（扫描算法）和电梯的运行过程类似，总是按一个方向来进行磁盘调度，直到该方向上没有未完成的磁盘请求，然后改变方向。</p>
+<p>因为考虑了移动方向，因此所有的磁盘请求都会被满足，解决了 SSTF 的饥饿问题。</p>
+<p><img src="http://picture.tjtulong.top/%E7%94%B5%E6%A2%AF%E7%AE%97%E6%B3%95.png" alt></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/操作系统/" rel="tag"># 操作系统</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/12/计算机操作系统-内存管理/" rel="next" title="计算机操作系统--内存管理">
+                <i class="fa fa-chevron-left"></i> 计算机操作系统--内存管理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="http://picture.tjtulong.top/QQ%E5%9B%BE%E7%89%8720190515225418.jpg" alt="Tulong Xiao">
+            
+              <p class="site-author-name" itemprop="name">Tulong Xiao</p>
+              <p class="site-description motion-element" itemprop="description">Almost Famous</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/TJtulong" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:TJtulong@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/2610493505/home" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/TJtulong" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-book"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.tongji.edu.cn/" title="同济大学" target="_blank">同济大学</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#文件的逻辑结构"><span class="nav-number">1.</span> <span class="nav-text">文件的逻辑结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#无结构文件"><span class="nav-number">1.1.</span> <span class="nav-text">无结构文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有结构文件"><span class="nav-number">1.2.</span> <span class="nav-text">有结构文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#顺序文件"><span class="nav-number">1.2.1.</span> <span class="nav-text">顺序文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#索引文件"><span class="nav-number">1.2.2.</span> <span class="nav-text">索引文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#索引顺序文件"><span class="nav-number">1.2.3.</span> <span class="nav-text">索引顺序文件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件目录"><span class="nav-number">2.</span> <span class="nav-text">文件目录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#文件控制块"><span class="nav-number">2.1.</span> <span class="nav-text">文件控制块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目录结构"><span class="nav-number">2.2.</span> <span class="nav-text">目录结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#单级目录结构"><span class="nav-number">2.2.1.</span> <span class="nav-text">单级目录结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#两级目录结构"><span class="nav-number">2.2.2.</span> <span class="nav-text">两级目录结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多级目录结构"><span class="nav-number">2.2.3.</span> <span class="nav-text">多级目录结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#无环图目录结构"><span class="nav-number">2.2.4.</span> <span class="nav-text">无环图目录结构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引节点"><span class="nav-number">2.3.</span> <span class="nav-text">索引节点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件管理功能"><span class="nav-number">3.</span> <span class="nav-text">文件管理功能</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#文件共享"><span class="nav-number">3.1.</span> <span class="nav-text">文件共享</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件保护"><span class="nav-number">3.2.</span> <span class="nav-text">文件保护</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#口令保护"><span class="nav-number">3.2.1.</span> <span class="nav-text">口令保护</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加密保护"><span class="nav-number">3.2.2.</span> <span class="nav-text">加密保护</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问控制"><span class="nav-number">3.2.3.</span> <span class="nav-text">访问控制</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件磁盘块管理"><span class="nav-number">4.</span> <span class="nav-text">文件磁盘块管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#文件的物理结构"><span class="nav-number">4.1.</span> <span class="nav-text">文件的物理结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#连续分配"><span class="nav-number">4.1.1.</span> <span class="nav-text">连续分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#链接分配"><span class="nav-number">4.1.2.</span> <span class="nav-text">链接分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#索引分配"><span class="nav-number">4.1.3.</span> <span class="nav-text">索引分配</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件的储存空间管理"><span class="nav-number">4.2.</span> <span class="nav-text">文件的储存空间管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#空闲表法"><span class="nav-number">4.2.1.</span> <span class="nav-text">空闲表法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#空闲链表法"><span class="nav-number">4.2.2.</span> <span class="nav-text">空闲链表法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#位式图法"><span class="nav-number">4.2.3.</span> <span class="nav-text">位式图法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#磁盘"><span class="nav-number">5.</span> <span class="nav-text">磁盘</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#磁盘结构"><span class="nav-number">5.1.</span> <span class="nav-text">磁盘结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#磁盘调度算法"><span class="nav-number">5.2.</span> <span class="nav-text">磁盘调度算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#先来先服务"><span class="nav-number">5.2.1.</span> <span class="nav-text">先来先服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最短寻道时间优先"><span class="nav-number">5.2.2.</span> <span class="nav-text">最短寻道时间优先</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#电梯算法"><span class="nav-number">5.2.3.</span> <span class="nav-text">电梯算法</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tulong Xiao</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="操作系统,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="内存内存基础内存是用于存放数据的硬件。程序执行前需要先放在内存中才能被CPU处理。 逻辑地址 vs 物理地址 程序运行过程：  编译：由编译程序将用户源代码编译成若干个目标模块(编译就是把高级语言翻译为机器语言)； 链接：由链接程序将编译后形成的一组目标模块，以及所需库函数链接在一起，形成一个完整的装入模块； 装入(装载)：由装入程序将装入模块装入内存运行。">
+<meta name="keywords" content="操作系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机操作系统--内存管理">
+<meta property="og:url" content="http://yoursite.com/2019/08/12/计算机操作系统-内存管理/index.html">
+<meta property="og:site_name" content="椰子皮&#39;s Blog">
+<meta property="og:description" content="内存内存基础内存是用于存放数据的硬件。程序执行前需要先放在内存中才能被CPU处理。 逻辑地址 vs 物理地址 程序运行过程：  编译：由编译程序将用户源代码编译成若干个目标模块(编译就是把高级语言翻译为机器语言)； 链接：由链接程序将编译后形成的一组目标模块，以及所需库函数链接在一起，形成一个完整的装入模块； 装入(装载)：由装入程序将装入模块装入内存运行。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://picture.tjtulong.top/%E7%A8%8B%E5%BA%8F%E8%BF%90%E8%A1%8C%E8%BF%87%E7%A8%8B.JPG">
+<meta property="og:image" content="http://picture.tjtulong.top/%E5%9B%BA%E5%AE%9A%E5%88%86%E5%8C%BA%E5%88%86%E9%85%8D.JPG">
+<meta property="og:image" content="http://picture.tjtulong.top/%E5%8A%A8%E6%80%81%E5%88%86%E5%8C%BA%E5%88%86%E9%85%8D%E7%AE%97%E6%B3%95.JPG">
+<meta property="og:image" content="http://picture.tjtulong.top/%E5%88%86%E9%A1%B5%E5%9C%B0%E5%9D%80.png">
+<meta property="og:image" content="http://picture.tjtulong.top/%E5%9D%97%E8%A1%A8.JPG">
+<meta property="og:image" content="http://picture.tjtulong.top/%E4%B8%A4%E7%BA%A7%E9%A1%B5%E8%A1%A8.JPG">
+<meta property="og:image" content="http://picture.tjtulong.top/%E5%88%86%E6%AE%B5%E5%9C%B0%E5%9D%80.png">
+<meta property="og:image" content="http://picture.tjtulong.top/%E8%AF%B7%E6%B1%82%E9%A1%B5%E8%A1%A8.JPG">
+<meta property="og:image" content="http://picture.tjtulong.top/%E6%9C%80%E4%B9%85%E6%9C%AA%E4%BD%BF%E7%94%A8.png">
+<meta property="og:image" content="http://picture.tjtulong.top/%E4%BA%8C%E6%AC%A1%E6%9C%BA%E4%BC%9A%E5%A4%84%E7%90%86.png">
+<meta property="og:image" content="http://picture.tjtulong.top/%E6%97%B6%E9%92%9F.png">
+<meta property="og:updated_time" content="2019-08-13T08:31:00.524Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="计算机操作系统--内存管理">
+<meta name="twitter:description" content="内存内存基础内存是用于存放数据的硬件。程序执行前需要先放在内存中才能被CPU处理。 逻辑地址 vs 物理地址 程序运行过程：  编译：由编译程序将用户源代码编译成若干个目标模块(编译就是把高级语言翻译为机器语言)； 链接：由链接程序将编译后形成的一组目标模块，以及所需库函数链接在一起，形成一个完整的装入模块； 装入(装载)：由装入程序将装入模块装入内存运行。">
+<meta name="twitter:image" content="http://picture.tjtulong.top/%E7%A8%8B%E5%BA%8F%E8%BF%90%E8%A1%8C%E8%BF%87%E7%A8%8B.JPG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/08/12/计算机操作系统-内存管理/">
+
+
+
+
+
+  <title>计算机操作系统--内存管理 | 椰子皮's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">椰子皮's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/12/计算机操作系统-内存管理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tulong Xiao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="http://picture.tjtulong.top/QQ%E5%9B%BE%E7%89%8720190515225418.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="椰子皮's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">计算机操作系统--内存管理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-12T13:49:10+08:00">
+                2019-08-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/操作系统/" itemprop="url" rel="index">
+                    <span itemprop="name">操作系统</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.9k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  13
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h1><h2 id="内存基础"><a href="#内存基础" class="headerlink" title="内存基础"></a>内存基础</h2><p>内存是用于存放数据的硬件。程序执行前需要先放在内存中才能被CPU处理。</p>
+<p>逻辑地址 vs 物理地址</p>
+<p>程序运行过程：</p>
+<p><img src="http://picture.tjtulong.top/%E7%A8%8B%E5%BA%8F%E8%BF%90%E8%A1%8C%E8%BF%87%E7%A8%8B.JPG" alt></p>
+<p><strong>编译</strong>：由编译程序将用户源代码编译成若干个目标模块(编译就是把高级语言翻译为机器语言)；</p>
+<p><strong>链接</strong>：由链接程序将编译后形成的一组目标模块，以及所需库函数链接在一起，形成一个完整的装入模块；</p>
+<p><strong>装入</strong>(装载)：由装入程序将装入模块装入内存运行。</p>
+<a id="more"></a>
+<font color="red">三种装入方式：</font>
+
+<ol>
+<li>绝对装入：编译时产生绝对地址；</li>
+<li>可重定向装入（静态重定位）：装入时逻辑地址转换为物理地址；</li>
+<li>动态运行时装入（动态重定位）：运行时逻辑地址转换为物理地址，需设置<strong>重定向寄存器</strong>，是现代操作系统采取的方式。</li>
+</ol>
+<h2 id="内存管理的概念"><a href="#内存管理的概念" class="headerlink" title="内存管理的概念"></a>内存管理的概念</h2><p>内存空间的分配与回收</p>
+<p>内存空间的扩种（实现虚拟性）</p>
+<p>地址转换：操作系统负责实现逻辑地址到物理地址的转换（三种方式）</p>
+<p>存储保护：</p>
+<ul>
+<li>设置上下限寄存器；</li>
+<li>利用重定位寄存器、界地址寄存器进行判断。</li>
+</ul>
+<h2 id="覆盖与交换技术"><a href="#覆盖与交换技术" class="headerlink" title="覆盖与交换技术"></a>覆盖与交换技术</h2><p>用于内存空间的扩充。</p>
+<p><strong>覆盖技术</strong>的思想：将程序分为多个段(多个模块)常用的段常驻内存，不常用的段在需要时调入内存。</p>
+<p><strong>内存中分为一个“固定区”和若干个“覆盖区”</strong>。需要常驻内存的段放在“固定区”中，调入后就不再调出(除非运行结束)不常用的段放在“覆盖区”，需要用到时调入内存，用不到时调出内存。 </p>
+<p>但由于必须由程序员声明，对用户不透明，因此已不再使用</p>
+<p><strong>交换技术</strong>的设计思想：内存紧张时，系统将内存中某些进程暂时换出<strong>外村</strong>，把外存中某些已具备运行条件的进程换入内存，中级调度就是决定哪个处于挂起状态的进程重新调入内存。</p>
+<p>具有对换功能的操作系统中，通常把磁盘空间分为<strong>文件区</strong>和<strong>对换区</strong>两部分。文件区主要用于存放文件，主要<strong>追求存储空间的利用率</strong>，因此对文件区空间的管理采用离散分配方式；对换区空间只占磁盘空间的小部分，<strong>被换出的进程数据就存放在对换区</strong>。由于对换的速度直接影响到系统的整体速度，因此对换区空间的管理主要追求换入换出速度，因此通常对换区采用连续分配方式。总之，对换区的I/O速度比文件区的更快。</p>
+<h2 id="连续分配管理方式"><a href="#连续分配管理方式" class="headerlink" title="连续分配管理方式"></a>连续分配管理方式</h2><p><strong>内部碎片</strong>：分配给某进程的内存区域中，有些部分没有用上；</p>
+<p><strong>外部碎片</strong>：指内存中的某些空闲分区由于太小而难以利用。</p>
+<h3 id="单一连续分配"><a href="#单一连续分配" class="headerlink" title="单一连续分配"></a>单一连续分配</h3><p>在单一连续分配方式中，内存被分为<strong>系统区和用户区</strong>。 </p>
+<p>系统区通常位于内存的低地址部分，用于存放操作系统相关数据；用户区用于存放用户进程相关数据。</p>
+<p>内存中<strong>只能有一道用户程序</strong>，用户程序独占整个用户区 空间。</p>
+<font color="red">储存利用率极低，有内部碎片，无外部碎片。</font>
+
+<h3 id="固定分区分配"><a href="#固定分区分配" class="headerlink" title="固定分区分配"></a>固定分区分配</h3><p>20世纪60年代出现了支持多道程序的系统，为了能在内 存中装入多道程序，且这些程序之间又不会相互干扰，于是<strong>将整个用户空间划分为若干个固定大小的分区，在每个分区中只装入一道作业</strong>，这样就形成了最早的、最简单的一种可运行多道程序的内存管理方式。</p>
+<p><img src="http://picture.tjtulong.top/%E5%9B%BA%E5%AE%9A%E5%88%86%E5%8C%BA%E5%88%86%E9%85%8D.JPG" alt></p>
+<p>操作系统需要建立一个数据结构一一<strong>分区说明表</strong>，来实现各个分区的分配与回收。每个表项对应一个分区，通常按分区大小排列。每个表项包括对应<strong>分区的大小、起始地址、状态（是否己分配）</strong>。</p>
+<font color="red">有内部碎片，无外部碎片。</font>
+
+<h3 id="动态分区分配"><a href="#动态分区分配" class="headerlink" title="动态分区分配"></a>动态分区分配</h3><p>动态分区分分配又称为可变分区分配。这种分配方式不会预先划分内存分区，而是在进程装入内存时，根据进程的大小动态地建立分区，并使分区的大小正好适合进程的需要。因此系统分区的大小和数目是可变的。</p>
+<p>如果内存中空闲空间的总和本来可以满足某进程的要求，但由于进程需要的是一整块连续的内存空间，因此这些 “碎片”不能满足进程的需求。可以通过<strong>紧凑</strong>（拼凑，Compaction)技术来解决外部碎片。</p>
+<font color="red">无内部碎片，有外部碎片。</font>
+
+<p><strong>动态分区分配算法（四种）</strong>：解决的是当有多个分区都能满足内存要求是，选择哪个分区。</p>
+<p><img src="http://picture.tjtulong.top/%E5%8A%A8%E6%80%81%E5%88%86%E5%8C%BA%E5%88%86%E9%85%8D%E7%AE%97%E6%B3%95.JPG" alt></p>
+<h2 id="非连续分配管理方式"><a href="#非连续分配管理方式" class="headerlink" title="非连续分配管理方式"></a>非连续分配管理方式</h2><h3 id="基本分页存储"><a href="#基本分页存储" class="headerlink" title="基本分页存储"></a>基本分页存储</h3><p>基本分页存储管理的思想：把内存分为一个个相等的<strong>小分区（页框）</strong>，再按照分区大小把进程拆分成一个个大小相等的小部分（<strong>页、页面</strong>）。操作系统以页框为单位为各个进程分配内存空间。进程的每个页面分别放入一个页框中。也就是说，<strong>进程的页面与内存的页框有一一对应的关系</strong>。各个页面不必连续存放，也不必按先后顺序来，可以放到不相 邻的各个页框中。</p>
+<p>物理地址与逻辑地址的转换：</p>
+<ol>
+<li>算出逻辑地址对应的页号</li>
+<li>找到该页号对应页面在内存中的起始地址（<strong>页表实现</strong>）</li>
+<li>算出逻辑地址在页面内的偏移量</li>
+<li><strong>物理地址 = 页面始址 + 页面偏移量</strong></li>
+</ol>
+<p>内存管理单元（MMU）管理着地址空间和物理内存的转换，其中的页表（Page table）存储着页（程序地址空间）和页框（物理内存空间）的映射表。</p>
+<p>一个虚拟地址分成两个部分，一部分存储页面号，一部分存储偏移量。</p>
+<p>下图的页表存放着 16 个页，这 16 个页需要用 4 个比特位来进行索引定位。例如对于虚拟地址（0010 000000000100），前 4 位是存储页面号 2，读取表项内容为（110 1），页表项最后一位表示是否存在于内存中，1 表示存在。<strong>后 12 位存储偏移量</strong>。这个页对应的页框的地址为 （110 000000000100）。</p>
+<p><img src="http://picture.tjtulong.top/%E5%88%86%E9%A1%B5%E5%9C%B0%E5%9D%80.png" alt></p>
+<h4 id="具有快表的地址变换机构"><a href="#具有快表的地址变换机构" class="headerlink" title="具有快表的地址变换机构"></a>具有快表的地址变换机构</h4><p>时间局限性：如果执行了程序中的某条指令，那么不久后这条指令很可能被再次执行；如果某个数据被访问过，不久之后该数据很可能再次被访问（因为程序中有大量循环）。</p>
+<p>空间局限性：一旦程序访问了某个储存单元，在不久之后，其附近的储存单元也可能被访问。</p>
+<p>由于局部性原理，可能连续很多次查到的都是一个<strong>页表项</strong>。这时可以引入快表，块表又称联想寄存器（TLB），是一种<strong>访问速度比内存快很多</strong>的高速缓冲存储器。这样在访问页表前先访问快表，若未命中，再访问页表。</p>
+<p><img src="http://picture.tjtulong.top/%E5%9D%97%E8%A1%A8.JPG" alt></p>
+<h4 id="两级页表"><a href="#两级页表" class="headerlink" title="两级页表"></a>两级页表</h4><p>单级页表存在的问题：</p>
+<ul>
+<li>页表必须连续存放，因此当页表很大时，需要<strong>占据很多个连续的页框</strong></li>
+<li>没有必要让整个页表常驻内存，因为进程在一段时间内可能只需要访问某几个特定的页面。</li>
+</ul>
+<p>可以把必须连续存放的页表再分页，再建立一个<font color="red">页表的页表</font>，称之为<strong>页目录表</strong>或外层页表或顶层页表。</p>
+<p><img src="http://picture.tjtulong.top/%E4%B8%A4%E7%BA%A7%E9%A1%B5%E8%A1%A8.JPG" alt></p>
+<p><strong>步骤</strong>：</p>
+<ol>
+<li>按照地址结构将逻辑地址拆分成三部分；</li>
+<li>从PCB中读出页目录表始址，再根据一级页号查页目录表，找到下一级页表在内存中的存放位置；</li>
+<li>根据二级页号查表，找到最终想访问的内存块号；</li>
+<li>结合页内偏移量得到物理地址。</li>
+</ol>
+<p><em>注：各级页表的大小不能超过一个页面，若两级页表不够，可以分更多级。</em></p>
+<h3 id="基本分段存储"><a href="#基本分段存储" class="headerlink" title="基本分段存储"></a>基本分段存储</h3><p>按照程序自身的逻辑关系划分为若干个段，每个段从0开始编制，以段为单位进行分配，<strong>每个段在内存中占据连续空间，但各段之间可以不相邻</strong>。通过段号查询<strong>段表</strong>来确定物理地址。</p>
+<p><img src="http://picture.tjtulong.top/%E5%88%86%E6%AE%B5%E5%9C%B0%E5%9D%80.png" alt></p>
+<p><strong>分页和分段的比较：</strong></p>
+<ul>
+<li>对程序员的透明性：分页透明，但是分段需要程序员显式划分每个段。</li>
+<li>地址空间的维度：分页是一维地址空间，分段是二维的。</li>
+<li>大小是否可以改变：页的大小不可变，段的大小可以动态改变。</li>
+<li>出现的原因：分页主要用于实现虚拟内存，从而获得更大的地址空间；分段主要是为了使程序和数据可以被划分为逻辑上独立的地址空间并且<strong>有助于共享和保护</strong>。</li>
+</ul>
+<h3 id="段页式存储"><a href="#段页式存储" class="headerlink" title="段页式存储"></a>段页式存储</h3><p>程序的地址空间划分成多个拥有独立地址空间的段，每个段上的地址空间划分成大小相同的页。这样既拥有分段系统的共享和保护，又拥有分页系统的虚拟内存功能。</p>
+<h1 id="虚拟存储技术"><a href="#虚拟存储技术" class="headerlink" title="虚拟存储技术"></a>虚拟存储技术</h1><p>传统存储管理方式的缺点：</p>
+<ul>
+<li><strong>一次性</strong>：作业必须一次性全部装入内存后才能开始运行，大作业无法运行；</li>
+<li><strong>驻留性</strong>：一旦作业被装入内存，就会一直驻留在内存中。</li>
+</ul>
+<p>基于局部性原理，在程序装入时，可以将程序中很快会用到的部分装入内存，暂时用不到的部分留在外存，就可以让程序开始执行。<br>在程序执行过程中，当所访问的信息不在内存时，<strong>由操作系统负贵将所需信息从外存调入内存（请求调页）</strong>，然后继续执行程序。若内存空间不够，<strong>由操作系统负责将内存中暂时用不到的信息换出到外存（页面置换）</strong>。在操作系统的管理下，在用户看来似乎有一个比实际 内存大得多的内存，这就是<strong>虚拟内存</strong>。</p>
+<h2 id="请求分页管理"><a href="#请求分页管理" class="headerlink" title="请求分页管理"></a>请求分页管理</h2><p>关键点：</p>
+<ul>
+<li>页表机制</li>
+<li>缺页中断机制</li>
+<li>地址变换机制</li>
+</ul>
+<p>页表项相对于基本分页存储多了一些状态项：</p>
+<p><img src="http://picture.tjtulong.top/%E8%AF%B7%E6%B1%82%E9%A1%B5%E8%A1%A8.JPG" alt></p>
+<p>在请求分页系统中，每当要访问的页面不在内存时，便产生一个<strong>缺页中断</strong>，然后由操作系统的缺页中断处理程序处理中断。此时<strong>缺页的进程阻塞，放入阻塞队列</strong>，调页完成后再将其唤醒，放回就绪队列。如果内存中有空闲块，则为进程分配一个空闲块，将所缺页而装入该块，并修改页表中相应的页表项。若内存空间不够，由操作系统负责将内存中暂时不用的信息换出到外存。</p>
+<h2 id="页面置换算法"><a href="#页面置换算法" class="headerlink" title="页面置换算法"></a>页面置换算法</h2><p>在程序运行过程中，如果要访问的页面不在内存中，就发生缺页中断从而将该页调入内存中。此时如果内存已无空闲空间，系统必须从内存中调出一个页面到磁盘对换区中来腾出空间。</p>
+<p>页面置换算法和缓存淘汰策略类似，可以将内存看成磁盘的缓存。在缓存系统中，缓存的大小有限，当有新的缓存到达时，需要淘汰一部分已经存在的缓存，这样才有空间存放新的缓存数据。</p>
+<p>页面置换算法的主要目标是使页面置换频率最低（也可以说缺页率最低）。</p>
+<h3 id="最佳置换算法"><a href="#最佳置换算法" class="headerlink" title="最佳置换算法"></a>最佳置换算法</h3><blockquote>
+<p>OPT, Optimal replacement algorithm</p>
+</blockquote>
+<p>所选择的被换出的页面将是最长时间内不再被访问，通常可以保证获得最低的缺页率。</p>
+<p>是一种理论上的算法，因为无法知道一个页面多长时间不再被访问。</p>
+<p>举例：一个系统为某进程分配了三个物理块，并有如下页面引用序列：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">7，0，1，2，0，3，0，4，2，3，0，3，2，1，2，0，1，7，0，1</span><br></pre></td></tr></table></figure>
+<p>开始运行时，先将 7, 0, 1 三个页面装入内存。当进程要访问页面 2 时，产生缺页中断，会将页面 7 换出，因为页面 7 再次被访问的时间最长。</p>
+<h3 id="最近最久未使用"><a href="#最近最久未使用" class="headerlink" title="最近最久未使用"></a>最近最久未使用</h3><blockquote>
+<p>LRU, Least Recently Used</p>
+</blockquote>
+<p>虽然无法知道将来要使用的页面情况，但是可以知道过去使用页面的情况。LRU 将最近最久未使用的页面换出。</p>
+<p>为了实现 LRU，需要在内存中维护一个所有页面的链表。当一个页面被访问时，将这个页面移到链表表头。这样就能保证链表表尾的页面是最近最久未访问的。</p>
+<p>因为每次访问都需要更新链表，因此这种方式实现的 LRU 代价很高。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">4，7，0，7，1，0，1，2，1，2，6</span><br></pre></td></tr></table></figure>
+<p><img src="http://picture.tjtulong.top/%E6%9C%80%E4%B9%85%E6%9C%AA%E4%BD%BF%E7%94%A8.png" alt></p>
+<h3 id="最近未使用"><a href="#最近未使用" class="headerlink" title="最近未使用"></a>最近未使用</h3><blockquote>
+<p>NRU, Not Recently Used</p>
+</blockquote>
+<p>每个页面都有两个状态位：R 与 M，当页面被访问时设置页面的 R=1，当页面被修改时设置 M=1。其中 R 位会定时被清零。可以将页面分成以下四类：</p>
+<ul>
+<li>R=0，M=0</li>
+<li>R=0，M=1</li>
+<li>R=1，M=0</li>
+<li>R=1，M=1</li>
+</ul>
+<p>当发生缺页中断时，NRU 算法随机地从类编号最小的非空类中挑选一个页面将它换出。</p>
+<p>NRU 优先换出已经被修改的脏页面（R=0，M=1），而不是被频繁使用的干净页面（R=1，M=0）。</p>
+<h3 id="先进先出"><a href="#先进先出" class="headerlink" title="先进先出"></a>先进先出</h3><blockquote>
+<p>FIFO, First In First Out</p>
+</blockquote>
+<p>选择换出的页面是最先进入的页面。</p>
+<p>该算法会将那些经常被访问的页面也被换出，从而使缺页率升高。</p>
+<h3 id="第二次机会算法"><a href="#第二次机会算法" class="headerlink" title="第二次机会算法"></a>第二次机会算法</h3><p>FIFO 算法可能会把经常使用的页面置换出去，为了避免这一问题，对该算法做一个简单的修改：</p>
+<p>当页面被访问 (读或写) 时设置该页面的 R 位为 1。需要替换的时候，检查最老页面的 R 位。如果 R 位是 0，那么这个页面既老又没有被使用，可以立刻置换掉；如果是 1，就将 R 位清 0，并把该页面放到链表的尾端，修改它的装入时间使它就像刚装入的一样，然后继续从链表的头部开始搜索。</p>
+<p><img src="http://picture.tjtulong.top/%E4%BA%8C%E6%AC%A1%E6%9C%BA%E4%BC%9A%E5%A4%84%E7%90%86.png" alt></p>
+<h3 id="时钟"><a href="#时钟" class="headerlink" title="时钟"></a>时钟</h3><blockquote>
+<p>Clock</p>
+</blockquote>
+<p>第二次机会算法需要在链表中移动页面，降低了效率。时钟算法使用环形链表将页面连接起来，再使用一个指针指向最老的页面。</p>
+<p><img src="http://picture.tjtulong.top/%E6%97%B6%E9%92%9F.png" alt></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/操作系统/" rel="tag"># 操作系统</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/08/计算机操作系统-进程/" rel="next" title="计算机操作系统--进程">
+                <i class="fa fa-chevron-left"></i> 计算机操作系统--进程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/13/计算机操作系统-文件管理/" rel="prev" title="计算机操作系统--文件管理">
+                计算机操作系统--文件管理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="http://picture.tjtulong.top/QQ%E5%9B%BE%E7%89%8720190515225418.jpg" alt="Tulong Xiao">
+            
+              <p class="site-author-name" itemprop="name">Tulong Xiao</p>
+              <p class="site-description motion-element" itemprop="description">Almost Famous</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/TJtulong" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:TJtulong@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/2610493505/home" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/TJtulong" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-book"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.tongji.edu.cn/" title="同济大学" target="_blank">同济大学</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#内存"><span class="nav-number">1.</span> <span class="nav-text">内存</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#内存基础"><span class="nav-number">1.1.</span> <span class="nav-text">内存基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存管理的概念"><span class="nav-number">1.2.</span> <span class="nav-text">内存管理的概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#覆盖与交换技术"><span class="nav-number">1.3.</span> <span class="nav-text">覆盖与交换技术</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#连续分配管理方式"><span class="nav-number">1.4.</span> <span class="nav-text">连续分配管理方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#单一连续分配"><span class="nav-number">1.4.1.</span> <span class="nav-text">单一连续分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#固定分区分配"><span class="nav-number">1.4.2.</span> <span class="nav-text">固定分区分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动态分区分配"><span class="nav-number">1.4.3.</span> <span class="nav-text">动态分区分配</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非连续分配管理方式"><span class="nav-number">1.5.</span> <span class="nav-text">非连续分配管理方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本分页存储"><span class="nav-number">1.5.1.</span> <span class="nav-text">基本分页存储</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#具有快表的地址变换机构"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">具有快表的地址变换机构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#两级页表"><span class="nav-number">1.5.1.2.</span> <span class="nav-text">两级页表</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本分段存储"><span class="nav-number">1.5.2.</span> <span class="nav-text">基本分段存储</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#段页式存储"><span class="nav-number">1.5.3.</span> <span class="nav-text">段页式存储</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#虚拟存储技术"><span class="nav-number">2.</span> <span class="nav-text">虚拟存储技术</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#请求分页管理"><span class="nav-number">2.1.</span> <span class="nav-text">请求分页管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#页面置换算法"><span class="nav-number">2.2.</span> <span class="nav-text">页面置换算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#最佳置换算法"><span class="nav-number">2.2.1.</span> <span class="nav-text">最佳置换算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最近最久未使用"><span class="nav-number">2.2.2.</span> <span class="nav-text">最近最久未使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最近未使用"><span class="nav-number">2.2.3.</span> <span class="nav-text">最近未使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#先进先出"><span class="nav-number">2.2.4.</span> <span class="nav-text">先进先出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二次机会算法"><span class="nav-number">2.2.5.</span> <span class="nav-text">第二次机会算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时钟"><span class="nav-number">2.2.6.</span> <span class="nav-text">时钟</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tulong Xiao</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
