@@ -88,7 +88,7 @@
 <meta property="og:description" content="本文总结了部分javase中常见的知识点，并对其进行了深入分析。 1. 为什么重写equals，还要重写hashcode？ HashMap中，如果要比较key 是否相等，要同时使用这两个函数！因为自定义的类的hashcode()方法继承于Object 类，其hashcode码为默认的内存地址，这样即便有相同含义的两个对象，比较也是不相等的。 12// System类中的方法同样可以得到hashco">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://picture.tjtulong.top/%E5%9B%9B%E7%A7%8D%E4%BF%AE%E9%A5%B0%E7%AC%A6.jpg">
-<meta property="og:updated_time" content="2019-07-05T02:53:22.382Z">
+<meta property="og:updated_time" content="2019-08-16T07:15:28.018Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java基础拾遗">
 <meta name="twitter:description" content="本文总结了部分javase中常见的知识点，并对其进行了深入分析。 1. 为什么重写equals，还要重写hashcode？ HashMap中，如果要比较key 是否相等，要同时使用这两个函数！因为自定义的类的hashcode()方法继承于Object 类，其hashcode码为默认的内存地址，这样即便有相同含义的两个对象，比较也是不相等的。 12// System类中的方法同样可以得到hashco">
@@ -501,7 +501,7 @@
 <p><strong>14.Java的四种引用</strong></p>
 <ol>
 <li><p>强引用</p>
-<p>不会被GC，当空间不足时。Jvm宁愿抛出OutOfMemory错误，使得程序终止，也不会考随意回收具有强引用的对象来解决内存不足的问题。强引用的举例：Object obj=new Object();</p>
+<p>不会被GC，当空间不足时。Jvm宁愿抛出OutOfMemory错误，使得程序终止，也不会考虑随意回收具有强引用的对象来解决内存不足的问题。强引用的举例：Object obj=new Object();</p>
 </li>
 <li><p>软引用</p>
 <p>内存空间足够，垃圾回收器就不会回收它，如果内存空间不足了，就会回收这些对象的内存。软引用作用是实现内存敏感的高速缓存。软引用可以和一个引用队列联合使用，如果软引用所引用的对象被垃圾回收，Java虚拟机会把软应用加入到与之关联的引用队列中。</p>
@@ -625,7 +625,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-count">42</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
