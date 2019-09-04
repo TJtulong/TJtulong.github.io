@@ -92,7 +92,7 @@
 <meta property="og:image" content="http://picture.tjtulong.top/%E6%A8%A1%E5%9D%97.png">
 <meta property="og:image" content="http://picture.tjtulong.top/snowflake.jpg">
 <meta property="og:image" content="http://picture.tjtulong.top/Rabbit.png">
-<meta property="og:updated_time" content="2019-06-30T06:30:01.793Z">
+<meta property="og:updated_time" content="2019-08-31T15:31:30.595Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="小木匠数值模拟软件交流社区开发总结">
 <meta name="twitter:description" content="小木匠项目简介小木匠是一个数值分析科研人员的专属学术交流平台，包括头条，问答，活动，交友，吐槽和招聘六大频道。">
@@ -405,7 +405,7 @@
 <p>查询推荐职位列表时，查询按照时间降序的前8条记录：</p>
 <p><code>public List&lt;Recruit&gt; findTop4ByStateOrderByCreatetimeDesc(String state);</code></p>
 <p>为提高查询效率，给职位表的createtime字段<strong>建立索引</strong>：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> <span class="string">`tb_recruit`</span> <span class="keyword">ADD</span> PRIMARY <span class="keyword">KEY</span> (<span class="string">`createtime`</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> <span class="string">`tb_recruit`</span> <span class="keyword">ADD</span> <span class="keyword">INDEX</span> index_name (<span class="string">`createtime`</span>)</span><br></pre></td></tr></table></figure>
 <h2 id="Redis缓存"><a href="#Redis缓存" class="headerlink" title="Redis缓存"></a>Redis缓存</h2><p>由于文章在主页中显示，查询频率很高，为提高查询性能，利用Redis缓存技术解决。</p>
 <p>在查询文章时，先尝试从缓存中取数据，如果缓存中没有数据，再到数据库中查找放入缓存：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Article <span class="title">findById</span><span class="params">(String id)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//先从缓存中查询当前对象</span></span><br><span class="line">    Article article = (Article) redisTemplate.opsForValue().get(<span class="string">"article_"</span> + id);</span><br><span class="line">    <span class="comment">//如果没有取到，从数据库中查询</span></span><br><span class="line">    <span class="keyword">if</span> (article == <span class="keyword">null</span>) &#123;</span><br><span class="line">        article = articleDao.findById(id).get();</span><br><span class="line">        redisTemplate.opsForValue().set(<span class="string">"article_"</span> + id, article);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> article;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
