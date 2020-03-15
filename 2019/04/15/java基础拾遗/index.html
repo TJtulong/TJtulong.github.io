@@ -88,7 +88,7 @@
 <meta property="og:description" content="本文总结了部分javase中常见的知识点，并对其进行了深入分析。 1. 为什么重写equals，还要重写hashcode？ HashMap中，如果要比较key 是否相等，要同时使用这两个函数！因为自定义的类的hashcode()方法继承于Object 类，其hashcode码为默认的内存地址，这样即便有相同含义的两个对象，比较也是不相等的。 12// System类中的方法同样可以得到hashco">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://picture.tjtulong.top/%E5%9B%9B%E7%A7%8D%E4%BF%AE%E9%A5%B0%E7%AC%A6.jpg">
-<meta property="og:updated_time" content="2019-08-16T07:15:28.018Z">
+<meta property="og:updated_time" content="2020-03-13T14:25:03.858Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java基础拾遗">
 <meta name="twitter:description" content="本文总结了部分javase中常见的知识点，并对其进行了深入分析。 1. 为什么重写equals，还要重写hashcode？ HashMap中，如果要比较key 是否相等，要同时使用这两个函数！因为自定义的类的hashcode()方法继承于Object 类，其hashcode码为默认的内存地址，这样即便有相同含义的两个对象，比较也是不相等的。 12// System类中的方法同样可以得到hashco">
@@ -338,7 +338,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  3.9k
+                  4.4k
                 </span>
               
 
@@ -354,7 +354,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  14
+                  16
                 </span>
               
             </div>
@@ -392,7 +392,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 生成线程安全的集合对象</span></span><br><span class="line">Map m = Collections.synchronizedMap(<span class="keyword">new</span> HashMap&lt;&gt;());</span><br></pre></td></tr></table></figure>
 <p>Hashtable与HashMap类似，它继承自Dictionary类，不同的是，它不允许记录的键或者值为空；它是线程安全的，即任一时刻只有一个线程能写Hashtable，因此也导致了Hashtable在写入时会比较慢。</p>
 <p>LinkedHashMap是HashMap的一个子类，保存了记录的插入顺序，在用Iterator遍历LinkedHashMap 时，先得到的记录肯定是先插入的。也可以在构造时用带参数，按照应用次数排序。在遍历的时候会HashMap慢，不过有种情况例外，当HashMap容量很大，实际数据较少时，遍历起来可能会比LinkedHashMap慢，因为LinkedHashMap的遍历速度只和实际数据有关，和容量无关，而HashMap的遍历速度和他的容量有关。</p>
-<p>TreeMap 实现SortMap 接口，能够把它保存的记录根据键排序,默认是按键值的升序排序，也可以指定排序的比较器，当用Iterator 遍历TreeMap时，得到的记录是排过序的。</p>
+<p>TreeMap 实现SortMap 接口，能够把它保存的记录根据键排序,默认是按键值的升序排序，也可以指定排序的比较器，当用Iterator 遍历TreeMap时，得到的记录是排过序的。<em>注：当两个元素compare后相等，及时equals不相等，也不会加入，和HashMap有区别。</em></p>
 <p>Properties类是HashMap的子类，便于处理属性文件，key和value均为String。</p>
 <p>一般情况下，我们用的最多的是HashMap，在Map 中插入、删除和定位元素，HashMap 是最好的选择。但如果您要按自然顺序或自定义顺序遍历键，那么TreeMap 会更好。如果需要输出的顺序和输入的相同，那么用LinkedHashMap 可以实现，它还可以按读取顺序来排列。</p>
 <p><strong>3. Object 若不重写hashCode()的话，hashCode()如何计算出来的？</strong></p>
@@ -429,6 +429,9 @@
 <li><strong>Lambda表达式</strong>：Lambda 允许把函数作为一个方法的参数（函数作为参数传递进方法中）；</li>
 <li><strong>函数式接口</strong>：在java.util.function包下预定义了大量的函数式接口接口，典型的包含四类：XxxFunction(对数据进行转换)、XxxConsumer(对参数进行处理，无返回值)、XxxPredicate(判断筛选)、XxxSupplier（无输入参数，逻辑算法）。</li>
 <li><strong>方法引用</strong>：方法引用提供了非常有用的语法，<strong>如果Lambda表达式的代码块只有一条代码</strong>，可以直接引用已有Java 类或对象（实例）的方法或构造器。与lambda 联合使用，方法引用可以使语言的构造更紧凑简洁，减少冗余代码；<br>方法引用使用一对冒号 :: ，包括<strong>构造器引用；静态方法引用；特定类的任意对象的方法引用；特定对象的方法引用</strong>四种</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ArrayList&lt;Student&gt; arr = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">arr.add(<span class="keyword">new</span> Student(<span class="string">"a"</span>,<span class="string">"m"</span>));</span><br><span class="line">arr.add(<span class="keyword">new</span> Student(<span class="string">"b"</span>,<span class="string">"m"</span>));</span><br><span class="line">arr.add(<span class="keyword">new</span> Student(<span class="string">"c"</span>,<span class="string">"f"</span>));</span><br><span class="line">List&lt;String&gt; l = arr.stream().map((Student s) -&gt; s.getName()).collect(Collectors.toList());</span><br><span class="line">String[] ns = arr.stream().map((Student s) -&gt; s.getName()).toArray(String[]::<span class="keyword">new</span>);</span><br><span class="line">System.out.println(ns[<span class="number">1</span>]);</span><br></pre></td></tr></table></figure>
+<ul>
 <li><strong>默认方法</strong>：默认方法就是接口可以有实现方法，而且不需要实现类去实现其方法。</li>
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Vehicle</span></span>&#123;</span><br><span class="line">    <span class="comment">// default关键字</span></span><br><span class="line">    <span class="function"><span class="keyword">default</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"接口也可以实现方法了"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -436,7 +439,7 @@
 <li><strong>新工具−新的编译工具</strong>：如：Nashorn引擎jjs、类依赖分析器jdeps；</li>
 <li><strong>Stream API</strong>：新添加的Stream API（java.util.stream）把真正的函数式编程风格引入到Java 中；这种风格将要处理的元素集合看作一种流， 流在管道中传输， 并且可以在管道的节点上进行处理， 比如筛选， 排序，聚合等。<br>元素流在管道中经过<strong>中间操作</strong>（intermediate operation）的处理，最后由<strong>最终操作</strong>(terminal operation)得到前面处理的结果。</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">+--------------------+       +------+   +------+   +---+   +-------+</span><br><span class="line">| stream of elements +-----&gt; |filter+-&gt; |sorted+-&gt; |map+-&gt; |collect|</span><br><span class="line">+--------------------+       +------+   +------+   +---+   +-------+</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">+--------------------+       +------+   +------+   +---+   +-------+</span><br><span class="line">| stream of elements +-----&gt; |filter+-&gt; |sorted+-&gt; |map+-&gt; |collect|</span><br><span class="line">+--------------------+       +------+   +------+   +---+   +-------+</span><br><span class="line">List&lt;Integer&gt; list = integers.stream().filter(i -&gt; i % 2 == 0).map(i -&gt; i * i).distinct().collect(Collectors.toList());//复合操作</span><br></pre></td></tr></table></figure>
 <ul>
 <li><p><strong>Date Time API</strong>：加强对日期与时间的处理（java.time包下Clock和Duration类），线程安全；</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Clock clock = Clock.systemUTC();</span><br><span class="line"><span class="comment">// 获取当前时间</span></span><br><span class="line">System.out.println(clock.instant());</span><br></pre></td></tr></table></figure>
@@ -492,6 +495,7 @@
 <li>使用final方法的原因有两个。第一个原因是把方法锁定，以防任何继承类修改它的含义；第二个原因是效率。在早期的Java实现版本中，会将final方法转为内嵌调用。但是如果方法过于庞大，可能看不到内嵌调用带来的<br> 任何性能提升（现在的Java版本已经不需要使用final方法进行这些优化了）。类中所有的private方法都隐式地指定为final。</li>
 </ol>
 <p><strong>13.内部类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Outer</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> num = <span class="number">10</span>;</span><br><span class="line">	<span class="comment">//成员位置</span></span><br><span class="line">	<span class="class"><span class="keyword">class</span> <span class="title">Inner</span></span>&#123;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show</span><span class="params">()</span></span>&#123;</span><br><span class="line">			System.out.println(num);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">InnerClassDemo2</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">		Outer.Inner oi = <span class="keyword">new</span> Outer().new Inner();</span><br><span class="line">		oi.show();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>Java从JDK1.1开始引入内部类，内部类的主要作用如下：</p>
 <ol>
 <li>内部类提供了更好的封装，可以把内部类隐藏在外部类之内，不允许同一个包中的其他类访问；</li>
@@ -513,6 +517,21 @@
 <p>虚引用当垃圾回收器准备回收一个对象时，如果发现它还有虚引用，就会在回收对象的内存之前，把这个虚引用加入到与之关联的引用队列中。程序可以通过判断引用队列中是否已经加入了虚引用，来了解被引用的对象是否将要被垃圾回收。如果程序发现某个虚引用已经被加入到引用队列，那么就可以在所引用的对象的内存被回收之前采取必要的行动。</p>
 </li>
 </ol>
+<p><strong>15.对比接口和抽象类</strong></p>
+<p>成员区别：抽象类有变量、常量、有抽象方法和非抽象方法</p>
+<p>​                   接口只有常量（默认为public static final）和抽象方法（默认为public abstract）</p>
+<p>关系区别：类与类：单继承</p>
+<p>​                   类与接口：单实现、多实现</p>
+<p>​                   接口与接口：单继承、多继承</p>
+<p>设计理念区别：抽象类：被继承体现的是“<strong>is a</strong>”的关系，属于共性功能</p>
+<p>​                           接口：体现的是“<strong>like a</strong>”的关系，属于扩展功能</p>
+<p><strong>16.成员变量初始化顺序</strong></p>
+<p>成员变量初始化：<strong>默认初始化–&gt;显示初始化–&gt;构造方法初始化</strong></p>
+<p>先初始化父类数据、再初始化子类数据</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">X</span></span>&#123;</span><br><span class="line">	Y b = <span class="keyword">new</span> Y();</span><br><span class="line">	X()&#123;</span><br><span class="line">		System.out.println(<span class="string">"X"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Y</span></span>&#123;</span><br><span class="line">	Y()&#123;</span><br><span class="line">		System.out.println(<span class="string">"Y"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Z</span> <span class="keyword">extends</span> <span class="title">X</span></span>&#123;</span><br><span class="line">    <span class="comment">//先初始化父类</span></span><br><span class="line">	Y y = <span class="keyword">new</span> Y();</span><br><span class="line">	Z()&#123;</span><br><span class="line">		System.out.println(<span class="string">"Z"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">		<span class="keyword">new</span> Z();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出依次为：Y X Y Z</p>
+<p><strong>17.多态的小案例</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show</span><span class="params">()</span></span>&#123;</span><br><span class="line">		show2();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show2</span><span class="params">()</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"I"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> <span class="keyword">extends</span> <span class="title">A</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show2</span><span class="params">()</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"Love"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span> <span class="keyword">extends</span> <span class="title">B</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.show();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show2</span><span class="params">()</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"You"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DuoTaiTest2</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">		A a = <span class="keyword">new</span> B();</span><br><span class="line">		a.show(); <span class="comment">// Love</span></span><br><span class="line">		B b = <span class="keyword">new</span> C();</span><br><span class="line">		b.show(); <span class="comment">// You</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -625,7 +644,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-count">46</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -647,7 +666,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-count">25</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
