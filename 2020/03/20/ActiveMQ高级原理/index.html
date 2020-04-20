@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ActiveMQ,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="ActiveMQ传输协议概述activemq传输协议的官方文档：http://activemq.apache.org/configuring-version-5-transports.html ActiveMQ支持的client-broker通讯协议有：TVP、NIO、UDP、SSL、Http(s)、VM。 协议的配置文件为：%activeMQ安装目录%/conf/activemq.xml 123">
+<meta name="keywords" content="ActiveMQ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ActiveMQ高级原理">
+<meta property="og:url" content="http://yoursite.com/2020/03/20/ActiveMQ高级原理/index.html">
+<meta property="og:site_name" content="椰子皮&#39;s Blog">
+<meta property="og:description" content="ActiveMQ传输协议概述activemq传输协议的官方文档：http://activemq.apache.org/configuring-version-5-transports.html ActiveMQ支持的client-broker通讯协议有：TVP、NIO、UDP、SSL、Http(s)、VM。 协议的配置文件为：%activeMQ安装目录%/conf/activemq.xml 123">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://picture.tjtulong.top/ActiveMQ%E5%8D%8F%E8%AE%AE.png">
+<meta property="og:image" content="http://picture.tjtulong.top/KahaDB.gif">
+<meta property="og:image" content="http://picture.tjtulong.top/kahaDB%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84.png">
+<meta property="og:image" content="http://picture.tjtulong.top/MSGS%E8%A1%A8.png">
+<meta property="og:image" content="http://picture.tjtulong.top/ACKS%E8%A1%A8.png">
+<meta property="og:image" content="http://picture.tjtulong.top/LevelDB%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
+<meta property="og:image" content="http://picture.tjtulong.top/%E5%85%B1%E4%BA%AB%E6%96%87%E4%BB%B6%E7%83%AD%E5%A4%87%E4%BB%BD.png">
+<meta property="og:image" content="http://picture.tjtulong.top/LevelDB%E9%9B%86%E7%BE%A4.png">
+<meta property="og:image" content="http://picture.tjtulong.top/%E5%BB%B6%E8%BF%9F%E6%8A%95%E9%80%92.png">
+<meta property="og:updated_time" content="2020-03-23T07:14:16.295Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ActiveMQ高级原理">
+<meta name="twitter:description" content="ActiveMQ传输协议概述activemq传输协议的官方文档：http://activemq.apache.org/configuring-version-5-transports.html ActiveMQ支持的client-broker通讯协议有：TVP、NIO、UDP、SSL、Http(s)、VM。 协议的配置文件为：%activeMQ安装目录%/conf/activemq.xml 123">
+<meta name="twitter:image" content="http://picture.tjtulong.top/ActiveMQ%E5%8D%8F%E8%AE%AE.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/03/20/ActiveMQ高级原理/">
+
+
+
+
+
+  <title>ActiveMQ高级原理 | 椰子皮's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">椰子皮's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/20/ActiveMQ高级原理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tulong Xiao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="http://picture.tjtulong.top/QQ%E5%9B%BE%E7%89%8720190515225418.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="椰子皮's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ActiveMQ高级原理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-20T15:02:30+08:00">
+                2020-03-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/高并发/" itemprop="url" rel="index">
+                    <span itemprop="name">高并发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4.1k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  15
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="ActiveMQ传输协议"><a href="#ActiveMQ传输协议" class="headerlink" title="ActiveMQ传输协议"></a>ActiveMQ传输协议</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>activemq传输协议的官方文档：<a href="http://activemq.apache.org/configuring-version-5-transports.html" target="_blank" rel="noopener">http://activemq.apache.org/configuring-version-5-transports.html</a></p>
+<p>ActiveMQ支持的client-broker通讯协议有：<strong>TVP、NIO、UDP、SSL、Http(s)、VM</strong>。</p>
+<p>协议的配置文件为：<code>%activeMQ安装目录%/conf/activemq.xml</code></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">transportConnectors</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">transportConnector</span> <span class="attr">name</span>=<span class="string">"openwire"</span> <span class="attr">uri</span>=<span class="string">"tcp://0.0.0.0:61616?maximumConnections=1000&amp;amp;wireFormat.maxFrameSize=104857600"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">transportConnector</span> <span class="attr">name</span>=<span class="string">"amqp"</span> <span class="attr">uri</span>=<span class="string">"amqp://0.0.0.0:5672?maximumConnections=1000&amp;amp;wireFormat.maxFrameSize=104857600"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">transportConnector</span> <span class="attr">name</span>=<span class="string">"stomp"</span> <span class="attr">uri</span>=<span class="string">"stomp://0.0.0.0:61613?maximumConnections=1000&amp;amp;wireFormat.maxFrameSize=104857600"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">transportConnector</span> <span class="attr">name</span>=<span class="string">"mqtt"</span> <span class="attr">uri</span>=<span class="string">"mqtt://0.0.0.0:1884?maximumConnections=1000&amp;amp;wireFormat.maxFrameSize=104857600"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">transportConnector</span> <span class="attr">name</span>=<span class="string">"ws"</span> <span class="attr">uri</span>=<span class="string">"ws://0.0.0.0:61614?maximumConnections=1000&amp;amp;wireFormat.maxFrameSize=104857600"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">transportConnectors</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>协议不同、代码不同</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">协议</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">TCP</td>
+<td style="text-align:center">默认的协议，性能相对一般</td>
+</tr>
+<tr>
+<td style="text-align:center">NIO</td>
+<td style="text-align:center">基于TCP协议之上进行了扩展和优化具有更好的扩展性</td>
+</tr>
+<tr>
+<td style="text-align:center">UDP</td>
+<td style="text-align:center">性能比TCP好，但不具备可靠性</td>
+</tr>
+<tr>
+<td style="text-align:center">SSL</td>
+<td style="text-align:center">安全连接</td>
+</tr>
+<tr>
+<td style="text-align:center">HTTP(S)</td>
+<td style="text-align:center">基于HTTP与HTTPS</td>
+</tr>
+<tr>
+<td style="text-align:center">VM</td>
+<td style="text-align:center">客户端和代理在同一台虚拟机时直接通信</td>
+</tr>
+</tbody>
+</table>
+<a id="more"></a>
+<h2 id="TCP协议"><a href="#TCP协议" class="headerlink" title="TCP协议"></a>TCP协议</h2><ol>
+<li><p>Transmission Control Protocol(TCP)是默认的，TCP的Client监听端口61616；</p>
+</li>
+<li><p>在网络传输数据前，必须要先序列化数据，消息是通过一个叫wire protocol的来序列化成字节流；</p>
+</li>
+<li><p>TCP连接的URI形式如：<code>tcp://HostName:port?key=value&amp;key=value</code>，后面的参数是可选的。</p>
+</li>
+</ol>
+<h2 id="NIO协议"><a href="#NIO协议" class="headerlink" title="NIO协议"></a>NIO协议</h2><p>NIO协议和TCP协议类似，但NIO更侧重于底层的访问操作。它允许开发人员对同一资源可有更多的Client调用和服务器端有更多的负载。</p>
+<p>NIO连接的URI形式：<code>nio://hostname:port?key=value&amp;key=value</code></p>
+<p><strong>在ActiveMQ中添加NIO协议：</strong></p>
+<ol>
+<li>修改配置文件activemq.xml在 <code>&lt;transportConnectors&gt;</code>节点下添加如下内容：</li>
+</ol>
+<p><code>&lt;transportConnector name=&quot;nio&quot; uri=&quot;nio://0.0.0.0:61618?trace=true&quot; /&gt;</code></p>
+<ol start="2">
+<li><p>修改完成后重启ActiveMQ:  <code>service activemq  restart</code></p>
+</li>
+<li><p>查看管理后台，可以看到页面多了nio</p>
+</li>
+</ol>
+<p><img src="http://picture.tjtulong.top/ActiveMQ%E5%8D%8F%E8%AE%AE.png" alt></p>
+<ol start="4">
+<li>客户端连接时把url改为:</li>
+</ol>
+<p><code>private static final String ACTIVEMQ_URL = &quot;nio://192.168.25.131:61618&quot;;</code></p>
+<h2 id="NIO协议增强"><a href="#NIO协议增强" class="headerlink" title="NIO协议增强"></a>NIO协议增强</h2><p>上面的配置是Openwire协议传输底层使用NIO网络IO模型。还可以让其他协议传输（amqp、mqtt等）底层也使用NIO网络IO模型，只需在activemq.xml中加入：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">transportConnector</span> <span class="attr">name</span>=<span class="string">"auto+nio"</span> <span class="attr">uri</span>=<span class="string">"auto+nio://0.0.0.0:61608?maximumConnections=1000&amp;amp;wireFormat.maxFrameSize=104857600&amp;amp;org.apache.activemq.transport.nio.SelectorManager.corePoolSize=20&amp;amp;org.apache.activemq.transport.nio.Se1ectorManager.maximumPoo1Size=50"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>auto：针对所有的协议，会自动识别调用的是什么协议。</p>
+</li>
+<li><p>nio：使用NIO网络IO模型。</p>
+</li>
+</ul>
+<p>修改配置文件后重启ActiveMQ，这样所有的协议底层都使用NIO。</p>
+<h1 id="ActiveMQ消息存储与持久化"><a href="#ActiveMQ消息存储与持久化" class="headerlink" title="ActiveMQ消息存储与持久化"></a>ActiveMQ消息存储与持久化</h1><p>可参考：<a href="https://www.cnblogs.com/Soprano/p/10659576.html" target="_blank" rel="noopener">https://www.cnblogs.com/Soprano/p/10659576.html</a></p>
+<p>持久化机制是ActiveMQ高可用的一种保障机制，使得ActiveMQ服务器宕机了，消息不会丢失的机制。</p>
+<p>ActiveMQ的消息持久化机制有<strong>JDBC，AMQ，KahaDB和LevelDB</strong>，无论使用哪种持久化方式，消息的存储逻辑都是一致的。就是在发送者将消息发送出去后，消息中心首先将消息存储到<strong>本地数据文件、内存数据库或者远程数据库</strong>等。再试图将消息发给接收者，<strong>成功则将消息从存储中删除，失败则继续尝试尝试发送</strong>。</p>
+<p>消息中心启动以后，要先检查指定的存储位置是否有未成功发送的消息，如果有，则会先把存储位置中的消息发出去。</p>
+<h2 id="AMQ-Message-Store"><a href="#AMQ-Message-Store" class="headerlink" title="AMQ Message Store"></a>AMQ Message Store</h2><p>基于文件的存储机制，是以前的默认机制，现在不再使用。</p>
+<p>AMQ是一种文件存储形式，它具有写入速度快和容易恢复的特点。消息存储将一个个文件中文件的默认大小为32M，当一个文件中的消息已经全部被消费，那么这个文件将被标识为可删除，在下一个清除阶段，这个文件被删除。AMQ适用于ActiveMQ5.3之前的版本。</p>
+<h2 id="KahaDB"><a href="#KahaDB" class="headerlink" title="KahaDB"></a>KahaDB</h2><p>KahaDB是从ActiveMQ 5.4开始默认的持久化插件。KahaDb恢复时间远远小于其前身AMQ并且使用更少的数据文件，所以可以完全代替AMQ，kahaDB的持久化机制同样是基于<strong>日志文件，索引和缓存</strong>。</p>
+<p>配置文件activemq.xml中，如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">persistenceAdapter</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">kahaDB</span> <span class="attr">directory</span>=<span class="string">"$&#123;activemq.data&#125;/kahadb"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">persistenceAdapter</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>日志文件的存储目录在：<code>%activemq安装目录%/data/kahadb</code></p>
+<p><strong>内部结构</strong></p>
+<p>消息存储在基于文件的数据日志中。如果消息发送成功，变标记为可删除的。系统会周期性的清除或者归档日志文件。消息文件的位置索引存储在内存中，这样能快速定位到。定期将内存中的消息索引保存到metadata store中，避免大量消息未发送时，消息索引占用过多内存空间。</p>
+<p><img src="http://picture.tjtulong.top/KahaDB.gif" alt></p>
+<ul>
+<li><strong>Data logs</strong>：消息日志包含了消息日志和一些命令</li>
+<li><strong>Cache</strong>：当有活动消费者时，用于临时存储，消息会被发送给消费着，同时被安排将被存储，如果消息及时被确认，这不需要写入到磁盘</li>
+<li><strong>Btree indexes（消息索引</strong>）：用于引用消息日志（message id），它存储在内存中，这样能快速定位到。MQ会定期将内存中的消息索引保存到 metadata store 中，避免大量消息未发送时，消息索引占用过多内存空间。</li>
+<li><strong>Redo log</strong>：用于在非正常关机情况下维护索引完整性。</li>
+</ul>
+<p><strong>目录结构（4 + 1）</strong></p>
+<p><strong>消息存储使用一个事务日志和仅仅用一个索引文件来存储其所有地址</strong></p>
+<p><img src="http://picture.tjtulong.top/kahaDB%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84.png" alt></p>
+<ul>
+<li><strong>Db log files</strong>：用于存储消息（默认大小32M），当log日志满了，会创建一个新的，当 log 日志中的消息都被删除，该日志文件会被<strong>删除或者归档（存到Archive directory）</strong>。</li>
+<li><strong>Archive directory</strong>：当 datalog不在被kahadb需要会被归档（通过 archiveDataLogs 属性控制）。</li>
+<li><strong>Db.data</strong>：存放 Btree indexs（<strong>B树索引</strong>）。</li>
+<li><strong>Db.redo</strong>：存放 redo file，用于恢复 Btree indexs。</li>
+<li><strong>lock</strong>：文件读写锁</li>
+</ul>
+<h2 id="JDBC存储"><a href="#JDBC存储" class="headerlink" title="JDBC存储"></a>JDBC存储</h2><p>支持通过JDBC将消息存储到关系数据库，由于依赖其它数据库，性能上自然不如文件存储，但能通过关系型数据库查询到消息的信息。</p>
+<p>MQ 支持的数据库：Apache Derby、MySQL、PostgreSQL、Oracle、SQLServer、Sybase、Informix等。</p>
+<p>默认生成三张表：</p>
+<p><strong>表1：ACTIVEMQ_MSGS</strong>：用于存储消息，Queue和Topic都存储在这个表中：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ID</td>
+<td>自增的数据库主键</td>
+</tr>
+<tr>
+<td>CONTAINER</td>
+<td>消息的Destination</td>
+</tr>
+<tr>
+<td>MSGID_PROD</td>
+<td>消息发送者客户端的主键</td>
+</tr>
+<tr>
+<td>MSG_SEQ</td>
+<td>是发送消息的顺序，<strong>MSGID_PROD+MSG_SEQ可以组成JMS的MessageID</strong></td>
+</tr>
+<tr>
+<td>EXPIRATION</td>
+<td>消息的过期时间，存储的是从1970-01-01到现在的毫秒数</td>
+</tr>
+<tr>
+<td>MSG</td>
+<td>消息本体的Java序列化对象的二进制数据</td>
+</tr>
+<tr>
+<td>PRIORITY</td>
+<td>优先级，从0-9，数值越大优先级越高</td>
+</tr>
+</tbody>
+</table>
+<p>使用queue模式持久化，发布3条消息后，发现<strong>ACTIVEMQ_MSGS</strong>数据表多了N条数据：</p>
+<p><img src="http://picture.tjtulong.top/MSGS%E8%A1%A8.png" alt></p>
+<p>启动消费者，消费了所有的消息后，数据表的数据就消失了。</p>
+<p><strong>表 2：ACTIVEMQ_ACKS</strong>：用于存储订阅关系。如果是持久化Topic，订阅者和服务器的订阅关系在这个表保存：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CONTAINER</td>
+<td>消息的Destination</td>
+</tr>
+<tr>
+<td>SUB_DEST</td>
+<td>如果是使用Static集群，这个字段会有集群其他系统的信息</td>
+</tr>
+<tr>
+<td>CLIENT_ID</td>
+<td>每个订阅者都必须有一个唯一的客户端ID用以区分</td>
+</tr>
+<tr>
+<td>SUB_NAME</td>
+<td>订阅者名称</td>
+</tr>
+<tr>
+<td>SELECTOR</td>
+<td>选择器，可以选择只消费满足条件的消息。条件可以用自定义属性实现，可支持多属性AND和OR操作</td>
+</tr>
+<tr>
+<td>LAST_ACKED_ID</td>
+<td>记录消费过的消息的ID</td>
+</tr>
+</tbody>
+</table>
+<p>注册一个消费者时，ACTIVEMQ_ACKS数据表就多了一个消费者的身份信息。一条记录代表一个持久化topic消费者。</p>
+<p><em>注：我们启动持久化生产者发布3个数据，ACTIVEMQ_MSGS数据表新增3条数据，消费者消费所有的数据后，ACTIVEMQ_MSGS数据表的数据<strong>并没有消失</strong>。持久化topic的消息不管是否被消费，是否有消费者，产生的数据永远都存在，且只存储一条。这个是要注意的，持久化的topic大量数据后可能导致性能下降。</em></p>
+<p><img src="http://picture.tjtulong.top/ACKS%E8%A1%A8.png" alt></p>
+<p><strong>表 3：ACTIVEMQ_LOCK</strong>（消息锁，保证同一时间只能有一个broker访问这些表结构）</p>
+<p>表 activemq_lock在集群环境中才有用，只有一个Broker可以获得消息，称为Master Broker，其他的只能作为备份等待Master Broker不可用，才可能成为下一个Master Broker。这个表用于记录哪个Broker是当前的Master Broker。</p>
+<p><strong>JDBC Message Store with ActiveMQ Journal</strong></p>
+<p>这种方式克服了JDBC Store的不足，JDBC每次消息过来，都需要去写库读库。ActiveMQ Journal使用高速缓存写入技术，大大提高了性能。当消费者的速度能够及时跟上生产者消息的生产速度时，journal文件能够大大减少需要写入到DB中的消息。</p>
+<p>为了高性能，这种方式使用<strong>日志文件存储+数据库存储</strong>。先将消息持久到日志文件，等待一段时间再将未消费的消息持久到数据库。该方式要比JDBC性能要高。</p>
+<h2 id="LevelDB"><a href="#LevelDB" class="headerlink" title="LevelDB"></a>LevelDB</h2><p><em>新兴的技术</em></p>
+<p>这种文件系统是从ActiveMQ5.8以后引进，也是<strong>基于文件的本地数据库存储形式</strong>，但是比 KahaDB更快，它比KahaDB 更快的原因是它不使用BTree 索引，而是使用本身自带的 LeavelDB 索引。</p>
+<p>LevelDB是能够处理十亿级别规模Key-Value型数据持久性存储的C++ 程序库，由Google发起并开源。LevelDB中的核心设计算法是跳跃表（Skip List），核心操作策略是对磁盘上的数据日志结构进行归并（LSM）。</p>
+<p><img src="http://picture.tjtulong.top/LevelDB%E7%A4%BA%E6%84%8F%E5%9B%BE.png" alt></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">AMQ</td>
+<td style="text-align:center">基于日志文件</td>
+</tr>
+<tr>
+<td style="text-align:center">KahaDB</td>
+<td style="text-align:center">基于日志文件，从ActiveMQ5.4开始默认使用</td>
+</tr>
+<tr>
+<td style="text-align:center">JDBC</td>
+<td style="text-align:center">基于第三方数据库</td>
+</tr>
+<tr>
+<td style="text-align:center">Replicated LevelDB Store</td>
+<td style="text-align:center">从5.9开始提供了LevelDB和Zookeeper的数据复制方法，用于Master-slave方式的首选数据复制方案。</td>
+</tr>
+</tbody>
+</table>
+<p>jdbc效率低，kahaDB效率高，jdbc+Journal效率较高。</p>
+<h1 id="ActiveMQ集群"><a href="#ActiveMQ集群" class="headerlink" title="ActiveMQ集群"></a>ActiveMQ集群</h1><p>参考：<a href="https://blog.csdn.net/yinwenjie/article/details/51205822" target="_blank" rel="noopener">https://blog.csdn.net/yinwenjie/article/details/51205822</a></p>
+<h2 id="基于共享文件系统的集群"><a href="#基于共享文件系统的集群" class="headerlink" title="基于共享文件系统的集群"></a>基于共享文件系统的集群</h2><p>基于共享文件系统的热备方案可以说是ActiveMQ消息中间件中最早出现的一种热备方案。它的工作原理很简单：<strong>让若干个ActiveMQ服务节点，共享一个文件系统</strong>。当某一个ActiveMQ服务抢占到了这个文件系统的操作权限，就给文件系统的操作区域加锁；其它服务节点一旦发现这个文件系统已经被加锁（并且锁不属于本进程），就会自动进入Salve模式。</p>
+<p>当某个ActiveMQ节点获取了文件系统的操作权限后，首先做的事情就是从文件系统中恢复内存索引结构：KahaDB恢复BTree结构；LevelDB恢复memTable结构。</p>
+<p><img src="http://picture.tjtulong.top/%E5%85%B1%E4%BA%AB%E6%96%87%E4%BB%B6%E7%83%AD%E5%A4%87%E4%BB%BD.png" alt></p>
+<h2 id="基于共享关系型数据库的集群"><a href="#基于共享关系型数据库的集群" class="headerlink" title="基于共享关系型数据库的集群"></a>基于共享关系型数据库的集群</h2><p>当需要搭建热备方案时，两个或者更多的ActiveMQ服务节点共享同一个数据服务。首先抢占到数据库服务的ActiveMQ节点，会<strong>将数据库中“activemq_lock”数据表的Master状态标记为自己</strong>，这样其它ActiveMQ服务节点就会进入Salve状态。</p>
+<h2 id="Zookeeper-LevelDB搭建集群"><a href="#Zookeeper-LevelDB搭建集群" class="headerlink" title="Zookeeper+LevelDB搭建集群"></a>Zookeeper+LevelDB搭建集群</h2><p>从ActiveMQ V5.9.0+ 版本开始基于Zookeeper+LevelDB搭建集群，集群仅提供主备方式的高可用集群功能，避免单点故障。这个方案中，我们可以让每个节点都有自己独立的LevelDB数据库（不是上面那样共享LevelDB的工作目录），并且使用Zookeeper集群控制多个ActiveMQ节点的工作状态，完成Master/Salve状态的切换。</p>
+<p><img src="http://picture.tjtulong.top/LevelDB%E9%9B%86%E7%BE%A4.png" alt></p>
+<p>使用Zookeeper集群注册所有的ActiveMQ Broker，但<strong>只有其中的一个Broker可以提供服务</strong>，它将被视为<strong>Master</strong>，其他的Broker处于待机状态被视为<strong>Slave</strong>。</p>
+<p>如果Master因故障而不能提供服务，Zookeeper从Slave中选出一个Broker充当Master。Slave连接Master并同步他们的存储状态，Slave不接受客户端连接。所有的存储操作都将复制到连接至Master的Slaves。</p>
+<p>集群搭建参考：<a href="https://blog.51cto.com/4925054/2103719" target="_blank" rel="noopener">https://blog.51cto.com/4925054/2103719</a></p>
+<h1 id="高级特性"><a href="#高级特性" class="headerlink" title="高级特性"></a>高级特性</h1><h2 id="异步投递"><a href="#异步投递" class="headerlink" title="异步投递"></a>异步投递</h2><p> ActiveMQ支持<strong>同步和异步</strong>发送消息到broker，默认异步。当<strong>设定同步发送的方式或未使用事务的情况下发持久化消息，这时是同步的</strong>。</p>
+<p>如果没有使用事务，且发送的是持久化消息，每次发送都会阻塞一个生产者直到broker发回一个确认，这样做保证了消息的安全送达，但是会阻塞客户端，造成很大延时 。 </p>
+<p>在高性能要求下，可以使用异步提高producer的性能。但会消耗较多的client端内存，也不能完全保证消息发送成功。在<code>useAsyncSend = true</code>情况下<strong>容忍消息丢失</strong>。</p>
+<p><strong>异步投递确认发送成功：</strong></p>
+<p>异步发送消息丢失的情况场景是：UseAsyncSend为true使用producer.send持续发送消息，消息不会阻塞，生产者会认为所有的send消息均会被发送到MQ，如果MQ突然宕机，此时生产者端尚未同步到MQ的消息均会丢失 。 故<strong>正确的异步发送方法需要接收回调</strong>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Jms_TX_Producer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String ACTIVEMQ_URL = <span class="string">"tcp://118.24.20.3:61626"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String ACTIVEMQ_QUEUE_NAME = <span class="string">"Async"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> JMSException </span>&#123;</span><br><span class="line">        ActiveMQConnectionFactory activeMQConnectionFactory = <span class="keyword">new</span> ActiveMQConnectionFactory(ACTIVEMQ_URL);</span><br><span class="line">        activeMQConnectionFactory.setUseAsyncSend(<span class="keyword">true</span>);</span><br><span class="line">        Connection connection = activeMQConnectionFactory.createConnection();</span><br><span class="line">        connection.start();</span><br><span class="line">        Session session = connection.createSession(<span class="keyword">false</span>, Session.AUTO_ACKNOWLEDGE);</span><br><span class="line">        Queue queue = session.createQueue(ACTIVEMQ_QUEUE_NAME);</span><br><span class="line">        ActiveMQMessageProducer activeMQMessageProducer = (ActiveMQMessageProducer)session.createProducer(queue);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">                TextMessage textMessage = session.createTextMessage(<span class="string">"tx msg--"</span> + i);</span><br><span class="line">                textMessage.setJMSMessageID(UUID.randomUUID().toString()+<span class="string">"orderAtguigu"</span>);</span><br><span class="line">                <span class="keyword">final</span> String  msgId = textMessage.getJMSMessageID();</span><br><span class="line">                activeMQMessageProducer.send(textMessage, <span class="keyword">new</span> AsyncCallback() &#123;</span><br><span class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                        System.out.println(<span class="string">"成功发送消息Id:"</span>+msgId);</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onException</span><span class="params">(JMSException e)</span> </span>&#123;</span><br><span class="line">                        System.out.println(<span class="string">"失败发送消息Id:"</span>+msgId);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(<span class="string">"消息发送完成"</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            activeMQMessageProducer.close();</span><br><span class="line">            session.close();</span><br><span class="line">            connection.close();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  同步发送和异步发送的区别就在于 ：</p>
+<ul>
+<li><p>同步发送send不阻塞就代表消息发送成功；</p>
+</li>
+<li><p>异步发送需要<strong>接收回执</strong>并又客户端在判断一次是否发送 ；</p>
+</li>
+</ul>
+<h2 id="延时投递与定时投递"><a href="#延时投递与定时投递" class="headerlink" title="延时投递与定时投递"></a>延时投递与定时投递</h2><p>首先在配置文件中设置定时器开关为true</p>
+<p><code>schedulerSupport=&quot;true&quot;</code></p>
+<p>可设置的参数为：</p>
+<p><img src="http://picture.tjtulong.top/%E5%BB%B6%E8%BF%9F%E6%8A%95%E9%80%92.png" alt></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">long</span> delay = <span class="number">3</span> * <span class="number">1000</span> ;</span><br><span class="line"><span class="keyword">long</span> perid = <span class="number">4</span> * <span class="number">1000</span> ;</span><br><span class="line"><span class="keyword">int</span> repeat = <span class="number">7</span> ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; <span class="number">4</span> ; i++) &#123;</span><br><span class="line">    TextMessage textMessage = session.createTextMessage(<span class="string">"delay msg--"</span> + i);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 消息每过3秒投递，每4秒重复投递一次，一共重复投递7次</span></span><br><span class="line">    textMessage.setLongProperty(ScheduledMessage.AMQ_SCHEDULED_DELAY,delay);</span><br><span class="line">    textMessage.setLongProperty(ScheduledMessage.AMQ_SCHEDULED_PERIOD,perid);</span><br><span class="line">    textMessage.setLongProperty(ScheduledMessage.AMQ_SCHEDULED_REPEAT,repeat);</span><br><span class="line"></span><br><span class="line">    messageProducer.send(textMessage);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="消费重试机制"><a href="#消费重试机制" class="headerlink" title="消费重试机制"></a>消费重试机制</h2><p>消费者收到消息，之后出现异常了，没有告诉broker确认收到该消息，broker会尝试再将该消息发送给消费者。尝试n次，如果消费者还是没有确认收到该消息，那么该消息将被放到死信队列重，之后broker不会再将该消息发送给消费者。</p>
+<p><strong>具体哪些情况会引发消息重发：</strong></p>
+<ol>
+<li><p>Client用了transactions且再session中调用了rollback</p>
+</li>
+<li><p>Client用了transactions且再调用commit之前关闭或者没有commit</p>
+</li>
+<li><p>Client在CLIENT_ACKNOWLEDGE的传递模式下，session中调用了recover</p>
+</li>
+</ol>
+<p><strong>消息重发时间间隔为1s和重发次数为6次</strong></p>
+<p>一个消息被redelivedred超过默认的最大重发次数（默认6次）时，消费者回复“<strong>poison ack</strong>”表示这个消息有毒，告诉broker不要再发了。这个时候broker会把这个消息放到<strong>DLQ（死信队列）</strong>。</p>
+<h2 id="避免重复消费"><a href="#避免重复消费" class="headerlink" title="避免重复消费"></a>避免重复消费</h2><p>网络延迟传输中，会造成MQ进行重试，重试过程中可能会造成重复消费。</p>
+<p>如果消息是做数据库的插入操作，给这个消息做一个<strong>唯一主键</strong>，那么就算出现重复消费的情况，就会导致主键冲突，避免数据库出现脏数据。</p>
+<p>还可以准备一个第三方服务来记录消费。以Redis为例，给消息分配一个全局id，只要消费过该消息，将&lt;id, message&gt;以K-V形式写入Redis，消费者在消费前，先去Redis中查找有没有消费记录即可。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ActiveMQ/" rel="tag"># ActiveMQ</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/20/消息中间件ActiveMQ实战/" rel="next" title="消息中间件ActiveMQ实战">
+                <i class="fa fa-chevron-left"></i> 消息中间件ActiveMQ实战
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/03/24/JVM调优基础/" rel="prev" title="JVM调优基础">
+                JVM调优基础 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="http://picture.tjtulong.top/QQ%E5%9B%BE%E7%89%8720190515225418.jpg" alt="Tulong Xiao">
+            
+              <p class="site-author-name" itemprop="name">Tulong Xiao</p>
+              <p class="site-description motion-element" itemprop="description">Almost Famous</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/TJtulong" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:TJtulong@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/2610493505/home" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/TJtulong" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-book"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.tongji.edu.cn/" title="同济大学" target="_blank">同济大学</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ActiveMQ传输协议"><span class="nav-number">1.</span> <span class="nav-text">ActiveMQ传输协议</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP协议"><span class="nav-number">1.2.</span> <span class="nav-text">TCP协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NIO协议"><span class="nav-number">1.3.</span> <span class="nav-text">NIO协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NIO协议增强"><span class="nav-number">1.4.</span> <span class="nav-text">NIO协议增强</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ActiveMQ消息存储与持久化"><span class="nav-number">2.</span> <span class="nav-text">ActiveMQ消息存储与持久化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#AMQ-Message-Store"><span class="nav-number">2.1.</span> <span class="nav-text">AMQ Message Store</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#KahaDB"><span class="nav-number">2.2.</span> <span class="nav-text">KahaDB</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JDBC存储"><span class="nav-number">2.3.</span> <span class="nav-text">JDBC存储</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LevelDB"><span class="nav-number">2.4.</span> <span class="nav-text">LevelDB</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">2.5.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ActiveMQ集群"><span class="nav-number">3.</span> <span class="nav-text">ActiveMQ集群</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基于共享文件系统的集群"><span class="nav-number">3.1.</span> <span class="nav-text">基于共享文件系统的集群</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于共享关系型数据库的集群"><span class="nav-number">3.2.</span> <span class="nav-text">基于共享关系型数据库的集群</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Zookeeper-LevelDB搭建集群"><span class="nav-number">3.3.</span> <span class="nav-text">Zookeeper+LevelDB搭建集群</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#高级特性"><span class="nav-number">4.</span> <span class="nav-text">高级特性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#异步投递"><span class="nav-number">4.1.</span> <span class="nav-text">异步投递</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#延时投递与定时投递"><span class="nav-number">4.2.</span> <span class="nav-text">延时投递与定时投递</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#消费重试机制"><span class="nav-number">4.3.</span> <span class="nav-text">消费重试机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#避免重复消费"><span class="nav-number">4.4.</span> <span class="nav-text">避免重复消费</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tulong Xiao</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

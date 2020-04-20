@@ -79,18 +79,23 @@
 
 
 
-<meta name="description" content="索引什么是索引MySQL官方对索引的定义为：索引(Index) 是帮助MySQL高效获取数据的数据结构。 排好顺序的快速查找数据结构。 数据本身之外，数据库维护着满足特定算法的数据结构，这种数据结构以某种方式指向数据，这样可以在这些数据结构上实现高级的查找算法，这种数据结构称为索引。一般来说索引也很大，不可能全部存储在内存中，因此索引往往以文件的形式储存在磁盘中。我们平常所说的索引，如果没有特别指">
+<meta name="description" content="索引什么是索引MySQL官方对索引的定义为：索引(Index) 是帮助MySQL高效获取数据的数据结构。 排好顺序的快速查找数据的结构。 数据本身之外，数据库维护着满足特定算法的数据结构，这种数据结构以某种方式指向数据，这样可以在这些数据结构上实现高级的查找算法，这种数据结构称为索引。一般来说索引也很大，不可能全部存储在内存中，因此索引往往以文件的形式储存在磁盘中。我们平常所说的索引，如果没有特别">
 <meta name="keywords" content="MySQL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL索引及优化">
 <meta property="og:url" content="http://yoursite.com/2019/05/13/MySQL索引及优化/index.html">
 <meta property="og:site_name" content="椰子皮&#39;s Blog">
-<meta property="og:description" content="索引什么是索引MySQL官方对索引的定义为：索引(Index) 是帮助MySQL高效获取数据的数据结构。 排好顺序的快速查找数据结构。 数据本身之外，数据库维护着满足特定算法的数据结构，这种数据结构以某种方式指向数据，这样可以在这些数据结构上实现高级的查找算法，这种数据结构称为索引。一般来说索引也很大，不可能全部存储在内存中，因此索引往往以文件的形式储存在磁盘中。我们平常所说的索引，如果没有特别指">
+<meta property="og:description" content="索引什么是索引MySQL官方对索引的定义为：索引(Index) 是帮助MySQL高效获取数据的数据结构。 排好顺序的快速查找数据的结构。 数据本身之外，数据库维护着满足特定算法的数据结构，这种数据结构以某种方式指向数据，这样可以在这些数据结构上实现高级的查找算法，这种数据结构称为索引。一般来说索引也很大，不可能全部存储在内存中，因此索引往往以文件的形式储存在磁盘中。我们平常所说的索引，如果没有特别">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://picture.tjtulong.top/5687393-d10b611e15cf2ac6.png">
 <meta property="og:image" content="http://picture.tjtulong.top/B-%E6%A0%91.JPG">
 <meta property="og:image" content="http://picture.tjtulong.top/B-%E8%87%AA%E5%B9%B3%E8%A1%A1.gif">
 <meta property="og:image" content="http://picture.tjtulong.top/B+%E6%A0%91.png">
+<meta property="og:image" content="http://picture.tjtulong.top/%E8%81%9A%E7%B0%87%E4%B8%8E%E9%9D%9E%E8%81%9A%E7%B0%87%E5%AF%B9%E6%AF%94.png">
+<meta property="og:image" content="http://picture.tjtulong.top/MyISAM%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E.png">
+<meta property="og:image" content="http://picture.tjtulong.top/InnoDB%E7%B4%A2%E5%BC%95%E5%AE%9E%E7%8E%B0.png">
+<meta property="og:image" content="http://picture.tjtulong.top/%E5%AF%B9%E6%AF%94%E4%B8%A4%E7%A7%8D%E7%B4%A2%E5%BC%95.JPG">
+<meta property="og:image" content="http://picture.tjtulong.top/%E8%81%94%E5%90%88%E7%B4%A2%E5%BC%95.jfif">
 <meta property="og:image" content="http://picture.tjtulong.top/explain.png">
 <meta property="og:image" content="http://picture.tjtulong.top/id%E7%9B%B8%E5%90%8C.png">
 <meta property="og:image" content="http://picture.tjtulong.top/706569-20180621233147579-359902163.png">
@@ -109,6 +114,7 @@
 <meta property="og:image" content="http://picture.tjtulong.top/case4.JPG">
 <meta property="og:image" content="http://picture.tjtulong.top/case5.JPG">
 <meta property="og:image" content="http://picture.tjtulong.top/case6.JPG">
+<meta property="og:image" content="http://picture.tjtulong.top/%E7%B4%A2%E5%BC%95%E4%B8%8B%E6%8E%A8.JPG">
 <meta property="og:image" content="http://picture.tjtulong.top/case7.JPG">
 <meta property="og:image" content="http://picture.tjtulong.top/etr.png">
 <meta property="og:image" content="http://picture.tjtulong.top/case8.JPG">
@@ -123,10 +129,12 @@
 <meta property="og:image" content="http://picture.tjtulong.top/sp1.png">
 <meta property="og:image" content="http://picture.tjtulong.top/sp2.png">
 <meta property="og:image" content="http://picture.tjtulong.top/sp3.png">
-<meta property="og:updated_time" content="2019-05-18T01:17:58.891Z">
+<meta property="og:image" content="http://picture.tjtulong.top/%E4%B8%8D%E5%8A%A0%E5%A4%8D%E5%90%88%E7%B4%A2%E5%BC%95.png">
+<meta property="og:image" content="http://picture.tjtulong.top/%E5%8A%A0%E5%A4%8D%E5%90%88%E7%B4%A2%E5%BC%95.png">
+<meta property="og:updated_time" content="2020-04-11T04:06:03.574Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL索引及优化">
-<meta name="twitter:description" content="索引什么是索引MySQL官方对索引的定义为：索引(Index) 是帮助MySQL高效获取数据的数据结构。 排好顺序的快速查找数据结构。 数据本身之外，数据库维护着满足特定算法的数据结构，这种数据结构以某种方式指向数据，这样可以在这些数据结构上实现高级的查找算法，这种数据结构称为索引。一般来说索引也很大，不可能全部存储在内存中，因此索引往往以文件的形式储存在磁盘中。我们平常所说的索引，如果没有特别指">
+<meta name="twitter:description" content="索引什么是索引MySQL官方对索引的定义为：索引(Index) 是帮助MySQL高效获取数据的数据结构。 排好顺序的快速查找数据的结构。 数据本身之外，数据库维护着满足特定算法的数据结构，这种数据结构以某种方式指向数据，这样可以在这些数据结构上实现高级的查找算法，这种数据结构称为索引。一般来说索引也很大，不可能全部存储在内存中，因此索引往往以文件的形式储存在磁盘中。我们平常所说的索引，如果没有特别">
 <meta name="twitter:image" content="http://picture.tjtulong.top/5687393-d10b611e15cf2ac6.png">
 
 
@@ -373,7 +381,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  5.8k
+                  8.1k
                 </span>
               
 
@@ -389,7 +397,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  21
+                  29
                 </span>
               
             </div>
@@ -411,7 +419,7 @@
 
       
         <h1 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h1><h2 id="什么是索引"><a href="#什么是索引" class="headerlink" title="什么是索引"></a>什么是索引</h2><p>MySQL官方对索引的定义为：<strong>索引(Index)</strong> 是帮助MySQL高效获取数据的<strong>数据结构</strong>。</p>
-<p><strong><em>排好顺序的快速查找数据结构。</em></strong></p>
+<p><strong><em>排好顺序的快速查找数据的结构。</em></strong></p>
 <p>数据本身之外，数据库维护着满足特定算法的数据结构，这种数据结构以某种方式指向数据，这样可以在这些数据结构上实现高级的查找算法，这种数据结构称为索引。<br><img src="http://picture.tjtulong.top/5687393-d10b611e15cf2ac6.png" alt="enter description here"><br>一般来说索引也很大，不可能全部存储在内存中，因此索引往往以文件的形式储存在<strong>磁盘</strong>中。我们平常所说的索引，如果没有特别指明，都是指<strong>B数</strong>(多路搜索树，不一定是二叉的)结构组织的索引。<br><a id="more"></a></p>
 <h2 id="索引的优缺点"><a href="#索引的优缺点" class="headerlink" title="索引的优缺点"></a>索引的优缺点</h2><p>优势：</p>
 <ol>
@@ -496,9 +504,61 @@
 <li>所有查询都要查找到叶子节点，<strong>查询性能稳定</strong>；</li>
 <li>所有叶子节点形成有序链表，<strong>便于范围查询</strong>。</li>
 </ol>
+<p><code>SHOW GLOBAL STATUS like &#39;Innodb_page_size&#39;</code>可以看到<strong>每个节点(文件页)大小16K</strong>，一次IO读写也是16K。</p>
+<p>bigInt 8B + 下一层节点指针 6B = 14B，一个节点可以存储16KB/14B=1170个元素，三层的B+树可以存储<code>1170 × 1170 × 16 ≈ 20000000</code> 数据。</p>
+<h1 id="聚簇索引"><a href="#聚簇索引" class="headerlink" title="聚簇索引"></a>聚簇索引</h1><p><em>参考：<a href="https://www.cnblogs.com/jiawen010/p/11805241.html" target="_blank" rel="noopener">https://www.cnblogs.com/jiawen010/p/11805241.html</a></em></p>
+<p>聚簇索引(聚集索引)：叶结点包括了完整的数据记录。InnoDB是聚簇索引，MyISAM是非聚簇索引。</p>
+<p>聚簇索引就是按照每张表的主键构造一颗B+树，同时叶子节点中存放的就是整张表的行记录数据，也将聚集索引的叶子节点称为数据页。这个特性决定了索引组织表中数据也是索引的一部分，每张表只能拥有一个聚簇索引。</p>
+<p><strong>优点：</strong></p>
+<ol>
+<li><p>数据访问更快，因为聚簇索引将索引和数据保存在同一个B+树中，因此从聚簇索引中获取数据比非聚簇索引更快；</p>
+</li>
+<li><p>聚簇索引对于主键的排序查找和范围查找速度非常快。</p>
+</li>
+</ol>
+<p><strong>缺点：</strong></p>
+<ol>
+<li>插入速度严重依赖于插入顺序，按照主键的<strong>顺序插入</strong>是最快的方式，否则将会出现页分裂，严重影响性能。因此，对于InnoDB表，我们一般都会定义一个<strong>自增的ID列为主键</strong></li>
+<li><strong>更新主键的代价很高</strong>，因为将会导致被更新的行移动。因此，对于InnoDB表，我们一般定义主键为不可新</li>
+<li><strong>辅助索引(二级索引)访问需要两次索引查找</strong>，第一次找到主键值，第二次根据主键值找到行数据。</li>
+</ol>
+<p><strong>P.S. 为什么主键通常建议使用自增id?</strong></p>
+<p><strong>聚簇索引的数据的物理存放顺序与索引顺序是一致的</strong>，即：<strong>只要索引是相邻的，那么对应的数据一定也是相邻地存放在磁盘上的</strong>。如果主键不是自增id，那么可以想象，它会干些什么，不断地调整数据的物理地址、分页，当然也有其他一些措施来减少这些操作，但却无法彻底避免。但如果是自增的，那就简单了，它只需要一页一页地写，索引结构相对紧凑，磁盘碎片少，效率也高。</p>
+<h2 id="辅助索引"><a href="#辅助索引" class="headerlink" title="辅助索引"></a>辅助索引</h2><p>　　在<strong>聚簇索引之上创建的索引称之为辅助索引(非聚簇索引)</strong>，辅助索引访问数据总是需要二次查找。辅助索引叶子节点存储的不再是行的物理位置，而是主键值。通过辅助索引首先找到的是主键值，再通过主键值找到数据行的数据页，再通过数据页中的Page Directory找到数据行。</p>
+<p>　　Innodb辅助索引的叶子节点并<strong>不包含行记录的全部数据</strong>，叶子节点除了包含键值外，还包含了相应行数据的聚簇索引键。辅助索引的存在不影响数据在聚簇索引中的组织，所以一张表可以有多个辅助索引。在innodb中有时也称辅助索引为二级索引。</p>
+<p><img src="http://picture.tjtulong.top/%E8%81%9A%E7%B0%87%E4%B8%8E%E9%9D%9E%E8%81%9A%E7%B0%87%E5%AF%B9%E6%AF%94.png" alt></p>
+<h2 id="MyISAM"><a href="#MyISAM" class="headerlink" title="MyISAM"></a>MyISAM</h2><p>MyISAM引擎使用B+Tree作为索引结构，叶节点的<strong>data域存放的是数据记录的地址</strong>。</p>
+<p>MySQL如果使用MyISAM存储引擎，数据库的文件类型就包括<code>.frm</code>(存储表结构)，<code>.MYD</code>(存储数据)与<code>.MYI</code>(存储索引)。索引文件和数据文件是分离的：</p>
+<p><img src="http://picture.tjtulong.top/MyISAM%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E.png" alt></p>
+<p>在MyISAM中，主索引和辅助索引（Secondary key）在结构上没有任何区别，<strong>只是主索引要求key是唯一的，而辅助索引的key可以重复</strong>。</p>
+<h2 id="InnoDB"><a href="#InnoDB" class="headerlink" title="InnoDB"></a>InnoDB</h2><p>MySQL如果使用InnoDB存储引擎，数据库的文件类型就包括<code>.frm</code>(存储表结构)，<code>.ibd</code>(索引+数据)。</p>
+<p>表数据文件本身就是按照B+Tree组织的一个索引结构文件，这棵树的叶节点data域保存了完整的数据记录。这个索引的key是数据表的主键，因此InnoDB表数据文件本身就是主索引。<strong>这就是问什么InnoDB表必须有主键，并且推荐使用整型的自增主键(保证永远是插入在叶节点的最后一个)。</strong></p>
+<p><em>Innodb通过主键聚集数据，如果没有定义主键，innodb会选择非空的唯一索引代替。如果没有这样的索引，innodb会隐式的定义一个主键来作为聚簇索引。</em></p>
+<p><img src="http://picture.tjtulong.top/InnoDB%E7%B4%A2%E5%BC%95%E5%AE%9E%E7%8E%B0.png" alt></p>
+<p><strong>对比两种索引形式：</strong></p>
+<p><img src="http://picture.tjtulong.top/%E5%AF%B9%E6%AF%94%E4%B8%A4%E7%A7%8D%E7%B4%A2%E5%BC%95.JPG" alt></p>
+<h2 id="覆盖索引"><a href="#覆盖索引" class="headerlink" title="覆盖索引"></a>覆盖索引</h2><p><strong>回表查询：</strong></p>
+<p>先通过普通索引定位到主键值，再通过聚集索引定位到行记录，这就是所谓的<strong>回表查询</strong>。由于要先定位主键值，再定位行记录，它的性能较扫一遍索引树更低。</p>
+<p>只需要在一棵索引树上就能获取SQL所需的所有列数据，即为<strong>覆盖索引</strong>，无需回表，速度更快。当explain的输出结果Extra字段为<code>Using index</code>时，能够触发<strong>索引覆盖</strong>。</p>
+<p><code>Using index condition</code>表示需要回表。</p>
+<h1 id="复合索引"><a href="#复合索引" class="headerlink" title="复合索引"></a>复合索引</h1><p>复合索引(联合索引)就是对多个字段同时建立的索引。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> <span class="string">`table_name`</span> <span class="keyword">ADD</span> <span class="keyword">INDEX</span> index_name (<span class="string">`column1`</span>, <span class="string">`column2`</span>, <span class="string">`column3`</span>)</span><br></pre></td></tr></table></figure>
+<p>复合索引的结构与电话簿类似，人名由姓和名构成，电话簿首先按姓氏对进行排序，然后按名字对有相同姓氏的人进行排序。如果您知道姓，电话簿将非常有用；如果您知道姓和名，电话簿则更为有用，但如果您只知道名不姓，电话簿将没有用处。</p>
+<p>所以说创建复合索引时，应该仔细考虑列的顺序。对索引中的所有列执行搜索或仅对前几列执行搜索时，复合索引非常有用；仅对后面的任意列执行搜索时，复合索引则没有用处。</p>
+<p><img src="http://picture.tjtulong.top/%E8%81%94%E5%90%88%E7%B4%A2%E5%BC%95.jfif" alt></p>
+<p>复合索引就是按照用户指定的顺序在树里多保存了几个字段。</p>
+<p>非聚集索引叶节点的DATA只是有一个指针指向对应的数据块，因此如果使用非聚集索引查询，而查询列中包含了其它该索引没有覆盖的列，那么还要进行第二次<strong>回表</strong>查询，查询节点上对应的数据行的数据。通过建立复合索引(col1, col2)可以解决该问题，因为复合索引的列包括了col1和col2，不需要回表：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> col1, col2 <span class="keyword">from</span> t1 <span class="keyword">where</span> col1 = <span class="string">'213'</span>;</span><br></pre></td></tr></table></figure>
+<p><em>参考：</em></p>
+<ul>
+<li><p><em><a href="https://www.zhihu.com/question/36996520/answer/93256153" target="_blank" rel="noopener">https://www.zhihu.com/question/36996520/answer/93256153</a></em></p>
+</li>
+<li><p><em><a href="https://www.cnblogs.com/happyflyingpig/p/7662881.html" target="_blank" rel="noopener">https://www.cnblogs.com/happyflyingpig/p/7662881.html</a></em></p>
+</li>
+</ul>
 <h1 id="性能调优"><a href="#性能调优" class="headerlink" title="性能调优"></a>性能调优</h1><p>MySQL常见瓶颈：</p>
 <ol>
-<li>CPU：CPU在饱和的时候一般发生在数据装入内存或从磁盘上读取数据的时候；</li>
+<li>CPU：CPU饱和的时候一般发生在数据装入内存或从磁盘上读取数据的时候；</li>
 <li>IO：磁盘I/O瓶颈发生在装入数据远大于内存容量的时候；</li>
 <li>服务器硬件的性能瓶颈。</li>
 </ol>
@@ -513,7 +573,7 @@
 <li>每张表有多少行被优化器查询。（对应rows）</li>
 </ol>
 <h2 id="explain包含的信息"><a href="#explain包含的信息" class="headerlink" title="explain包含的信息"></a>explain包含的信息</h2><p><img src="http://picture.tjtulong.top/explain.png" alt="enter description here"></p>
-<h3 id="id"><a href="#id" class="headerlink" title="id"></a>id</h3><p>select查询的<strong>序列号</strong>，包含一组数字，表示查询中执行select子句或操作表的顺序，该字段通常与table字段搭配来分析。</p>
+<h2 id="id"><a href="#id" class="headerlink" title="id"></a>id</h2><p>select查询的<strong>序列号</strong>，包含一组数字，表示查询中执行select子句或操作表的顺序，该字段通常与table字段搭配来分析。</p>
 <p><strong>1.id相同，执行顺序从上到下</strong><br><img src="http://picture.tjtulong.top/id%E7%9B%B8%E5%90%8C.png" alt="enter description here"><br>id相同，执行顺序从上到下，搭配table列进行观察可知，执行顺序为t1-&gt;t3-&gt;t2。</p>
 <p><strong>2.id不同，如果是子查询，id的序号会递增，id值越大执行优先级越高</strong><br><img src="http://picture.tjtulong.top/706569-20180621233147579-359902163.png" alt="enter description here"><br>如果是子查询id的序号会递增，id值越大执行优先级越高，搭配table列可知，执行顺序为t3-&gt;t1-&gt;t2。</p>
 <p><strong>3.id相同不同，同时存在</strong><br><img src="http://picture.tjtulong.top/706569-20180621233603807-1370399356.png" alt="enter description here"><br>id如果相同，可认为是同一组，执行顺序从上到下。在所有组中，id值越大执行优先级越高。所以执行顺序为t3-&gt;derived2(衍生表，也可以说临时表)-&gt;t2。</p>
@@ -547,9 +607,11 @@
 <h2 id="rows"><a href="#rows" class="headerlink" title="rows"></a>rows</h2><p>根据表统计信息及索引选用情况大致估算出找到所需记录所要读取的行数。当然该值<strong>越小越好</strong>。</p>
 <h2 id="extra"><a href="#extra" class="headerlink" title="extra"></a>extra</h2><h3 id="Using-filesort"><a href="#Using-filesort" class="headerlink" title="Using filesort"></a>Using filesort</h3><p>Using filesort表明mysql会对数据使用一个外部的索引<strong>排序</strong>，而不是按照表内的索引顺序进行读取。mysql中无法利用索引完成的排序操作称为“文件排序”。</p>
 <p>出现Using filesort就非常危险了，在数据量非常大的时候几乎“九死一生”。出现Using filesort尽快优化sql语句。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> <span class="string">`tb_dept`</span>;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`tb_dept`</span> (</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  <span class="string">`deptname`</span> <span class="built_in">varchar</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</span><br></pre></td></tr></table></figure>
 <p>deptname字段未建索引的情况：<br><img src="http://picture.tjtulong.top/706569-20180622154520287-452169518.png" alt="enter description here"><br>为deptname字段创建索引后：<br><img src="http://picture.tjtulong.top/706569-20180622154657116-497510920.png" alt="enter description here"></p>
+<p>p.s. 若tb_dept表中还有别的列，那么依然是Using filesort，必须建立复合索引优化。</p>
 <h3 id="Using-temporary"><a href="#Using-temporary" class="headerlink" title="Using temporary"></a>Using temporary</h3><p>使用了<strong>临时表保存中间结果</strong>，常见于排序order by和分组查询group by。非常危险，“十死无生”，急需优化。</p>
-<h3 id="Using-index"><a href="#Using-index" class="headerlink" title="Using index"></a>Using index</h3><p>表明相应的select操作中使用了覆盖索引，避免访问表的额外数据行，效率不错。</p>
+<h3 id="Using-index"><a href="#Using-index" class="headerlink" title="Using index"></a>Using index</h3><p>表明相应的select操作中使用了<strong>覆盖索引</strong>，避免访问表的额外数据行，效率不错。</p>
 <p>如果同时出现了Using where，表明索引被用来执行索引键值的查找。（where deptid=1）</p>
 <p>如果没有同时出现Using where，表明索引用来读取数据而非执行查找动作。</p>
 <p>删除tb_emp表中name和deptid字段的单独索引，创建复合索引：<br><img src="http://picture.tjtulong.top/706569-20180622162414976-876933935.png" alt="enter description here"></p>
@@ -564,7 +626,10 @@
 <p>最佳左前缀法则就是说如果创建了多个索引，在使用索引时要按照创建索引的顺序来使用，不能缺少或跳过，当然如果只使用最左边的索引列，也就是第一个索引是可以的，通俗理解：“<strong>带头大哥不能死，中间兄弟不能断</strong>”。要点：“头不能掉”。</p>
 <p>case4：<br><img src="http://picture.tjtulong.top/case4.JPG" alt="enter description here"><br>索引最左边没有用到，变为全表扫描。</p>
 <h2 id="不要在索引列上做任何操作"><a href="#不要在索引列上做任何操作" class="headerlink" title="不要在索引列上做任何操作"></a>不要在索引列上做任何操作</h2><p>在索引列上做任何操作（<strong>计算、函数、（自动or手动）类型转换</strong>），会导致索引失效从而转向全表扫描。<br><img src="http://picture.tjtulong.top/case5.JPG" alt="enter description here"><br>这里使用了函数计算，type=ALL，导致索引失效。</p>
-<h2 id="范围右边全失效"><a href="#范围右边全失效" class="headerlink" title="范围右边全失效"></a>范围右边全失效</h2><p>存储引擎不能使用索引中范围右边的列，也就是说范围右边的索引列会失效。<br><img src="http://picture.tjtulong.top/case6.JPG" alt="enter description here"><br>当使用范围时（age&gt;22），type=range，key_len=86，ref=Null，与Case 1、Case2和Case3可知，使用了<strong>部分索引</strong>，但<strong>gender索引没用上</strong>（与Case 3对比）。</p>
+<h2 id="范围右边全失效"><a href="#范围右边全失效" class="headerlink" title="范围右边全失效"></a>范围右边全失效</h2><p>存储引擎不能使用索引中范围右边的列，也就是说范围右边的索引列会失效。<br><img src="http://picture.tjtulong.top/case6.JPG" alt="enter description here"><br>当使用范围时（age&gt;22），type=range，key_len=86，ref=Null，与Case 1、Case2和Case3可知，使用了<strong>部分索引</strong>，但<strong>gender索引没用上</strong>（与Case 3对比），需要<strong>大量回表</strong>。</p>
+<p>MySQL 5.6 引入的<strong>索引下推优化</strong>（index condition pushdown)， 可以在索引遍历过程中，对索引中包含的字段先做判断，直接过滤掉不满足条件的记录，<strong>减少回表次数</strong>。</p>
+<p>例如：<code>mysql&gt; select * from tuser where name like &#39;张%&#39; and age=10 and ismale=1;</code></p>
+<p><img src="http://picture.tjtulong.top/%E7%B4%A2%E5%BC%95%E4%B8%8B%E6%8E%A8.JPG" alt></p>
 <h2 id="尽量使用覆盖索引"><a href="#尽量使用覆盖索引" class="headerlink" title="尽量使用覆盖索引"></a>尽量使用覆盖索引</h2><p>尽量使用覆盖索引（查询列和索引列尽量一致，通俗说就是对A、B列创建了索引，然后查询中也使用A、B列），减少select * 的使用。</p>
 <p><img src="http://picture.tjtulong.top/case7.JPG" alt="enter description here"></p>
 <p>select name,age,gender替代select * 使用覆盖索引（查询列与条件列对应），可看到Extra从Null变成了Using index，提高检索效率。</p>
@@ -576,6 +641,9 @@
 <p>但是在实际生产环境中，%仅出现在右边可能不能够解决我们的问题，所以解决%出现在左边索引失效的方法：使用<strong>覆盖索引</strong>。<br><img src="http://picture.tjtulong.top/case10.png" alt="enter description here"></p>
 <h2 id="字符串不加单引号导致索引失效"><a href="#字符串不加单引号导致索引失效" class="headerlink" title="字符串不加单引号导致索引失效"></a>字符串不加单引号导致索引失效</h2><p><img src="http://picture.tjtulong.top/case11.png" alt="enter description here"></p>
 <p>通过explain执行结果可以看出，字符串（name）不加单引号在查询的时候，导致索引失效（type=ref变成了type=ALL，并且key=Null），并全表扫描。</p>
+<p>因为在MySQL中，字符串和数字做比较的话，是将<strong>字符串转换成数字</strong>。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from tb_emp where CAST(name AS signed int) = 123;</span><br></pre></td></tr></table></figure>
+<p>也就是说，这条语句触发了上面说到的规则：对索引字段做函数操作，优化器会放弃走树搜索功能。</p>
 <h2 id="少用or，用or连接会使索引失效"><a href="#少用or，用or连接会使索引失效" class="headerlink" title="少用or，用or连接会使索引失效"></a>少用or，用or连接会使索引失效</h2><p><strong>一般性建议：</strong></p>
 <ul>
 <li>对于单键索引，尽量选择针对当前query过滤性更好的索引</li>
@@ -583,6 +651,9 @@
 <li>在选择组合索引时，尽量选择可以能够包含当前query中的where字句中更多字段的索引；</li>
 <li>尽可能通过分析统计信息和调整query写法来达到选择合适索引的目的。</li>
 </ul>
+<h2 id="对比唯一索引与普通索引"><a href="#对比唯一索引与普通索引" class="headerlink" title="对比唯一索引与普通索引"></a>对比唯一索引与普通索引</h2><p>当需要更新一个数据页时，如果数据页在内存中就直接更新，而如果这个数据页还没有在内存中的话，在不影响数据一致性的前提下，InooDB会将这些更新操作缓存在<strong>change buffer</strong>中，这样就不需要从磁盘中读入这个数据页了。在下次查询需要访问这个数据页的时候，将数据页读入内存，然后执行change buffer中与这个页有关的操作。通过这种方式就能保证这个数据逻辑的正确性。</p>
+<p>对于唯一索引来说，所有的更新操作都要先判断这个操作是否违反唯一性约束。比如，要插入(4,400)这个记录，就要先判断现在表中是否已经存在k=4的记录，而这必须要将数据页读入内存才能判断。如果都已经读入到内存了，那直接更新内存会更快，就没必要使用change  buffer了。因此，唯一索引的更新就不能使用change buffer，实际上也只有普通索引可以使用。</p>
+<p><strong>这两类索引在查询能力上是没差别的，主要考虑的是对更新性能的影响。所以建议尽量选择普通索引。</strong></p>
 <h1 id="查询截取分析"><a href="#查询截取分析" class="headerlink" title="查询截取分析"></a>查询截取分析</h1><p>分析过程：</p>
 <ol>
 <li>先观察，至少跑1天，查看生产的慢SQL情况；</li>
@@ -639,6 +710,17 @@
 <li>Copying to tmp table on disk：把内存中临时表复制到磁盘上，危险！</li>
 <li>locked</li>
 </ul>
+<h2 id="应用案例"><a href="#应用案例" class="headerlink" title="应用案例"></a>应用案例</h2><p>在项目中，有一个动态表，里面有主题、用户id、视频信息、发布时间等字段，现要查询某一主题下最新发布的5条字段。</p>
+<ol>
+<li>如果不加索引：全表扫描ALL + Using filesort</li>
+<li>只对主题加索引，类似下图(字段名替换了)：</li>
+</ol>
+<p><img src="http://picture.tjtulong.top/%E4%B8%8D%E5%8A%A0%E5%A4%8D%E5%90%88%E7%B4%A2%E5%BC%95.png" alt></p>
+<ol start="3">
+<li>对主题和发布时间加混合索引：</li>
+</ol>
+<p><img src="http://picture.tjtulong.top/%E5%8A%A0%E5%A4%8D%E5%90%88%E7%B4%A2%E5%BC%95.png" alt></p>
+<p><em>参考：<a href="https://www.cnblogs.com/songwenjie/p/9418397.html" target="_blank" rel="noopener">https://www.cnblogs.com/songwenjie/p/9418397.html</a></em></p>
 
       
     </div>
@@ -760,7 +842,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-count">54</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -771,7 +853,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -782,7 +864,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -857,7 +939,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#索引"><span class="nav-number">1.</span> <span class="nav-text">索引</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是索引"><span class="nav-number">1.1.</span> <span class="nav-text">什么是索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引的优缺点"><span class="nav-number">1.2.</span> <span class="nav-text">索引的优缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引分类"><span class="nav-number">1.3.</span> <span class="nav-text">索引分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本语法"><span class="nav-number">1.4.</span> <span class="nav-text">基本语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建索引"><span class="nav-number">1.4.1.</span> <span class="nav-text">创建索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除索引"><span class="nav-number">1.4.2.</span> <span class="nav-text">删除索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看索引"><span class="nav-number">1.4.3.</span> <span class="nav-text">查看索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他创建索引的方式"><span class="nav-number">1.4.4.</span> <span class="nav-text">其他创建索引的方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引的结构"><span class="nav-number">1.5.</span> <span class="nav-text">索引的结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建立索引与否的具体情况"><span class="nav-number">1.6.</span> <span class="nav-text">建立索引与否的具体情况</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#需建立索引的情况"><span class="nav-number">1.6.1.</span> <span class="nav-text">需建立索引的情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不需要创建索引的情况"><span class="nav-number">1.6.2.</span> <span class="nav-text">不需要创建索引的情况</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#B-Tree和B-Tree"><span class="nav-number">2.</span> <span class="nav-text">B-Tree和B+Tree</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#B-树"><span class="nav-number">2.1.</span> <span class="nav-text">B-树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-树-1"><span class="nav-number">2.2.</span> <span class="nav-text">B+树</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#性能调优"><span class="nav-number">3.</span> <span class="nav-text">性能调优</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#explain的作用"><span class="nav-number">3.1.</span> <span class="nav-text">explain的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#explain包含的信息"><span class="nav-number">3.2.</span> <span class="nav-text">explain包含的信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#id"><span class="nav-number">3.2.1.</span> <span class="nav-text">id</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#select-type"><span class="nav-number">3.3.</span> <span class="nav-text">select_type</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#type"><span class="nav-number">3.4.</span> <span class="nav-text">type</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#system"><span class="nav-number">3.4.1.</span> <span class="nav-text">system</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#const"><span class="nav-number">3.4.2.</span> <span class="nav-text">const</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#eq-ref"><span class="nav-number">3.4.3.</span> <span class="nav-text">eq_ref</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ref"><span class="nav-number">3.4.4.</span> <span class="nav-text">ref</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#range"><span class="nav-number">3.4.5.</span> <span class="nav-text">range</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#index"><span class="nav-number">3.4.6.</span> <span class="nav-text">index</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ALL"><span class="nav-number">3.4.7.</span> <span class="nav-text">ALL</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#possible-keys和key、key-len"><span class="nav-number">3.5.</span> <span class="nav-text">possible_keys和key、key_len</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ref-1"><span class="nav-number">3.6.</span> <span class="nav-text">ref</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rows"><span class="nav-number">3.7.</span> <span class="nav-text">rows</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#extra"><span class="nav-number">3.8.</span> <span class="nav-text">extra</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-filesort"><span class="nav-number">3.8.1.</span> <span class="nav-text">Using filesort</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-temporary"><span class="nav-number">3.8.2.</span> <span class="nav-text">Using temporary</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-index"><span class="nav-number">3.8.3.</span> <span class="nav-text">Using index</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#索引优化"><span class="nav-number">4.</span> <span class="nav-text">索引优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#全职匹配我最爱"><span class="nav-number">4.1.</span> <span class="nav-text">全职匹配我最爱</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最佳左前缀法则"><span class="nav-number">4.2.</span> <span class="nav-text">最佳左前缀法则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不要在索引列上做任何操作"><span class="nav-number">4.3.</span> <span class="nav-text">不要在索引列上做任何操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#范围右边全失效"><span class="nav-number">4.4.</span> <span class="nav-text">范围右边全失效</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#尽量使用覆盖索引"><span class="nav-number">4.5.</span> <span class="nav-text">尽量使用覆盖索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用不等于（-或-lt-gt-）会使索引失效"><span class="nav-number">4.6.</span> <span class="nav-text">使用不等于（!=或&lt;&gt;）会使索引失效</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-null-或-is-not-null也无法使用索引"><span class="nav-number">4.7.</span> <span class="nav-text">is null 或 is not null也无法使用索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#like通配符以-开头会使索引失效"><span class="nav-number">4.8.</span> <span class="nav-text">like通配符以%开头会使索引失效</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串不加单引号导致索引失效"><span class="nav-number">4.9.</span> <span class="nav-text">字符串不加单引号导致索引失效</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#少用or，用or连接会使索引失效"><span class="nav-number">4.10.</span> <span class="nav-text">少用or，用or连接会使索引失效</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查询截取分析"><span class="nav-number">5.</span> <span class="nav-text">查询截取分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#小表驱动大表"><span class="nav-number">5.1.</span> <span class="nav-text">小表驱动大表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ORDER-BY优化"><span class="nav-number">5.2.</span> <span class="nav-text">ORDER BY优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#慢查询日志"><span class="nav-number">5.3.</span> <span class="nav-text">慢查询日志</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Show-Profile"><span class="nav-number">5.4.</span> <span class="nav-text">Show Profile</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#索引"><span class="nav-number">1.</span> <span class="nav-text">索引</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是索引"><span class="nav-number">1.1.</span> <span class="nav-text">什么是索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引的优缺点"><span class="nav-number">1.2.</span> <span class="nav-text">索引的优缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引分类"><span class="nav-number">1.3.</span> <span class="nav-text">索引分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本语法"><span class="nav-number">1.4.</span> <span class="nav-text">基本语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建索引"><span class="nav-number">1.4.1.</span> <span class="nav-text">创建索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除索引"><span class="nav-number">1.4.2.</span> <span class="nav-text">删除索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看索引"><span class="nav-number">1.4.3.</span> <span class="nav-text">查看索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他创建索引的方式"><span class="nav-number">1.4.4.</span> <span class="nav-text">其他创建索引的方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引的结构"><span class="nav-number">1.5.</span> <span class="nav-text">索引的结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建立索引与否的具体情况"><span class="nav-number">1.6.</span> <span class="nav-text">建立索引与否的具体情况</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#需建立索引的情况"><span class="nav-number">1.6.1.</span> <span class="nav-text">需建立索引的情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不需要创建索引的情况"><span class="nav-number">1.6.2.</span> <span class="nav-text">不需要创建索引的情况</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#B-Tree和B-Tree"><span class="nav-number">2.</span> <span class="nav-text">B-Tree和B+Tree</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#B-树"><span class="nav-number">2.1.</span> <span class="nav-text">B-树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-树-1"><span class="nav-number">2.2.</span> <span class="nav-text">B+树</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#聚簇索引"><span class="nav-number">3.</span> <span class="nav-text">聚簇索引</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#辅助索引"><span class="nav-number">3.1.</span> <span class="nav-text">辅助索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyISAM"><span class="nav-number">3.2.</span> <span class="nav-text">MyISAM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#InnoDB"><span class="nav-number">3.3.</span> <span class="nav-text">InnoDB</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#覆盖索引"><span class="nav-number">3.4.</span> <span class="nav-text">覆盖索引</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#复合索引"><span class="nav-number">4.</span> <span class="nav-text">复合索引</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#性能调优"><span class="nav-number">5.</span> <span class="nav-text">性能调优</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#explain的作用"><span class="nav-number">5.1.</span> <span class="nav-text">explain的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#explain包含的信息"><span class="nav-number">5.2.</span> <span class="nav-text">explain包含的信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#id"><span class="nav-number">5.3.</span> <span class="nav-text">id</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#select-type"><span class="nav-number">5.4.</span> <span class="nav-text">select_type</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#type"><span class="nav-number">5.5.</span> <span class="nav-text">type</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#system"><span class="nav-number">5.5.1.</span> <span class="nav-text">system</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#const"><span class="nav-number">5.5.2.</span> <span class="nav-text">const</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#eq-ref"><span class="nav-number">5.5.3.</span> <span class="nav-text">eq_ref</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ref"><span class="nav-number">5.5.4.</span> <span class="nav-text">ref</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#range"><span class="nav-number">5.5.5.</span> <span class="nav-text">range</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#index"><span class="nav-number">5.5.6.</span> <span class="nav-text">index</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ALL"><span class="nav-number">5.5.7.</span> <span class="nav-text">ALL</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#possible-keys和key、key-len"><span class="nav-number">5.6.</span> <span class="nav-text">possible_keys和key、key_len</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ref-1"><span class="nav-number">5.7.</span> <span class="nav-text">ref</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rows"><span class="nav-number">5.8.</span> <span class="nav-text">rows</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#extra"><span class="nav-number">5.9.</span> <span class="nav-text">extra</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-filesort"><span class="nav-number">5.9.1.</span> <span class="nav-text">Using filesort</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-temporary"><span class="nav-number">5.9.2.</span> <span class="nav-text">Using temporary</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-index"><span class="nav-number">5.9.3.</span> <span class="nav-text">Using index</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#索引优化"><span class="nav-number">6.</span> <span class="nav-text">索引优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#全职匹配我最爱"><span class="nav-number">6.1.</span> <span class="nav-text">全职匹配我最爱</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最佳左前缀法则"><span class="nav-number">6.2.</span> <span class="nav-text">最佳左前缀法则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不要在索引列上做任何操作"><span class="nav-number">6.3.</span> <span class="nav-text">不要在索引列上做任何操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#范围右边全失效"><span class="nav-number">6.4.</span> <span class="nav-text">范围右边全失效</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#尽量使用覆盖索引"><span class="nav-number">6.5.</span> <span class="nav-text">尽量使用覆盖索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用不等于（-或-lt-gt-）会使索引失效"><span class="nav-number">6.6.</span> <span class="nav-text">使用不等于（!=或&lt;&gt;）会使索引失效</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-null-或-is-not-null也无法使用索引"><span class="nav-number">6.7.</span> <span class="nav-text">is null 或 is not null也无法使用索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#like通配符以-开头会使索引失效"><span class="nav-number">6.8.</span> <span class="nav-text">like通配符以%开头会使索引失效</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串不加单引号导致索引失效"><span class="nav-number">6.9.</span> <span class="nav-text">字符串不加单引号导致索引失效</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#少用or，用or连接会使索引失效"><span class="nav-number">6.10.</span> <span class="nav-text">少用or，用or连接会使索引失效</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对比唯一索引与普通索引"><span class="nav-number">6.11.</span> <span class="nav-text">对比唯一索引与普通索引</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查询截取分析"><span class="nav-number">7.</span> <span class="nav-text">查询截取分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#小表驱动大表"><span class="nav-number">7.1.</span> <span class="nav-text">小表驱动大表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ORDER-BY优化"><span class="nav-number">7.2.</span> <span class="nav-text">ORDER BY优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#慢查询日志"><span class="nav-number">7.3.</span> <span class="nav-text">慢查询日志</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Show-Profile"><span class="nav-number">7.4.</span> <span class="nav-text">Show Profile</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#应用案例"><span class="nav-number">7.5.</span> <span class="nav-text">应用案例</span></a></li></ol></li></ol></div>
             
 
           </div>
